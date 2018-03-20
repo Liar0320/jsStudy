@@ -11,10 +11,14 @@ var myObject = function(){};
     }
  
     myObject.prototype.publickMethod = ()=>{
-        return privateFunction(privateVariable);
+        return privateFunction(privateVariable++);
     }
-})();
+})(); 
 new myObject().publickMethod();
+p = new myObject();
+p.publickMethod()
+p.publickMethod()
+p=null;
 //------------------------------------------
 var Person;
 (()=>{
@@ -42,22 +46,3 @@ for(let item in person1){
 }
 
 //--------------------------------
-
-function Keith(name) {
-    var age;
-    function setAge(n) {
-    age = n;
-    }
-    function getAge() {
-    return age;
-    }
-    return {
-    name: name,
-    setAge: setAge,
-    getAge: getAge
-    };
-}
-    var person = Keith('keith');
-    person.setAge(21);
-    console.log(person.name); // 'keith'
-    console.log(person.getAge()); //21
