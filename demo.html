@@ -1,0 +1,27 @@
+！<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    var fnc;
+    (function(_window){
+        function opp(){
+            function my(){
+
+            }
+            _window.addEventListener('resize',my);
+            _window.removeEventListener('resize',my);
+            _window= null;
+        }
+        fnc=opp
+    })(window);
+    console.log(fnc);
+</script>
+</html>
