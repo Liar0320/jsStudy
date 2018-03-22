@@ -15,3 +15,66 @@
     }
     del2(o)
 })();
+
+
+///
+///-------- liarCopy || 深度copy  暂时不考虑原形链上的
+///$  isArray isNull liarCopy
+var $ = {};
+(function(){
+    function liarCopy(destination,souce){
+       if(typeof destination === 'object'&&typeof souce === 'object'){
+            if(isArray(souce)){
+                if(!isArray(destination))throw new Error('destination参数必须是数组');
+                !destination.length||(destination.length = 0);
+                souce.forEach(item => {
+                    destination.push(item);
+               });
+            }else{
+                if(isArray(destination))throw new Error('destination参数必须是对象');
+                if(!isNull(destination)){
+                    Object.keys(destination).forEach(item =>{
+                        delete destination['item'];
+                    })
+                }
+                for(let item in souce){
+                    destination[item] = souce[item];
+                }
+            }
+       }else{
+          throw new Error('输入的必须是对象');
+       }
+    }
+    ///是否是数组
+    function isArray(obj){
+        if(Array.isArray){
+            return Array.isArray(obj);
+        }else{
+            return object.prototype.toString.call(obj) === '[object Array]'
+        }
+    }
+    ///是否为空
+    function isNull(obj){
+        if(typeof obj ==='object'){
+            if(isArray(obj)){
+                return obj.length === 0;
+            }else{
+                return  Object.keys(obj).length ===0;
+            }
+        }else{
+            if(obj === undefined||obj ===null||obj ==='')return true;
+            return false;
+        }
+    }
+    //去除头尾空格
+    function trim(str){
+        if(typeof str === 'string') return str.replace(/^\s+|\s+$/g,'');
+        throw new Error('$.tirm()  参数必须为string')
+    }
+
+    $.isArray = isArray;
+    $.isNull = isNull;
+    $.trim = trim;
+    $.liarCopy = liarCopy;
+})();
+console.log($.isArray([]),$.isArray(0));
