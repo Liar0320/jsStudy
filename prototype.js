@@ -27,6 +27,7 @@ var Person;
             name = value;
             this.puper = '22222';
     }
+    Person.pop = 00;
     Person.prototype.getName = ()=>{
         return name;
     }
@@ -34,6 +35,7 @@ var Person;
         name = value;
     }
 })()
+console.log(Object.keys(Person));
 var person1 = new Person('lch');
 console.log(person1.getName());
 person1.setName('sun');

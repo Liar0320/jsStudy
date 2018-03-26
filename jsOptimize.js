@@ -3,14 +3,11 @@
 ///https://www.cnblogs.com/canning-gao/p/5708796.html
 ///https://git-scm.com/book/zh/v1/Git-%E5%9F%BA%E7%A1%80-%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8
 /*
-https://www.jianshu.com/p/287e0bb867ae  es6
-
-https://www.jianshu.com/p/78c10239f852  https://zhuanlan.zhihu.com/p/25407758  浅析Promise用法
-
 
 http://blog.csdn.net/u011277123/article/details/53606089 	JavaScript 最佳实践：帮你提升代码质量
 
 https://segmentfault.com/a/1190000004322487       你真的会使用XMLHttpRequest吗？
+
 */
 (function(){
     var o = {a:1,b:2};
@@ -61,15 +58,19 @@ const $ = {};
 })($);
 
 
-///-------- liarCopy || 深度copy  暂时不考虑原形链上的
+///-------- liarCopy || 浅拷贝 -----深度拷贝  暂时不考虑原形链上的
 (function(_$){ 
     function liarCopy(destination,source){
         if($.isArray(source)){
                 if(!_$.isArray(destination))throw new Error('destination参数必须是数组');
                 !destination.length||(destination.length = 0);
                 source.forEach(item => {
-                    destination.push(item);
-               });
+                    if(typeof item !== 'object'){
+                        destination.push(item);
+                    }else{
+                       // liarCopy
+                    }
+                });
         }else 
         if(_$.isObject(source)){
                 if(!_$.isObject(destination))throw new Error('destination参数必须是对象');
