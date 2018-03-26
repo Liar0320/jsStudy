@@ -13,6 +13,8 @@
     ///reg
     var reg = new RegExp('1');
     console.log(reg.test('1我怕'),/1/.test('12312'));
+    var reg_2 = new RegExp('2','g');
+    console.log('723131231'.replace(reg_2,"帅"));
 
     ///  +
     var matchStr = '12345da123sds22af';

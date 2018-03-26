@@ -1,3 +1,4 @@
+///$q  promise https://www.cnblogs.com/ZengYunChun/p/6438330.html
 ///固定一个元素到文档底部的高度
 (function(_window){
     angular.module('app').directice('decHeight',decHeight);
