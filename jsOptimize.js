@@ -61,29 +61,35 @@ const $ = {};
 ///-------- liarCopy || 浅拷贝 -----深度拷贝  暂时不考虑原形链上的
 (function(_$){ 
     function liarCopy(destination,source){
-        if($.isArray(source)){
-                if(!_$.isArray(destination))throw new Error('destination参数必须是数组');
+        copyRecurse(destination,source)
+        function copyRecurse(destination,source){
+            if($.isArray(source)){
+                !_$.isArray(destination)&&(destination = []);
                 !destination.length||(destination.length = 0);
-                source.forEach(item => {
-                    if(typeof item !== 'object'){
-                        destination.push(item);
-                    }else{
-                       // liarCopy
-                    }
+                source.forEach((item,index) => {
+                    destination[index] = copyElement(item);
                 });
-        }else 
-        if(_$.isObject(source)){
-                if(!_$.isObject(destination))throw new Error('destination参数必须是对象');
-                if(!_$.isNull(destination)){
-                    Object.keys(destination).forEach(item =>{
-                        delete destination['item'];
-                    })
-                }
-                for(let item in source){
-                    destination[item] = source[item];
-                }
+            }else 
+            if(_$.isObject(source)){
+                    !_$.isObject(destination)&&(destination = {});
+                    if(!_$.isNull(destination)){
+                        Object.keys(destination).forEach(item =>{
+                            delete destination['item'];
+                        })
+                    }
+                    for(let item in source){
+                        destination[item] = copyElement(source[item]);
+                    }
+            }
+            return destination;
+        }
+        function copyElement(source){
+            if(typeof source !=='object') return source;
+            let destination = undefined;
+            return copyRecurse(destination,source);
         }
     }
+ 
 
     function liarExtend(destination,source){
         if(_$.isObject(destination)&&_$.isObject(source)){
