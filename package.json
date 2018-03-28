@@ -1,0 +1,22 @@
+{
+  "name": "liar",
+  "version": "1.0.0",
+  "description": "day day up",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Liar0320/jsStudy.git"
+  },
+  "author": "liar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Liar0320/jsStudy/issues"
+  },
+  "homepage": "https://github.com/Liar0320/jsStudy#readme",
+  "devDependencies": {
+    "angular": "^1.6.9"
+  }
+}

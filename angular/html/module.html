@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../../node_modules/angular/angular.js"></script>
+    <title>module</title>
+</head>
+<body>
+    <div ng-app="app">
+        <div ng-controller="liarControl_1 as vm">
+            <label >{{vm.name}}</label>
+        </div>
+    </div>
+    <div ng-app="module1">
+        <div ng-controller="liarControl_1 as vm">
+            <label >{{vm.name}}</label>
+        </div>
+    </div>
+</body>
+    <script src="../~~js/module.js"></script>
+</html>

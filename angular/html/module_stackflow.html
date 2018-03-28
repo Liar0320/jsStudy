@@ -1,0 +1,56 @@
+<!--https://stackoverflow.com/questions/30570505/why-2-different-module-can-access-each-other-when-added-as-depend-to-third-modul-->
+<!DOCTYPE html>
+<html >
+<body>
+    
+    <div ng-app="home">
+        <div  ng-controller="MainController as mainController">
+            {{mainController.name}}
+        </div>
+    </div>
+    <div ng-app="product">
+        <div  ng-controller="MainController as mainController">
+            {{mainController.name}}
+        </div>
+    </div>
+    <div ng-app="main">
+        <div  ng-controller="MainControllerDifferent as mainController">
+            {{mainController.name}}
+        </div>
+    </div>
+<script type="application/javascript" src="../../node_modules/angular/angular.js"></script>
+<script>
+(function (ng) {
+    ///---------------------
+    var homeModule = ng.module('home', ['product']);
+    homeModule.service("HomeService", [function () {
+        var homeService = this;
+        homeService.getName = function () {
+            return "Home Service";
+        }
+    }]);
+    homeModule.controller("MainController", ['ProductService', function (ProductService) {
+        var mainController = this;
+        mainController.name = ProductService.getName();
+    }]);
+    ///---------------------
+    var productModule = ng.module('product', []);
+    productModule.service("ProductService", ["HomeService", function (HomeService) {
+        var productService = this;
+        productService.getName = function () {
+            return "Product Service - " + HomeService.getName();
+        };
+    }]);
+    // productModule.controller("MainController", ['ProductService', function (ProductService) {
+    //     var mainController = this;
+    //     mainController.name = ProductService.getName()+'--------------------';
+    // }]);
+    ///---------------------
+    var mainModule = ng.module('main', ['home', 'product']);
+    mainModule.controller("MainControllerDifferent", ['ProductService', function (ProductService) {
+        var mainController = this;
+        mainController.name = ProductService.getName();
+    }]);
+})(angular);
+</script>
+</body>

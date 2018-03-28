@@ -3,11 +3,7 @@
 ///https://www.cnblogs.com/canning-gao/p/5708796.html
 ///https://git-scm.com/book/zh/v1/Git-%E5%9F%BA%E7%A1%80-%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8
 /*
-
-http://blog.csdn.net/u011277123/article/details/53606089 	JavaScript 最佳实践：帮你提升代码质量
-
 https://segmentfault.com/a/1190000004322487       你真的会使用XMLHttpRequest吗？
-
 */
 (function(){
     var o = {a:1,b:2};
@@ -114,3 +110,23 @@ const $ = {};
     })
 })($);
 console.log($);
+
+(function(){
+    function sendAjax(){
+        var formData = new FormData();
+        formData.append('username','liar');
+        formData.append('id',123456);
+
+        var xhr = new XMLHttpRequest();
+        xhr.timeout = 3000;
+        xhr.responseText = "text";
+        xhr.open('post','http://www.baidu.com',true)
+        xhr.onload = function(e){
+            if(this.status ==200||this.status == 304){
+                console.log(this.responseText);
+            }
+        }
+        xhr.send(formData)
+    } 
+
+})()
