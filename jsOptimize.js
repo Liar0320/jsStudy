@@ -128,5 +128,5 @@ console.log($);
         }
         xhr.send(formData)
     } 
-
+    sendAjax()
 })()
