@@ -10,6 +10,45 @@
     <canvas id="myCanvas" width="960" height="590" style="position: relative;border:1px solid #dedede"></canvas>
 </body>
     <script>
+        'use strict'
+        var c;
+        var ctx;
+        var resize = [10,10];
+        var originalRect = {width:960,height:590};
+        var baseRect = {width:1,height:1};
+        var rectAll = [];
+      
+        window.addEventListener("load",init);
+        function init(){
+           console.log("load"); 
+           c = document.getElementById("myCanvas");
+           ctx = c.getContext("2d");
+           initRectAll(...resize,rectAll);
+           baseRect.width = originalRect/resize[0];
+           baseRect.height = originalRect/resize[1];
+        }
+
+        function initRectAll(a,b,arr){
+            for(var i=0 ;i< a;i++){
+                arr[i] = [];
+                for(var j=0 ;j< b;j++){
+                    arr[i][j] = 0;
+                }
+            }
+        }
+
+        function rect(x,y){
+            
+        }
+
+        myCanvas.addEventListener("mousemove",mousemove)
+        function mousemove(){
+
+        }
+    </script>
+</html>
+
+<noscript>
         var c ;
         var ctx_stroke;
         var tempPois = {x:0,y:0};
@@ -86,5 +125,65 @@
            C_stroke(ctx_stroke,{x:e["offsetX"],y:e["offsetY"]},tempPois); 
            C_paint(ctx_stroke,poisArr,tempPois);         
         })
-    </script>
-</html>
+    </noscript>
+
+<noscript>
+        var c ;
+        var ctx_stroke;
+        var tempPos = {};
+        var rect = [0,0,960,590];
+        var rectAll = [];
+        window.addEventListener('load',load);
+        function load(){
+            console.log("load");
+            c = document.getElementById("myCanvas");
+            ctx_stroke = c.getContext("2d");
+        }
+
+        function C_stroke(ctx,pos,original){ 
+            var x= rect[0];
+            var y =rect[1];
+            ctx.clearRect(...rect);
+            ctx.strokeStyle ="#000";
+            ctx.beginPath();
+            ctx.moveTo(pos.x,y);
+            ctx.lineTo(pos.x,pos.y);
+            ctx.lineTo(x,pos.y);
+            ctx.stroke();
+        }
+        
+        // function collectRect(rectAll,rect){
+        //     rectAll.push();
+        // }
+
+        function C_paint(ctx,pos,rect){
+           // rectAll.push(0,0,...rect).contact();
+            var x= 0;
+            var y =0;
+            ctx.beginPath();
+         //   ctx.strokeStyle="#dedede"
+            
+            ctx.moveTo(x,0);
+            ctx.lineTo(960,0);
+            ctx.lineTo(960,590);
+            ctx.lineTo(0,590);
+            ctx.lineTo(0,y);
+            ctx.lineTo(x,y);
+           // ctx.closePath();
+            ctx.stroke();
+            ctx.clip();
+        }
+        function checkPaint(posAll,pos){  
+    
+        }
+        myCanvas.addEventListener("mouseup",function(e){
+            console.log({x:e["offsetX"],y:e["offsetY"]});
+            tempPos = {x:e["offsetX"],y:e["offsetY"]};
+            C_paint(ctx_stroke,tempPos,rect); 
+        })
+        myCanvas.addEventListener("mousemove",function(e){
+           // C_stroke.setAttribute('height','600px');
+           C_stroke(ctx_stroke,{x:e["offsetX"],y:e["offsetY"]}); 
+              
+        })
+    </noscript>
