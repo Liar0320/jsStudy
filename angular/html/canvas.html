@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>canvas</title>
+</head>
+<body>
+    <canvas id="myCanvas" width="960" height="590" style="position: relative;border:1px solid #dedede"></canvas>
+</body>
+    <script>
+        var c ;
+        var ctx_stroke;
+        var tempPois = {x:0,y:0};
+        var poisArr = [];
+        window.addEventListener('load',load);
+        function load(){
+            console.log("load");
+            c = document.getElementById("myCanvas");
+            ctx_stroke = c.getContext("2d");
+            ctx_paint = c.getContext("2d");
+        }
+
+        function C_stroke(ctx,pos,original){ 
+            ctx.clearRect(0,0,960,590);
+            ctx.strokeStyle ="#dedede";
+            ctx.beginPath();
+            ctx.moveTo(pos.x,original.y);
+            ctx.lineTo(pos.x,pos.y);
+            ctx.lineTo(original.x,pos.y);
+            ctx.stroke();
+        }
+        function ctx_clip(ctx){ 
+            ctx.fillRect(0,0,150,150);
+            ctx.translate(75,75);
+
+            // Create a circular clipping path
+            ctx.beginPath();
+            ctx.arc(0,0,60,0,Math.PI*2,true);
+            ctx.clip()
+        };
+        var drawFrame=function(ctx,pos){
+            ctx.clearRect(0,0,960,590);
+            ctx.beginPath();
+            ctx.strokeStyle="gray"
+            ctx.moveTo(pos.x,0);
+            ctx.lineTo(pos.x,pos.y);
+            ctx.lineTo(0,pos.y);
+            ctx.stroke();
+        };
+        function C_paint(ctx,pois,original){
+            var x= 0;
+            var y =0;
+            if(pois.length ===0) return;
+            if(pois.length>1) (x = original.x)&&(y=original.y);
+            pois.forEach(pos=>{
+                ctx.beginPath();
+                ctx.strokeStyle="#000"
+                ctx.moveTo(pos.x,y);
+                ctx.lineTo(pos.x,pos.y);
+                ctx.lineTo(x,pos.y);
+                ctx.stroke();
+            })
+        }
+        function checkPaint(posAll,pos){  
+            if(poisArr.length ===0){
+                return pos;
+            } 
+           var x = -1;
+           var y = -1;
+           posAll.forEach(item=>{
+               (item.x<pos.x)&&(item.y>pos.Y)? (x<item.x? x= item.x:null):
+               (item.x>pos.x)&&(item.y<pos.y)? (y<item.y? y = item.y:null)
+               :null;
+           })
+           return (x>-1&&y>-1)?{x,y}:null;
+        }
+        myCanvas.addEventListener("mouseup",function(e){
+            tempPois = checkPaint(poisArr,{x:e["offsetX"],y:e["offsetY"]});
+            tempPois&&poisArr.push({x:e["offsetX"],y:e["offsetY"]});
+            console.log({x:e["offsetX"],y:e["offsetY"]});
+        })
+        myCanvas.addEventListener("mousemove",function(e){
+           // C_stroke.setAttribute('height','600px');
+           C_stroke(ctx_stroke,{x:e["offsetX"],y:e["offsetY"]},tempPois); 
+           C_paint(ctx_stroke,poisArr,tempPois);         
+        })
+    </script>
+</html>
