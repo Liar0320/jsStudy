@@ -4,6 +4,7 @@
 ///https://git-scm.com/book/zh/v1/Git-%E5%9F%BA%E7%A1%80-%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8
 /*
 https://segmentfault.com/a/1190000004322487       你真的会使用XMLHttpRequest吗？
+https://www.cnblogs.com/heyuquan/archive/2014/07/17/bubble-quick-sort.html  排序可参考
 */
 (function(){
     var o = {a:1,b:2};
@@ -56,15 +57,19 @@ const $ = {};
 
 ///-------- liarCopy || 浅拷贝 -----深度拷贝  暂时不考虑原形链上的
 (function(_$){ 
+     //对象的深度拷贝，不考虑原型链
     function liarCopy(destination,source){
         copyRecurse(destination,source)
         function copyRecurse(destination,source){
             if($.isArray(source)){
                 !_$.isArray(destination)&&(destination = []);
                 !destination.length||(destination.length = 0);
-                source.forEach((item,index) => {
-                    destination[index] = copyElement(item);
-                });
+                for(let i = 0;i<source.length;i++){
+                    destination[i] = copyElement(source[i]);
+                }
+                // source.forEach((item,index) => {
+                //     destination[index] = copyElement(item);
+                // });
             }else 
             if(_$.isObject(source)){
                     !_$.isObject(destination)&&(destination = {});
@@ -86,7 +91,7 @@ const $ = {};
         }
     }
  
-
+    //对象的扩展
     function liarExtend(destination,source){
         if(_$.isObject(destination)&&_$.isObject(source)){
             for(let item in source){
@@ -95,6 +100,55 @@ const $ = {};
         }else{
             new Error('data is not [object Object]');
         }
+    }
+
+    //快速排序  O(nlog2n) O(1)
+    function querysort(origin){
+        if(!_$.isArray(origin))return new Error('输入的参数不是数组无法进行快速排序')
+        function sort(start,end,arr){
+            let key = arr[start];
+            let temp_x = start;
+            let temp_y = end;
+            while(true&&(start<end)){
+
+                for(;start<end;end--){
+                    if(key>arr[end]){
+                        arr[start++] = arr[end];//start++ 先赋值然后将start所在的索引加一，因为这个数据arr[start]肯定小于key 所以在下面的for循环中就没必要在进行判断；
+                        break;
+                    }
+                }
+
+                for(;start<end;start++){
+                    if(key<arr[start]){
+                        arr[end--] = arr[start];//同理
+                        break;
+                    }
+                }
+
+            }
+
+            arr[start] = key;
+        //    if(temp_y-temp_x===1) return arr;
+            if(start === end){
+                if(start-temp_x>1)sort(temp_x,start-1,arr);
+                if(temp_y-end>1)sort(end+1,temp_y,arr);
+            }
+        }
+        sort(0,origin.length-1,origin)
+    }
+
+    //冒泡排序  O(n^2) O(1)
+    function bubbleSort(origin) {
+        for(let j = 0 ; j<origin.length;j++){
+            for(let i = 0;i<origin.length;i++){
+                if(origin[i+1]<origin[i]){
+                    let temp = origin[i+1];
+                    origin[i+1] = origin[i];
+                    origin[i] = temp;
+                }
+            }
+        }
+        return origin;
     }
 
     //去除头尾空格  return str
@@ -106,27 +160,9 @@ const $ = {};
     liarExtend(_$,{
         liarCopy,
         liarExtend,
-        trim
+        trim,
+        querysort,
+        bubbleSort
     })
 })($);
 console.log($);
-
-(function(){
-    function sendAjax(){
-        var formData = new FormData();
-        formData.append('username','liar');
-        formData.append('id',123456);
-
-        var xhr = new XMLHttpRequest();
-        xhr.timeout = 3000;
-        xhr.responseText = "text";
-        xhr.open('post','http://www.baidu.com',true)
-        xhr.onload = function(e){
-            if(this.status ==200||this.status == 304){
-                console.log(this.responseText);
-            }
-        }
-        xhr.send(formData)
-    } 
-    sendAjax()
-})()
