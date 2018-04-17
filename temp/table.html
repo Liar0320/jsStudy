@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>titleAngle</title>
+</head>
+<body>
+    <table class="table">
+         <thead>
+         </thead>
+         <tbody>
+        </tbody>
+    </table>
+
+    <canvas id='titleAngle' pop='22'></canvas>
+</body>
+</html>
+<script>
+   (function(){
+      let data = [1,2,3,4,5,6,7,8];
+
+      let tr_head = document.createElement('tr');
+      for(let item in data){
+        let th = document.createElement('th');
+        th.innerText = item;
+        tr_head.appendChild(th);
+      }
+
+
+      let fragMent = document.createDocumentFragment();
+      let tr = document.createElement('tr');
+      for(let item in data){
+        let td = document.createElement('td');
+        td.innerText = item;
+        tr.appendChild(td);
+      } 
+
+      for(let i = 0 ;i<8;i++){
+        fragMent.appendChild(tr.cloneNode(true));
+      }
+      let table = document.getElementsByTagName('table')[0];
+      table.children[0].appendChild(tr_head);
+      table.children[1].appendChild(fragMent);
+
+      tr_head = null;
+      tr = null;
+      fragMent= null;
+      table = null;
+   })();
+
+   (function(){
+        window.addEventListener('load',init);
+        var c ;
+        function init(){
+            c = document.getElementById('titleAngle');
+           
+        }
+   })();
+   
+</script>
+<style>
+  .table{
+    border:solid 1px #dedede;
+    border-collapse: collapse;
+  }
+  .table>thead>tr>th,.table>tbody>tr>td{
+    padding: 15px;
+  }
+  .table>thead>tr>th,.table>tbody>tr:not(:last-child)>td{
+    border-bottom:solid 1px #dedede;
+  }
+</style>
