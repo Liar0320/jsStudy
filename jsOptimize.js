@@ -2,6 +2,7 @@
 ///  null既不是对象也不是一种类型，它仅是一种特殊的值，你可以将其赋予任何引用类型，你也可以将null转化成任何类型
 ///https://www.cnblogs.com/canning-gao/p/5708796.html
 ///https://git-scm.com/book/zh/v1/Git-%E5%9F%BA%E7%A1%80-%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8
+//https://blog.csdn.net/cbjcry/article/details/70154946 JS操作DOM元素属性和方法
 /*
 https://segmentfault.com/a/1190000004322487       你真的会使用XMLHttpRequest吗？
 https://www.cnblogs.com/heyuquan/archive/2014/07/17/bubble-quick-sort.html  排序可参考
@@ -164,5 +165,19 @@ const $ = {};
         querysort,
         bubbleSort
     })
+})($);
+
+//document和节点的方法
+(function($){
+    function getStyle(ele,attr){
+        return ele.currentStyle?
+        ele.currentStyle[attr]:getComputedStyle(ele,'null')[attr];
+    }
+
+    function getAttributeNames(ele,attr){
+        return ele.attributes;
+    }
+
+
 })($);
 console.log($);

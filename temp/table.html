@@ -1,3 +1,4 @@
+<!--??????????????????????为什么坐标轴出错-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +15,7 @@
         </tbody>
     </table>
 
-    <canvas id='titleAngle' pop='22'></canvas>
+    <canvas id='titleAngle' pop='22' data-0='sun' data-1='李程欢'></canvas>
 </body>
 </html>
 <script>
@@ -52,10 +53,44 @@
 
    (function(){
         window.addEventListener('load',init);
-        var c ;
         function init(){
-            c = document.getElementById('titleAngle');
-           
+            let c = document.getElementById('titleAngle');
+            let th = document.getElementsByTagName('th')[0];
+            let width = 300|| th.offsetWidth;
+            let height = 400|| th.offsetHeight;
+            c.style.cssText = `width:${width}px;height:${height}px`;
+          //  c.addEventListener('mousemove',mousemove);
+            th = null;
+            let ctx = c.getContext("2d");
+            let titles = sides(c);
+            draw(ctx,titles,width,height);
+        }
+
+        function draw(ctx,titles,width,height){
+          ctx.strokeStyle = "#dedede"
+            ctx.moveTo(0,0);
+            ctx.lineTo(width,height);
+            ctx.stroke();
+        }
+        
+        function mousemove(e){
+           console.log({x:e['offsetX'],y:e['offsetY']});
+        }
+
+        function sides(elem){
+           //let side = elem.attributes?[...elem.attributes]:[];
+           let index = [0,1,2,3];
+           let result = [];
+           for(item in index){
+             if(elem.getAttribute('data-'+item)=== null)return result;
+               result.push(elem.getAttribute('data-'+item));
+           }
+           return result;
+        }
+
+        function getStyle(ele,attr){
+          return ele.currentStyle?
+          ele.currentStyle[attr]:getComputedStyle(ele,'null')[attr];
         }
    })();
    
