@@ -15,7 +15,7 @@
         </tbody>
     </table>
 
-    <canvas id='titleAngle' pop='22' data-0='sun' data-1='李程欢'></canvas>
+    <!-- <canvas id='titleAngle' pop='22' data-0='sun' data-1='李程欢'></canvas> -->
 </body>
 </html>
 <script>
@@ -54,44 +54,58 @@
    (function(){
         window.addEventListener('load',init);
         function init(){
-            let c = document.getElementById('titleAngle');
+            let c = document.createElement('canvas');
             let th = document.getElementsByTagName('th')[0];
-            let width = 300|| th.offsetWidth;
-            let height = 400|| th.offsetHeight;
-            c.style.cssText = `width:${width}px;height:${height}px`;
+            c.width = th.offsetWidth;
+            c.height =  th.offsetHeight;
+         //   c.style.cssText = `width:${width}px;height:${height}px`;
           //  c.addEventListener('mousemove',mousemove);
-            th = null;
             let ctx = c.getContext("2d");
-            let titles = sides(c);
-            draw(ctx,titles,width,height);
+            let titles = sides(th);
+            draw(ctx,titles,c.width,c.height);
+            th.innerHTML="";
+            th.style.cssText = "padding:0;margin:0";
+            //------------------------------直接放入th中会有下部有偏移
+            let div = document.createElement('div');
+            div.appendChild(c);
+            div.style.cssText='width:'+c.width+'px;height:'+c.height+'px';
+            //------------------------------
+            th.appendChild(div);
+            th = null;
+            div = null;
         }
 
         function draw(ctx,titles,width,height){
-          ctx.strokeStyle = "#dedede"
+            ctx.strokeStyle = "#dedede"
             ctx.moveTo(0,0);
             ctx.lineTo(width,height);
             ctx.stroke();
+            ctx.font='14px 微软雅黑';
+            ctx.fillStyle ='rbg(26,26,26)';
+            ctx.fillText(titles[0],15,height-10);
+            ctx.fillText(titles[1],width/2,20);
         }
         
-        function mousemove(e){
-           console.log({x:e['offsetX'],y:e['offsetY']});
-        }
+        // function mousemove(e){
+        //    console.log({x:e['offsetX'],y:e['offsetY']});
+        // }
 
-        function sides(elem){
+        function sides(ele){
            //let side = elem.attributes?[...elem.attributes]:[];
-           let index = [0,1,2,3];
+           let index = 0;
            let result = [];
-           for(item in index){
-             if(elem.getAttribute('data-'+item)=== null)return result;
-               result.push(elem.getAttribute('data-'+item));
+           while(ele.getAttribute('data-'+index)!== null){
+              result.push(ele.getAttribute('data-'+index));
+              index++;
            }
+           result=['sun','李程欢'];
            return result;
         }
 
-        function getStyle(ele,attr){
-          return ele.currentStyle?
-          ele.currentStyle[attr]:getComputedStyle(ele,'null')[attr];
-        }
+        // function getStyle(ele,attr){
+        //   return ele.currentStyle?
+        //   ele.currentStyle[attr]:getComputedStyle(ele,'null')[attr];
+        // }
    })();
    
 </script>
@@ -101,7 +115,7 @@
     border-collapse: collapse;
   }
   .table>thead>tr>th,.table>tbody>tr>td{
-    padding: 15px;
+    padding: 15px 150px 15px 15px;
   }
   .table>thead>tr>th,.table>tbody>tr:not(:last-child)>td{
     border-bottom:solid 1px #dedede;
