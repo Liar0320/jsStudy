@@ -23,8 +23,12 @@
         let reader = new FileReader();
         reader.onload = function(e){
             if(e.target.readyState !==2) new Error('input file 缓存数据出错');
-            let workbook = XLSX.read(reader.result,{type:'binary'})
-            console.log(workbook);
+            let wb = XLSX.read(reader.result,{type:'binary'})
+            console.log(wb.Sheets[wb.SheetNames[0]]);
+            var jsonStr = JSON.stringify(XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]));//获取JSON字符串
+                var jsonObj = JSON.parse(jsonStr);//转化为JSON对象
+            console.log(wb,jsonObj);
+         //   console.log(getCollectionView(wb));
         }
         reader.readAsBinaryString(file);
     }

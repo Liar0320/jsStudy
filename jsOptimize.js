@@ -174,6 +174,25 @@ const $ = {};
         ele.currentStyle[attr]:getComputedStyle(ele,'null')[attr];
     }
 
+    function addClass(ele,addName){
+        if(addName.match(/ +/g) === null){
+            ele.classList.add(addName);
+        }else{
+            ele.className += ele.className === ''? addName:' '+addName;
+        }
+    }
+    
+    function removeClass(ele,addName){
+        if(addName.match(/ +/g) === null){
+            ele.classList.remove(addName);
+        }else{
+            let names = addName.split(/ +/);
+            for(let item of names){
+                ele.className.indexOf(item) ===-1||ele.classList.remove(item);
+            }
+        }
+    }
+
     function getAttributeNames(ele,attr){
         return ele.attributes;
     }
