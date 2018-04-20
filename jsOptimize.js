@@ -158,6 +158,19 @@ const $ = {};
         throw new Error('$.tirm()  参数必须为string')
     }
 
+    //两个数组合并，根据关键字去重，
+    //groupA  groupB  key
+    function combineData(groupA,groupB,key){
+        let
+        combineGroup = groupA.concat(groupB);
+        let tempData = []
+        return combineGroup.filter(function(x){
+            if(tempData.indexOf(x[key]) !==-1) return ;
+            tempData.push(x[key]);
+            return x;
+        })
+    }
+
     liarExtend(_$,{
         liarCopy,
         liarExtend,
