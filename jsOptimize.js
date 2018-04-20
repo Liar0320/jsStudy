@@ -199,7 +199,7 @@ const $ = {};
         if(addName.match(/ +/g) === null){
             ele.classList.remove(addName);
         }else{
-            let names = addName.split(/ +/);
+            let names = addName.split(/ +/g);
             for(let item of names){
                 ele.className.indexOf(item) ===-1||ele.classList.remove(item);
             }
