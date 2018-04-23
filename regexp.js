@@ -27,4 +27,6 @@
 
     var strTrim = '  asdsad   ';
     console.log('55'+strTrim+'55','55'+strTrim.replace(/^\s+|\s+$/g,'')+'55');
+
+    "translate3d(35px, 18px, 0px)".replace(/[^\d]+/g,',') //取反
 })();

@@ -159,7 +159,7 @@ const $ = {};
     }
 
     //两个数组合并，根据关键字去重，
-    //groupA  groupB  key
+    //groupA  groupB  以A为原型对b去重 如果值相同 取A；
     function combineData(groupA,groupB,key){
         let
         combineGroup = groupA.concat(groupB);
