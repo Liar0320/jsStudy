@@ -183,7 +183,9 @@
         var aa = {x:0,y:0}
         function boxMove(current,offset){
             let transform = current.style['transform'].replace(/[^\d]+/g,',').split(',')||[];
-            current.style['transform'] = 'translate3d('+(offset.x*1+(transform[2]||0)*1)+'px,'+(offset.y*1+(transform[3]||0)*1)+'px,0)'
+            current.style['transform'] = 'translate3d('+(offset.x*1+(transform[2]||0)*1)+'px,'+(offset.y*1+(transform[3]||0)*1)+'px,0)';
+            current = null;
+            console.log(dragDown);
         }
 
     // function boxMove(current,offset){
