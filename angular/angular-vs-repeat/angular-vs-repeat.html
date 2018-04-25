@@ -5,20 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>angular-vs-repeat</title>
+    <script src="./dist/angular.js"></script>
     <script src="./dist/angular-vs-repeat.js"></script>
+    <script src="./angular-vs-repeat.js"></script>
     <style>
         .table-content{
             height:600px;
+            overflow: auto;
+        }
+        .rows{
+            height:25px;
         }
     </style>
 </head>
 <body ng-app='app'>
-    <div ng-controller="repeat in rp">
-        <div vs-repeat="{scrollParent:'.table-content'}">
-            <div >
-
-            </div>
+    <div ng-controller="repeat as vm">
+        <div  class="table-content">
+                <div vs-repeat="{scrollParent:'.table-content'}">
+                        <div ng-repeat="rows in vm.tableRows " class="rows">
+                           {{rows.text}}------key:{{rows.key}}------{{$index}}
+                        </div>
+                    </div>
         </div>
+        <input type="number" ng-model="vm.addrows" placeholder="输入需要添加的行记录条数"> 
+        <button ng-click="vm.add()">增加</button>
     </div>
 </body>
 </html>
