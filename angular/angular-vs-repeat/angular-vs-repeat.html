@@ -20,6 +20,7 @@
 </head>
 <body ng-app='app'>
     <div ng-controller="repeat as vm">
+        <div>当rows记录大于200条时 启用分布式加载</div>
         <div  class="table-content">
                 <div vs-repeat="{scrollParent:'.table-content'}">
                         <div ng-repeat="rows in vm.tableRows " class="rows">

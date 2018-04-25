@@ -12,6 +12,9 @@ function _slicedToArray(arr, i) { if (Array.isArray(arr)) { return arr; } else i
  * Copyright Kamil Pękala http://github.com/kamilkp
  * Angular Virtual Scroll Repeat v2.0.9 2018/04/02
  */
+/*
+    2018.4.26       liar如果enable大于length  关闭开启分布式加载  -------------liar
+*/
 
 /* global console, setTimeout, module */
 (function (window, angular) {
@@ -176,7 +179,8 @@ function _slicedToArray(arr, i) { if (Array.isArray(arr)) { return arr; } else i
     horizontal: false,
     autoresize: false,
     hunked: false,
-    hunkSize: 0
+    hunkSize: 0,
+    enable:200
   };
   var vsRepeatModule = angular.module('vs-repeat', []).directive('vsRepeat', ['$compile', '$parse', function ($compile, $parse) {
     return {
@@ -415,6 +419,9 @@ function _slicedToArray(arr, i) { if (Array.isArray(arr)) { return arr; } else i
             $scope.vsRepeat.endIndex = 0;
 
             function scrollHandler() {
+              //liar如果enable大于length 滚轮事件注销
+              if(originalLength < defaultOptions.enable) return;
+              //liar如果enable大于length 滚轮事件注销  
               var pos = $scrollParent[0][scrollPos];
 
               if (updateInnerCollection()) {
@@ -609,6 +616,12 @@ function _slicedToArray(arr, i) { if (Array.isArray(arr)) { return arr; } else i
               }
 
               if (digestRequired) {
+                //liar如果enable大于length则不启用分布式
+                if(originalLength < defaultOptions.enable){
+                    $scope.vsRepeat.startIndex = 0;
+                    $scope.vsRepeat.endIndex = defaultOptions.enable;
+                }
+                 //liar ---end
                 $scope[collectionName] = originalCollection.slice($scope.vsRepeat.startIndex, $scope.vsRepeat.endIndex); // Emit the event
 
                 $scope.$emit('vsRepeatInnerCollectionUpdated', $scope.vsRepeat.startIndex, $scope.vsRepeat.endIndex, _prevStartIndex, _prevEndIndex);
