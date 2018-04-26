@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>angular-vs-repeat</title>
+    <script src="./dist/angular.min.js"></script>
+    <script src="./dist/angular-vs-repeat.min.js"></script>
+    <!--lib      xlsx -->
+    <script src='./dist/shim.js'></script>
+    <script src='./dist/xlsx.full.min.js'></script>
+    <!--end -->
+    <script src='./SheetJS-angular.js'></script>
+    <script src="./index.js"></script>
+    <style>
+        .table-content{
+            height:300px;
+            overflow: auto;
+        }
+        .rows{
+            height:25px;
+        }
+    </style>
+</head>
+<body ng-app='app'>
+    <div ng-controller="repeat as vm">
+        <div>当rows记录大于200条时 启用分布式加载</div>
+        <button ng-click="vm.export()">导出</button>
+        <div  class="table-content">
+                <div vs-repeat="{scrollParent:'.table-content'}">
+                        <div ng-repeat="rows in vm.tableRows " class="rows">
+                           {{rows.text}}------key:{{rows.key}}------{{$index}}
+                        </div>
+                    </div>
+        </div>
+        <input type="number" ng-model="vm.addrows" placeholder="输入需要添加的行记录条数"> 
+        <button ng-click="vm.add()">增加</button>
+        <input type="file" sheet-js-import-directive opts='vm.getExcel(excel)'>
+        <label >{{vm.excel}}</label>
+    </div>
+</body>
+</html>
