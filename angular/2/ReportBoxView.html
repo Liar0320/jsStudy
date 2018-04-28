@@ -1,0 +1,20 @@
+﻿<div ng-include="vm.type">
+
+</div>
+
+<script type="text/ng-template" id="boxView-Tabele">
+    <table class="table table-striped table_sim">
+        <thead>
+            <tr>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="row in vm.rows">
+                <td ng-repeat="head in vm.headers">
+                    {{row[head]}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</script>
