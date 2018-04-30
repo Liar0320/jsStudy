@@ -1,0 +1,1 @@
+start "liarServer" node liarServer.js
