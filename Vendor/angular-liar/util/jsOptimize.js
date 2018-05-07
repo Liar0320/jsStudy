@@ -3,7 +3,7 @@ const $ = {};
 ((_$)=>{
     ///基础类型判断
     const types=["Array","Boolean","Date","Number"
-    ,"Object","RegExp","HTMLDocument","String","Window"];
+    ,"Object","RegExp","HTMLDocument","String","Window",'Function'];
     types.reduce((index,item)=>{
         _$['is'+item] = (data)=>{
             if(Object.prototype.toString.call(data) === `[object ${item}]`) return true;

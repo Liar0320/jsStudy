@@ -37,8 +37,66 @@
                 }});
         routerHelp.createRouter(routerConfig);
     }]);
-    app.provider('ajaxService',['',()=>{
-        
+    app.service('ajaxService',['$http',function($http){
+        this.post = (url,params,resolve,reject,cache)=>{
+            $http({
+                method:'post',
+                url,
+                data:params,
+                cache,
+            }).then((response, status, headers, config)=>{
+                $.isFunction(resolve)?
+                        resolve(response, status, headers, config):
+                        console.warn('ajaxService callback is not function');
+            }).catch((response, status, headers, config)=>{
+                $.isFunction(reject)?
+                        reject(response, status, headers, config):
+                        console.warn('ajaxService callback is not function');
+            });
+        }
+        this.get = (url,params,resolve,reject,cache)=>{
+            $http({
+                method:'get',
+                url,
+                params,
+                cache,
+            }).success((response, status, headers, config)=>{
+                $.isFunction(resolve)?
+                        resolve(response, status, headers, config):
+                        console.warn('ajaxService callback is not function');
+            }).error((response, status, headers, config)=>{
+                $.isFunction(reject)?
+                        reject(response, status, headers, config):
+                        console.warn('ajaxService callback is not function');
+            });
+        }
+    }])
+    app.factory('httpInterceptor',['$q',($q)=>{
+        return{
+            request:(config)=>{
+                console.log('发送成功',config);
+                return config;
+            },
+            requestError:(err)=>{
+                console.log('发送失败',err);
+                return $q.reject(err);
+            },
+            response:(res)=>{
+                console.log('请求成功',res);
+                return res;
+            },
+            responseError:(err)=>{
+                console.log('请求失败',err);
+                return $q.reject(err);
+            }
+        }
+    }]);
+    app.config(['$httpProvider',($httpProvider)=>{
+        $httpProvider.interceptors.push('httpInterceptor');
+        $httpProvider.defaults.headers.post["Content-Type"] =
+        "application/x-www-form-urlencoded;charset=utf-8";
+         $httpProvider.defaults.headers.put["Content-Type"] =
+        "application/x-www-form-urlencoded;charset=utf-8";
     }])
     app.run(['$rootScope',($rootScope)=>{
         
