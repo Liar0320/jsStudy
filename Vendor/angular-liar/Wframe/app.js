@@ -2,7 +2,7 @@
 (function(angular){
     'use strict'
    var app = angular.module('app',['ui.router','oc.lazyLoad']);
-   app.config(function ($controllerProvider, $compileProvider, $filterProvider, $provide) {
+    app.config(function ($controllerProvider, $compileProvider, $filterProvider, $provide) {
         app.register = {
             controller: $controllerProvider.register,
             directive: $compileProvider.directive,
@@ -54,6 +54,23 @@
                         console.warn('ajaxService callback is not function');
             });
         }
+        function processData(data) {
+            if (data == null && data == {}) return {};
+            var processData = {};
+            if (angular.isObject(data)) {
+              angular.forEach(data, function(value, key) {
+                var obj = {};
+                if (!angular.isString(value)) {
+                  obj[key] = JSON.stringify(value);
+                } else {
+                  obj[key] = value;
+                }
+                angular.extend(processData, obj);
+              });
+            }
+            return processData;
+        }
+
         this.get = (url,params,resolve,reject,cache)=>{
             $http({
                 method:'get',
@@ -95,8 +112,56 @@
         $httpProvider.interceptors.push('httpInterceptor');
         $httpProvider.defaults.headers.post["Content-Type"] =
         "application/x-www-form-urlencoded;charset=utf-8";
+        $httpProvider.defaults.headers.put["Content-Type"] =
+        "application/x-www-form-urlencoded;charset=utf-8";
+        var param = function(obj) {
+            var query = "",
+                name,
+                value,
+                fullSubName,
+                subName,
+                subValue,
+                innerObj,
+                i;
+            for (name in obj) {
+                value = obj[name];
+                if (value instanceof Array) {
+                for (i = 0; i < value.length; ++i) {
+                    subValue = value[i];
+                    fullSubName = name + "[" + i + "]";
+                    innerObj = {};
+                    innerObj[fullSubName] = subValue;
+                    query += param(innerObj) + "&";
+                }
+                } else if (value instanceof Object) {
+                for (subName in value) {
+                    subValue = value[subName];
+                    fullSubName = name + "[" + subName + "]";
+                    innerObj = {};
+                    innerObj[fullSubName] = subValue;
+                    query += param(innerObj) + "&";
+                }
+                } else if (value !== undefined && value !== null) {
+                query +=
+                    encodeURIComponent(name) +
+                    "=" +
+                    encodeURIComponent(value) +
+                    "&";
+                }
+            }
+            return query.length ? query.substr(0, query.length - 1) : query;
+        };
+        $httpProvider.defaults.transformRequest = [
+            function(data) {
+                return angular.isObject(data) && String(data) !== "[object File]"
+                ? param(data)
+                : data;
+            }
+        ];
     }])
     app.run(['$rootScope',($rootScope)=>{
-        
+        $rootScope.app={
+            name:'liar',
+        }
     }])
 })(angular);

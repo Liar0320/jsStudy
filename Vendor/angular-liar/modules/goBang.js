@@ -36,7 +36,7 @@
                 ctx.lineTo(cellSize.width*i,client.y);
                 ctx.stroke();
             }
-            for(let i = 0;i<boardSize.rows;i++){
+            for(let i = 0;i<boardSize.rows+1;i++){
                 ctx.moveTo(0,cellSize.height*i);
                 ctx.lineTo(client.x,cellSize.height*i);
                 ctx.stroke();
