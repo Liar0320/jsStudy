@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>codemirror</title>
+    <script src='./dist/codemirror.js'></script>
+    <script src='./dist/module/javascript.js'></script>
+    <link rel="stylesheet" href="./dist/codemirror.css">
+</head>
+<body>
+    <textarea  id="code" cols="30" rows="10"></textarea>
+    <label for="opo" draggable="true">opopop</label>
+</body>
+<script>
+    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+        lineNumbers: true,     // 显示行数
+        indentUnit: 4,         // 缩进单位为4
+        styleActiveLine: true, // 当前行背景高亮
+        matchBrackets: true,   // 括号匹配
+        mode: 'text/javascript',     // HMTL混合模式
+        lineWrapping: true,    // 自动换行
+        theme: 'monokai',      // 使用monokai模版
+    });
+    editor.setValue('abaddasds/n');
+  //  editor.addModeClass = true;
+    editor.addOverlay('abaddasds/n');
+    editor.replaceSelection("插入的内容");
+    console.log( editor.getDoc());
+
+</script>
+</html>
