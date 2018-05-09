@@ -1,5 +1,20 @@
-<div >
+<div class="goBang">
     <h4>五子棋-----{{vm.name}}</h4>
-    <canvas class="decGoBang"></canvas>
-    <footer></footer>
+    <canvas class="decGoBang goBang-main"></canvas>
+    <!-- <footer></footer> -->
 </div>
+<style>
+    .goBang{
+        position: relative;
+    }
+    .goBang-main{
+        position: absolute;
+        left:0;
+        z-index:1;
+    }
+    .goBang-main{
+        position: absolute;
+        left:0;
+        z-index:0;
+    }
+</style>

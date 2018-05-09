@@ -12,35 +12,114 @@
 
     decGoBang.$inject = [];
     function decGoBang(){
-        return{
-            restrict:'C',
-            link:link,
+        const abstractBoard = handleBoard();
+        //抽象的棋盘操手
+        function handleBoard(){
+            const cellSize ={width:0,height:0}; //存储每一个单元格的大小
+            const boardLayout = []; //抽象的棋盘 二维数组
+            //设置抽象棋盘
+            function setBoardLayut(size,layout = boardLayout){
+                if(size.cols === undefined||size.rows ===undefined) 
+                            new Error(`棋盘格局不对,行数${size.rows},列数${size.cols}`)
+                for(let i = 0;i<size.cols;i++){
+                    layout[i] = [];
+                    for(let j=0;j<size.rows;j++){
+                        layout[i][j] = 0;
+                    }
+                }
+                console.log(layout,boardLayout)
+            };
+            //修改抽象棋盘
+            function modifyLayout(current,turn,layout = boardLayout){
+                layout[current[1]][current[0]] = turn;
+                console.log(layout,boardLayout)
+            }
+            return{
+                cellSize,
+                boardLayout,
+                setBoardLayut,
+                modifyLayout,
+            }
         }
 
-        function link(scope,ele,attrs){
+        function link(scope,element,attrs){
             console.log(attrs);
-            let client = {x:document.body.offsetWidth,y:document.body.offsetHeight};
+            let ele = element[0];
+            let client = {height:600,width:600};
             let boardSize = {cols:15,rows:15};
-            let cellSize = {width:client.x/boardSize.cols,height:client.y/boardSize.rows}
-            ele[0].setAttribute('width',client.x);
-            ele[0].setAttribute('height',client.y);
-            let ctx = ele[0].getContext('2d');
-            createBoard(ctx,boardSize,cellSize,client);
+            abstractBoard.cellSize.width = client.width/boardSize.cols;
+            abstractBoard.cellSize.height = client.height/boardSize.rows;
+            abstractBoard.setBoardLayut(boardSize);
+
+            initBoard(ele,client);
+            createBoard(ele,boardSize,abstractBoard.cellSize,client);
+        }
+
+        //初始化棋盘配置
+        function initBoard(ele,client){
+            ele.setAttribute('width',client.width);
+            ele.setAttribute('height',client.height);
+            ele.addEventListener('mousedown',mousedown);
+            ele.addEventListener('mouseup',mouseup);
+        }
+
+        //创建棋盘背景
+        function createBoard(ele,boardSize,cellSize,client){
+            let img = new Image();
+            img.src = "./assets/img/boardBg.jpg";
+            img.onload = ()=>{
+                let bgCanvas = document.createElement('canvas');
+                bgCanvas.className = 'goBang-bg';
+                bgCanvas.height = client.height;
+                bgCanvas.width = client.width;
+                let ctx = bgCanvas.getContext('2d');
+                ctx.drawImage(img,0,0);
+                ele.parentElement.appendChild(bgCanvas);
+                paintBoard(ctx,boardSize,cellSize,client);
+                bgCanvas = null;
+                ele = null;
+                img = null;
+            }
         }
 
         //绘制棋盘
-        function createBoard(ctx,boardSize,cellSize,client){
+        function paintBoard(ctx,boardSize,cellSize,client){
             ctx.strokeStyle = '#000';
-            for(let i = 0;i<boardSize.cols;i++){
+            for(let i = 0;i<boardSize.cols+1;i++){
                 ctx.moveTo(cellSize.width*i,0);
-                ctx.lineTo(cellSize.width*i,client.y);
+                ctx.lineTo(cellSize.width*i,client.height);
                 ctx.stroke();
             }
             for(let i = 0;i<boardSize.rows+1;i++){
                 ctx.moveTo(0,cellSize.height*i);
-                ctx.lineTo(client.x,cellSize.height*i);
+                ctx.lineTo(client.width,cellSize.height*i);
                 ctx.stroke();
             }
+        }
+
+        //增加棋盘监听事件mousedown
+        function mousedown(evnet){
+            console.log('down',evnet);
+        }
+
+        //增加棋盘监听事件mouseup
+        function mouseup(evnet){
+         //   console.log('up',evnet,calcRect(event.offsetX,event.offsetY,abstractBoard.cellSize));
+            abstractBoard.modifyLayout(calcRect(event.offsetX,event.offsetY,abstractBoard.cellSize),1);
+        }
+
+        //计算当前点击的棋盘位置
+        function calcRect(x,y,cellSize){
+            return [Math.floor(x/cellSize.width),Math.floor(y/cellSize.height)];
+        }
+
+        function validRect(x,y){
+
+        }
+
+        return{
+            restrict:'C',
+            link:link,
         }
     }
 })(angular);
