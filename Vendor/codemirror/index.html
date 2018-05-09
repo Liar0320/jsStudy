@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,8 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>codemirror</title>
     <script src='./dist/codemirror.js'></script>
-    <script src='./dist/module/javascript.js'></script>
+    <!-- <script src='./dist/module/javascript.js'></script> -->
+    <script src='./dist/module/liar.js'></script>
+    <script src='./dist/module/extend/show-hint.js'></script>
+    <!-- <script src='./dist/module/extend/sql-hint.js'></script> -->
+    <script src='./dist/module/extend/sql-reWrite.js'></script>
     <link rel="stylesheet" href="./dist/codemirror.css">
+    <link rel="stylesheet" href="./dist/module/extend/show-hint.css">
 </head>
 <body>
     <textarea  id="code" cols="30" rows="10"></textarea>
@@ -17,16 +22,20 @@
     var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
         lineNumbers: true,     // 显示行数
         indentUnit: 4,         // 缩进单位为4
-        styleActiveLine: true, // 当前行背景高亮
+     //   styleActiveLine: true, // 当前行背景高亮
         matchBrackets: true,   // 括号匹配
-        mode: 'text/javascript',     // HMTL混合模式
+        mode: 'liar',     // sql模式
         lineWrapping: true,    // 自动换行
-        theme: 'monokai',      // 使用monokai模版
+        extraKeys: {"Ctrl-Space": "autocomplete"},
+        // hintOptions: {tables: {
+        //     users: ["name", "score", "birthDate"],
+        //     countries: ["name", "population", "size"]
+        // }}
     });
+    editor.on('change', function() {  
+            editor.showHint(); //满足自动触发自动联想功能  
+    }); 
     editor.setValue('abaddasds/n');
-  //  editor.addModeClass = true;
-    editor.addOverlay('abaddasds/n');
-    editor.replaceSelection("插入的内容");
     console.log( editor.getDoc());
 
 </script>

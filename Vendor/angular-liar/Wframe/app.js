@@ -1,7 +1,7 @@
 
 (function(angular){
     'use strict'
-   var app = angular.module('app',['ui.router','oc.lazyLoad']);
+    var app = angular.module('app',['ui.router','oc.lazyLoad']);
     app.config(function ($controllerProvider, $compileProvider, $filterProvider, $provide) {
         app.register = {
             controller: $controllerProvider.register,
@@ -87,7 +87,7 @@
                         console.warn('ajaxService callback is not function');
             });
         }
-    }])
+    }]);
     app.factory('httpInterceptor',['$q',($q)=>{
         return{
             request:(config)=>{
@@ -158,10 +158,10 @@
                 : data;
             }
         ];
-    }])
+    }]);
     app.run(['$rootScope',($rootScope)=>{
         $rootScope.app={
             name:'liar',
         }
-    }])
+    }]);
 })(angular);
