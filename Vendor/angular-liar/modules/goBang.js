@@ -12,7 +12,19 @@
 
     decGoBang.$inject = [];
     function decGoBang(){
+
         const abstractBoard = handleBoard();
+
+        //画板
+        var ctxPiece;
+
+        //棋子
+        const pieceBlob={
+            black:new Blob(),
+            white:new Blob(),
+            current: 0 , //0代表黑色,1代表白色
+        } 
+
         //抽象的棋盘操手
         function handleBoard(){
             const cellSize ={width:0,height:0}; //存储每一个单元格的大小
@@ -24,7 +36,7 @@
                 for(let i = 0;i<size.cols;i++){
                     layout[i] = [];
                     for(let j=0;j<size.rows;j++){
-                        layout[i][j] = 0;
+                        layout[i][j] = false;
                     }
                 }
                 console.log(layout,boardLayout)
@@ -32,7 +44,7 @@
             //修改抽象棋盘
             function modifyLayout(current,turn,layout = boardLayout){
                 layout[current[1]][current[0]] = turn;
-                console.log(layout,boardLayout)
+                // console.log(layout,boardLayout)
             }
             return{
                 cellSize,
@@ -45,6 +57,7 @@
         function link(scope,element,attrs){
             console.log(attrs);
             let ele = element[0];
+            ctxPiece = ele.getContext('2d');
             let client = {height:600,width:600};
             let boardSize = {cols:15,rows:15};
             abstractBoard.cellSize.width = client.width/boardSize.cols;
@@ -53,6 +66,7 @@
 
             initBoard(ele,client);
             createBoard(ele,boardSize,abstractBoard.cellSize,client);
+            getPiece(pieceBlob);
         }
 
         //初始化棋盘配置
@@ -72,10 +86,10 @@
                 bgCanvas.className = 'goBang-bg';
                 bgCanvas.height = client.height;
                 bgCanvas.width = client.width;
-                let ctx = bgCanvas.getContext('2d');
-                ctx.drawImage(img,0,0);
+                let bgCtx = bgCanvas.getContext('2d');
+                bgCtx.drawImage(img,0,0);
                 ele.parentElement.appendChild(bgCanvas);
-                paintBoard(ctx,boardSize,cellSize,client);
+                paintBoard(bgCtx,boardSize,cellSize,client);
                 bgCanvas = null;
                 ele = null;
                 img = null;
@@ -105,7 +119,10 @@
         //增加棋盘监听事件mouseup
         function mouseup(evnet){
          //   console.log('up',evnet,calcRect(event.offsetX,event.offsetY,abstractBoard.cellSize));
-            abstractBoard.modifyLayout(calcRect(event.offsetX,event.offsetY,abstractBoard.cellSize),1);
+            let current = calcRect(event.offsetX,event.offsetY,abstractBoard.cellSize);
+            if(!validRect(abstractBoard.boardLayout,current)) return;
+            abstractBoard.modifyLayout(current,pieceBlob.current);
+            drawPiece(ctxPiece,current,abstractBoard.cellSize,pieceBlob);
         }
 
         //计算当前点击的棋盘位置
@@ -113,8 +130,31 @@
             return [Math.floor(x/cellSize.width),Math.floor(y/cellSize.height)];
         }
 
-        function validRect(x,y){
+        //判断五子棋是否结束的算法
+        function validRect(boardLayout,current){
+            if(boardLayout[current[1]][current[0]] !== false) return false;
 
+            return true;
+        }
+
+        //获取初始化五子棋
+        function getPiece(piece){
+            let imgBlack = new Image();
+            imgBlack.src = './assets/img/black.png';
+            imgBlack.onload = function(){
+                piece.black = imgBlack;
+            }; 
+            let imgWhite = new Image();
+            imgWhite.src = './assets/img/white.png';
+            imgWhite.onload = function(){
+                piece.white = imgWhite;
+            }; 
+        }
+
+        //设置当前棋子
+        function drawPiece(ctx,current,cellSize,piece){
+            let turn = (++piece.current)%2 === 0? 'black':'white';
+            ctx.drawImage(piece[turn],current[0]*cellSize.width,current[1]*cellSize.height);         
         }
 
         return{
