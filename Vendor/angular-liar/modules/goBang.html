@@ -1,6 +1,7 @@
 <div class="goBang">
     <h4>五子棋-----{{vm.name}}</h4>
     <canvas class="decGoBang goBang-main"></canvas>
+    <button ng-click="clearPiece()" style="position: absolute">上一步</button>
     <!-- <footer></footer> -->
 </div>
 <style>
@@ -9,6 +10,9 @@
     }
     .goBang-main{
         position: absolute;
+        display: block;
+        margin: 0;
+        padding: 0;
         left:0;
         z-index:1;
     }

@@ -63,6 +63,7 @@ const $ = {};
             let destination = undefined;
             return copyRecurse(destination,source);
         }
+        return destination;
     }
 
     //对象的扩展

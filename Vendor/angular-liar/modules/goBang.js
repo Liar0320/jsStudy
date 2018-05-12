@@ -1,27 +1,28 @@
-(function(angular) {
+(function(angular,window) {
   "use strict";
   angular
     .module("app.goBang", [])
     .controller("goBangCtrl", goBangCtrl)
     .directive("decGoBang", decGoBang);
-  goBangCtrl.$inject = [];
-  function goBangCtrl() {
+  goBangCtrl.$inject = ['$scope'];
+  function goBangCtrl($scope) {
     const vm = this;
-    console.log(vm);
     vm.name = "goBang";
+    $scope.name = 'goBang';
   }
 
   decGoBang.$inject = [];
   function decGoBang() {
+    //配置
     let conf = {
-        height:600,
-        width:600,
+        // height:window.screen.availHeight>1200?600:window.screen.availHeight,
+        // width:window.screen.availWidth>1200?600:window.screen.availWidth,
+        height:document.documentElement.clientWidth>1200?600:document.documentElement.clientHeight,
+        width:document.documentElement.clientWidth>1200?600:document.documentElement.clientWidth,
     }
     const abstractBoard = handleBoard();
-
     //画板
     var ctxPiece;
-
     //棋子
     const pieceBlob = {
       black: new Blob(),
@@ -31,10 +32,30 @@
 
     //抽象的棋盘操手
     function handleBoard() {
-      const cellSize = { width: 0, height: 0 }; //存储每一个单元格的大小
-      const boardLayout = []; //抽象的棋盘 二维数组
+      //cell的多少
+      const cellCount= {
+        cols:15,
+        rows:15
+      }; 
+      //存储每一个单元格的大小
+      const cellSize = { width: 0, height: 0 }; 
+      //抽象的棋盘 二维数组
+      const boardLayout = []; 
+      //存储棋盘的步数对应的落子位置 包含参数 第一步 黑子 位置 ， step turn  pois
+      const sortBoardStep=[];
+      //设置cell的多少
+      function setCellCount(cols=cellCount.cols,rows=cellCount.rows){
+        cellCount.cols = cols;
+        cellCount.rows = rows;
+        setBoardLayut(cellCount);
+      }
+      //设置每个单元格的宽高
+      function setCellSize(client){
+              cellSize.width = client.width / cellCount.cols;
+              cellSize.height = client.height / cellCount.rows;
+      }
       //设置抽象棋盘
-      function setBoardLayut(size, layout = boardLayout) {
+      function setBoardLayut(size = cellCount, layout = boardLayout) {
         if (size.cols === undefined || size.rows === undefined)
           new Error(`棋盘格局不对,行数${size.rows},列数${size.cols}`);
         for (let i = 0; i < size.cols; i++) {
@@ -48,13 +69,28 @@
       //修改抽象棋盘
       function modifyLayout(current, turn, layout = boardLayout) {
         layout[current[1]][current[0]] = turn;
+        if(turn)setBoardStep(current, turn, $.liarCopy([],layout));
         // console.log(layout,boardLayout)
       }
+      //存储棋盘的步数对应的落子位置 包含参数 第一步 黑子 位置 ， step turn  pois
+      function setBoardStep(current, turn, layout = boardLayout){
+        sortBoardStep.push({
+            current,
+            turn,
+            layout
+        });
+      }
+
       return {
+        cellCount,
         cellSize,
         boardLayout,
+        sortBoardStep,
+        setCellCount,
+        setCellSize,
         setBoardLayut,
-        modifyLayout
+        modifyLayout,
+        setBoardStep
       };
     }
 
@@ -62,23 +98,26 @@
       console.log(attrs);
       let ele = element[0];
       ctxPiece = ele.getContext("2d");
-      let client = { height: conf.height, width: conf.width };
-      let boardSize = { cols: 15, rows: 15 };
-      abstractBoard.cellSize.width = client.width / boardSize.cols;
-      abstractBoard.cellSize.height = client.height / boardSize.rows;
-      abstractBoard.setBoardLayut(boardSize);
 
-      initBoard(ele, client);
-      createBoard(ele, boardSize, abstractBoard.cellSize, client);
+      initAbstractBoard(conf);
+      initBoard(ele,conf);
+      createBoard(ele, abstractBoard.cellCount, abstractBoard.cellSize, conf);
       getPiece(pieceBlob);
+      scope.clearPiece = clearPiece;
     }
 
     //初始化棋盘配置
-    function initBoard(ele, client) {
-      ele.setAttribute("width", client.width);
-      ele.setAttribute("height", client.height);
+    function initBoard(ele,client) {
+      ele.width = client.width;
+      ele.height = client.height;
       ele.addEventListener("mousedown", mousedown);
       ele.addEventListener("mouseup", mouseup);
+    }
+
+    //初始化抽象棋盘
+    function initAbstractBoard(conf){
+       abstractBoard.setCellCount();
+       abstractBoard.setCellSize(conf);
     }
 
     //创建棋盘背景
@@ -122,7 +161,6 @@
 
     //增加棋盘监听事件mouseup
     function mouseup(evnet) {
-      //   console.log('up',evnet,calcRect(event.offsetX,event.offsetY,abstractBoard.cellSize));
       let current = calcRect(
         event.offsetX,
         event.offsetY,
@@ -130,12 +168,12 @@
       );
       if (abstractBoard.boardLayout[current[1]][current[0]] !== false) return false;  
       let turn = ++pieceBlob.current % 2 === 0 ? "black" : "white"; 
-      abstractBoard.modifyLayout(current, turn);
       drawPiece(ctxPiece, current, abstractBoard.cellSize, pieceBlob,turn);
       if (validRect(abstractBoard.boardLayout, current,turn)){
           alert(`游戏结束.${turn}方胜利`);
-          clearCanvas();
+          gameControl();
       }
+      console.log(abstractBoard);
     }
 
     //计算当前点击的棋盘位置
@@ -192,24 +230,55 @@
 
     //设置当前棋子
     function drawPiece(ctx, current, cellSize, piece,turn) {
+      abstractBoard.modifyLayout(current, turn);
       ctx.drawImage(
         piece[turn],
         current[0] * cellSize.width,
         current[1] * cellSize.height
       );
     }
+
+    //返回上一步
+    function clearPiece() {
+      if(pieceBlob.current === 0) return alert('没有上一步');
+      let step = abstractBoard.sortBoardStep[--pieceBlob.current];
+      abstractBoard.sortBoardStep.pop();
+      abstractBoard.modifyLayout(step.current,false);
+      ctxPiece.clearRect(
+            step.current[0] * abstractBoard.cellSize.width,
+            step.current[1] * abstractBoard.cellSize.height,
+            abstractBoard.cellSize.width,
+            abstractBoard.cellSize.height
+          );
+    }
+
+     //返回上一步
+    function saveBoard() {
+      if(pieceBlob.current === 0) return alert('没有上一步');
+      let step = abstractBoard.sortBoardStep[--pieceBlob.current];
+      abstractBoard.sortBoardStep.pop();
+      abstractBoard.modifyLayout(step.current,false);
+      ctxPiece.clearRect(
+            step.current[0] * abstractBoard.cellSize.width,
+            step.current[1] * abstractBoard.cellSize.height,
+            abstractBoard.cellSize.width,
+            abstractBoard.cellSize.height
+          );
+    }
     
-    //使用clearRect方法清空画布
-    function clearCanvas(){
+    //游戏的开始和重启
+    function gameControl(){
         ctxPiece.clearRect(0,0,conf.width,conf.height);
+        initAbstractBoard(conf);
     }
 
     return {
       restrict: "C",
+      //scope:true,
       link: link
     };
   }
-})(angular);
+})(angular,window);
 
 // current当前位置，turn当前方，boardLayout当前棋盘布局
 // function countResult(current,turn,boardLayout){
