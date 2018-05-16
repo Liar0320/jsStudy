@@ -6,3 +6,16 @@
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 
 http://ghmagical.com/article/page/id/nXCnaSLsuyWd
+
+
+https://stackoverflow.com/questions/3395359/difference-between-src-and-href     SRC和HREF之间的区别
+
+
+javaScript 大纲
+    因为是一门解释性语言,执行速度没有其他编译性语言快，但是不存在跨平台;
+
+所有的浏览器都起源于Mosaic,现在流行的浏览器内核，
+    Chrome:Webkit,
+    Safari:Webkit,
+    IE:Trident,
+    Firefox:gecko,
