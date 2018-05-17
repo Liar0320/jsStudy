@@ -206,6 +206,26 @@ const $ = {};
         }
     }
 
+    //window.getComputedStyle(ele).height     (内容高度);  height
+    //clientHeight                                          (内容高度 + 内边距*2); height + padding
+    //offsetHeight                                          (内容高度 + 内边距*2 +边框*2)  height + padding + border
+    //ele node节点  如果 bol为true则获取 加上margin值得 宽度;
+    function width(ele,bol){
+        let width = bol?ele.offsetWidth + 
+                        getStyle(ele,'margin-right').match(/\d+/)*1 +
+                        getStyle(ele,'margin-left').match(/\d+/)*1  :
+                    ele.offsetWidth;
+        return width;
+    };
+
+    function height(ele,bol){
+        let height = bol?ele.offsetHeight + 
+                        getStyle(ele,'margin-top').match(/\d+/)*1 +
+                        getStyle(ele,'margin-bottom').match(/\d+/)*1  :
+                    ele.offsetHeight;
+        return height;
+    }
+
     function getAttributeNames(ele,attr){
         return ele.attributes;
     }
