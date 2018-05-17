@@ -10,7 +10,7 @@ http://ghmagical.com/article/page/id/nXCnaSLsuyWd
 
 https://stackoverflow.com/questions/3395359/difference-between-src-and-href     SRC和HREF之间的区别
 
-
+https://developer.mozilla.org/zh-CN/docs/Web/API/GlobalEventHandlers
 javaScript 大纲
     因为是一门解释性语言,执行速度没有其他编译性语言快，但是不存在跨平台;
 
