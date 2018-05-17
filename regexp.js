@@ -34,3 +34,4 @@
 
     "translate3d(35px, 18px, 0px)".replace(/[^\d]+/g,',') //取反
 })();
+window.location.search.match(/[^&|?]+/g).map(function(item,index){var obj = item.match(/[^=]+/g);return {[obj[0]]:obj[1]}})
