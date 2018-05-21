@@ -1,6 +1,17 @@
 <div >
-   <a ui-sref="goBang">goBang</a>
+   <!-- <a ui-sref="goBang">goBang</a>
    <label for="url"></label><input type="text" name='url' ng-model="vm.url">
    <label for="data"></label><input type="text" name='data' ng-model='vm.data'>
-   <button ng-click='vm.send()'>发送</button>
+   <button ng-click='vm.send()'>发送</button> -->
+   <form >
+        <fieldset>
+            <label for="id">账号</label>
+            <input type="text" ng-model="vm.form.id">
+        </fieldset>
+        <fieldset>
+            <label for="password">密码</label>
+            <input type="password" ng-model="vm.form.password">
+        </fieldset>
+       <button ng-click="vm.login()">登录</button>
+   </form>
 </div>
