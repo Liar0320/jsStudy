@@ -11,11 +11,12 @@ function login(router,app,jwt){
             if(!result||result.recordset.length !== 1){
                 res.send(false);
             } else{
+                if(result.recordset[0]['password']+'' !== receive['password']+'') return res.send({bool:false})
                 var token = jwt.sign(receive,app.get('superSecret'),{
                     expiresIn:60*60*24
                 });
                 res.send({
-                    bool:result.recordset[0]['password']+'' === receive['password']+'',
+                    bool:true,
                     token
                 });
             }
