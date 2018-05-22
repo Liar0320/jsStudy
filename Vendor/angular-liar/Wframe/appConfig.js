@@ -15,5 +15,5 @@
     ]
 
 
-    angular.module('app').constant('routerConfig',routerConfig)
+    angular.module('app').constant('routerConfig',routerConfig);
 })(angular);

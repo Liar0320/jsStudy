@@ -37,6 +37,22 @@
                 }});
         routerHelp.createRouter(routerConfig);
     }]);
+    app.factory('sessionFactory',['$window',$window=>{
+        return{
+            set:(key,value)=>{
+                $window.sessionStorage[key] = value;
+            },
+            get:(key,defaultValue)=>{
+                return $window.sessionStorage[key]||defaultValue;
+            },
+            setObject:(key,value)=>{
+                $window.sessionStorage[key] = JSON.stringify(value);
+            },
+            getObject:(key)=>{
+                return JSON.parse($window.sessionStorage(key)||'{}')
+            }
+        }
+    }])
     app.service('ajaxService',['$http',function($http){
         this.post = (url,params,resolve,reject,cache)=>{
             $http({
@@ -88,9 +104,10 @@
             });
         }
     }]);
-    app.factory('httpInterceptor',['$q',($q)=>{
+    app.factory('httpInterceptor',['$q','sessionFactory',($q,sessionFactory)=>{
         return{
             request:(config)=>{
+                if(sessionFactory.get('UserLogin')) config.headers['x-access-token'] = sessionFactory.get('UserLogin');
                 console.log('发送成功',config);
                 return config;
             },
@@ -159,6 +176,22 @@
             }
         ];
     }]);
+    app.config(['$provide',$provide=>{
+        $provide.decorator("$state", ['$delegate',$delegate=>{
+            // let state = {};
+            // angular.copy($delegate, state);
+            // $delegate.transitionTo = to=>{
+            //     console.log(to);
+            //     state.transitionTo.apply(null, arguments);
+            // }
+            return  $delegate;
+        }])
+    }]);
+    app.decorator('$state',($delegate)=>{
+        console.log($delegate);
+    })
+
+
     app.run(['$rootScope',($rootScope)=>{
         $rootScope.app={
             name:'liar',

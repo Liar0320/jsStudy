@@ -12,3 +12,6 @@ https://www.jianshu.com/p/153807857292
 
 AngularJS进阶(十七)在AngularJS应用中实现微信认证授权遇到的坑
 https://blog.csdn.net/sunhuaqiang1/article/details/50188605
+
+sessionStorage 、localStorage 和 cookie
+//https://blog.csdn.net/sinat_31057219/article/details/70229566
