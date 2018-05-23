@@ -15,3 +15,6 @@ https://blog.csdn.net/sunhuaqiang1/article/details/50188605
 
 sessionStorage 、localStorage 和 cookie
 //https://blog.csdn.net/sinat_31057219/article/details/70229566
+
+ui-router 1.0以上的 $stateChangeStart  ---2018.5.24
+//https://www.cnblogs.com/mamimi/p/7809475.html

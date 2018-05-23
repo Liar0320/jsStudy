@@ -67,7 +67,7 @@
             }).catch((response, status, headers, config)=>{
                 $.isFunction(reject)?
                         reject(response, status, headers, config):
-                        console.warn('ajaxService callback is not function');
+                        console.error(response);
             });
         }
         function processData(data) {
@@ -187,14 +187,28 @@
             return  $delegate;
         }])
     }]);
-    app.decorator('$state',($delegate)=>{
-        console.log($delegate);
-    })
+    // app.decorator('$state',($delegate)=>{
+    //     console.log($delegate);
+    // })
 
 
-    app.run(['$rootScope',($rootScope)=>{
+    app.run(['$rootScope','$transitions','sessionFactory',($rootScope,$transitions,sessionFactory)=>{
         $rootScope.app={
             name:'liar',
-        }
+        };
+                //https://www.cnblogs.com/mamimi/p/7809475.html
+        // $transitions.onBefore({},(transition)=>{
+        //     let stateName = transition.to().name;
+        //     if(stateName!=='login'&&sessionFactory.get('UserLogin')) return transition.router.stateService.target('login');
+        //     console.log(transition);
+        //     return transition;
+        //  })
+        $transitions.onStart({}, function(transition) {
+            let stateName = transition.to().name;
+            if(stateName!=='login'&&!sessionFactory.get('UserLogin')) return transition.router.stateService.target('login');
+            return transition;
+        })
+
+        console.log($rootScope);
     }]);
 })(angular);

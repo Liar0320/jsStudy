@@ -18,9 +18,12 @@
                     console.log('success',data);
                     if(data.bool){
                          sessionFactory.set('UserLogin',data.token);
-                         ajaxService.post('/userInfo','',function(data){
-                            console.log(data);
-                         })
+                        //  ajaxService.post('/userInfo','',function(data){
+                        //     console.log(data);
+                        //  })
+                        $state.go('goBang',{});
+                    }else{
+                        sessionFactory.set('UserLogin','');
                     }
                 })
         }
