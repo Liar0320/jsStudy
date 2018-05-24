@@ -19,3 +19,19 @@ javaScript 大纲
     Safari:Webkit,
     IE:Trident,
     Firefox:gecko,
+
+js的六种基本类型  Number String Boolean Null Undefined Object
+显示类型转化
+Number类型 NaN解释 not a number | Number('1') = 1; Number(true) = 1; Number(false) = 0; Number(null) = 0;  Number(undefined) = NaN;   Number('abc') = NaN ;
+String类型 String(1)='1';
+Boolead类型 Boolean(0) = false; Boolean(undefined) = false; Boolean('') = false;
+
+隐式类型转换
+Number类型 
+parseInt:: parseInt('123') = 123; parseInt('123px') = 123;  parseInt(string, radix);parseInt('101', 2) = 5;//radix进制 将string按照radix转化为十进制
+parsefloat:: parseInt('123.111pasdas') = 123.111;
+
+String类型
+
+Boolead类型  == 两边类型进行隐式转换    === 不进行转化
+2>1 = true ; 3>2>1 = false;--->3>2=ture ----> true>1 false; 3>2==1 = true;   3>2===1 = false;   
