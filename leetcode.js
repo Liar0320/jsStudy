@@ -109,4 +109,68 @@ var intersect = function(nums1, nums2) {
       }
       return temp;
 };
-  
+
+//斐波那契数列
+// 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233，377，610，987，1597，2584，4181，6765，10946，17711，28657，46368
+//fibonSequence(n) = fibonSequence(n-1) + fibonSequence(n-2);
+function fibonSequence(n){
+    if(n===0||n===1) return 1;
+    return fibonSequence(n-1) + fibonSequence(n-2);
+} 
+
+//要求输入一串低于十位的数字,输出这串数字的中文大写。
+//eg: input 10000   output:壹万;
+//eg: input 1001010 output:壹佰万壹仟零壹拾;
+//千位 没有则加零
+//分析从最大位开始向下读取,碰到零则继续下一位(千位读零);
+function localismCash(money){
+    const REG = /^0+$/g
+    money += '';
+    let cashPronun = '';
+    for(let i =0;i<money.length;i++){
+        let number = money.charAt(i);
+        cashPronun += +number||(money.length-i===4&&(!REG.test(money.substring(i,money.length))))?transferZero(+number):'';
+        cashPronun += +number||(money.length-i===1)?transfer(money.length-i):'';
+    }
+    function transfer(digit){
+        switch (digit) {
+            case 1: return '元';
+            case 2: return '拾';     
+            case 3: return '佰';   
+            case 4: return '仟';     
+            case 5: return '万';  
+            case 6: return '拾万';   
+            case 7: return '佰万';   
+            case 8: return '仟万';    
+            case 9: return '亿'; 
+            case 10: return '拾亿'; 
+            default:  
+        }
+    }
+
+    function transferZero(number){
+        switch (number) {
+            case 0: return '零';
+            case 1: return '壹';
+            case 2: return '贰';     
+            case 3: return '叁';   
+            case 4: return '肆';     
+            case 5: return '伍';   
+            case 6: return '陆';   
+            case 7: return '柒';   
+            case 8: return '捌';   
+            case 9: return '玖';   
+            default:  new Error("错误数值");
+        }
+    }
+
+    return cashPronun;
+}
+
+
+
+
+
+
+
+

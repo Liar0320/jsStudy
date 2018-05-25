@@ -7,23 +7,6 @@
 https://segmentfault.com/a/1190000004322487       你真的会使用XMLHttpRequest吗？
 https://www.cnblogs.com/heyuquan/archive/2014/07/17/bubble-quick-sort.html  排序可参考
 */
-(function(){
-    var o = {a:1,b:2};
-    function del(item){
-        console.log(o);
-        item.a ='改变';
-        console.log(o);
-    }
-   del(o);
-   function del2 (item){
-        console.log(o);
-        item =null;
-        console.log(o);
-    }
-    del2(o)
-})();
-
-
 const $ = {};
 ///判断 return true or false
 ((_$)=>{
@@ -233,3 +216,4 @@ const $ = {};
 
 })($);
 console.log($);
+
