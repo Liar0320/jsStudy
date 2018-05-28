@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>执行期上下文</title>
+</head>
+<body>
+    
+</body>
+<script>
+    ///函数预编译阶段
+        //创建ao对象
+        //形参的声明,
+        //实参和形参的统一
+        //函数的声明
+
+    function testa(a){
+        console.log(a);
+        a = 1;
+        console.log(a);
+    }
+    testa(9);
+    //-----------------------预编译----------------------------------------------------------------------||    -----执行函数------
+    //创建 AO{          AO{                                 AO{                       AO{                       AO{
+    //        ---->        a:undefined; //形参声明 ---->          a:9; //实参统一 ---->      a:9;//函数声明            a:9;  //执行函数
+    //}                 }                                    }                         }                         }
+
+    ///所以 结果应该是   9  --->  1;
+
+    function testb(a){
+        console.log(a);
+        a = 1;
+        console.log(a);
+    }
+    testb();
+    //创建 AO{          AO{                                 AO{                                 AO{                             AO{ 
+    //        ---->        a:undefined //形参声明 ---->          a:undefined //实参统一 ---->         a:undefined;//函数声明           a:1;  //执行函数
+    //}                 }                                    }                                   }                               }
+
+    ///所以 结果应该是   undefined --->  1;
+
+
+    function testc(a){
+        console.log(a);
+        a = 1;
+        console.log(a);
+        function a(){};
+        console.log(a);
+        var b = 5;
+    }
+    testc(9);
+    //创建 AO{          AO{                                 AO{                                AO{                
+    //        ---->        a:undefined //形参声明 ---->          a:9;         //实参统一 ---->      a:functin a(){}       //函数声明 ---->  执行函数
+    //                     b:undefined                          b:undefined                        b:undefined
+    //}                 }                                    }                                   }
+
+    ///所以 结果应该是   function a(){} --->  1 ------> 1
+
+      function testc(a){
+        console.log(a);
+        a = 1;
+        console.log(a);
+        function a(){}
+        console.log(a);
+        console.log(b);
+        var b = 5;
+        console.log(b);
+        b = function b(){};
+        console.log(b);
+    }
+    testc(9);    
+     ///所以 结果应该是  function a(){}  --->  1 ------> 1 ---->undefind----> 5 -----> function b(){};
+
+      function testc(a){
+          a = 0;
+          var a;
+          return a;
+          function a(){};
+    }
+    testc();
+    ///所以 结果应该是   function a(){}  --->  undefined ------>  0 
+
+
+</script>
+</html>
