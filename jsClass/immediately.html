@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>js立即执行函数解析</title>
+</head>
+<body>
+    <p>
+        ():js执行符号,
+        js中只有表达式才能被执行，
+    </p>
+</body>
+<script>
+    //立执行函数  官网给出的两种方式
+    (function(){    console.log(1);}());  //W3C 推荐
+    (function(){    console.log(1);})() 
+
+    //立执行函数解析 其实都是讲函数声明转成表达式去执行，
+    + function (){
+        console.log(1);
+    }()  
+    - function (){
+        console.log(1);
+    }()  
+    ! function (){
+        console.log(1);
+    }() 
+
+    //拓展
+
+    function test(a,b,c){                  // function test(a,b,c){
+        console.log(a,b,c);  //-------->   //    console.log(a,b,c); 
+    }(1,2,3)                               //  }
+                                           //(1,2,3)       函数解析时 (1,2,3)可以读写成表达式 所以函数解析成函数表达式  不是去执行test函数
+
+</script>
+</html>

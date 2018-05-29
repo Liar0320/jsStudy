@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>函数作用域链</title>
+</head>
+<body>   
+    <img src="./函数作用域链.png" alt="函数作用域链" style="height:500px;width: 700px">
+</body>
+<script>
+    function a(){
+        function b(){
+            var b = 234;
+        }
+        var a =123;
+        b();
+        console.log(a);
+    }
+    a();
+    var golb = 100;
+    //a defiend ----> a.[[scope]] ----> 0 : GO{}
+
+    //a doing   ----> a.[[scope]] ----> 0 : AO{}
+    //                                  1 : GO{}
+
+    //b defiend ----> b.[[scope]] ----> 0 : AO{}
+    //                                  0 : GO{}
+
+    //b doing   ----> b.[[scope]] ----> 0 : BO{}
+    //                                  1 : AO{}
+    //                                  2 : GO{}
+</script>
+</html>
