@@ -20,7 +20,7 @@
         height:document.documentElement.clientWidth>1200?600:document.documentElement.clientHeight,
         width:document.documentElement.clientWidth>1200?600:document.documentElement.clientWidth,
     }
-    const abstractBoard = handleBoard();
+    const abstractBoard = new HandleBoard();
     //画板
     var ctxPiece;
     //棋子
@@ -31,31 +31,31 @@
     };
 
     //抽象的棋盘操手
-    function handleBoard() {
+    function HandleBoard() {
       //cell的多少
-      const cellCount= {
+      this.cellCount= {
         cols:15,
         rows:15
       }; 
       //存储每一个单元格的大小
-      const cellSize = { width: 0, height: 0 }; 
+      this.cellSize = { width: 0, height: 0 }; 
       //抽象的棋盘 二维数组
-      const boardLayout = []; 
+      this.boardLayout = []; 
       //存储棋盘的步数对应的落子位置 包含参数 第一步 黑子 位置 ， step turn  pois
-      const sortBoardStep=[];
+      this.sortBoardStep=[];
       //设置cell的多少
-      function setCellCount(cols=cellCount.cols,rows=cellCount.rows){
+      this.setCellCount = function(cols=cellCount.cols,rows=cellCount.rows){
         cellCount.cols = cols;
         cellCount.rows = rows;
         setBoardLayut(cellCount);
       }
       //设置每个单元格的宽高
-      function setCellSize(client){
+      this.setCellSize = function(client){
               cellSize.width = client.width / cellCount.cols;
               cellSize.height = client.height / cellCount.rows;
       }
       //设置抽象棋盘
-      function setBoardLayut(size = cellCount, layout = boardLayout) {
+      this.setBoardLayut = function(size = cellCount, layout = boardLayout) {
         if (size.cols === undefined || size.rows === undefined)
           new Error(`棋盘格局不对,行数${size.rows},列数${size.cols}`);
         for (let i = 0; i < size.cols; i++) {
@@ -67,32 +67,32 @@
         console.log(layout, boardLayout);
       }
       //修改抽象棋盘
-      function modifyLayout(current, turn, layout = boardLayout) {
+      this.modifyLayout = function(current, turn, layout = boardLayout) {
         layout[current[1]][current[0]] = turn;
         if(turn)setBoardStep(current, turn, $.liarCopy([],layout));
         // console.log(layout,boardLayout)
       }
       //存储棋盘的步数对应的落子位置 包含参数 第一步 黑子 位置 ， step turn  pois
-      function setBoardStep(current, turn, layout = boardLayout){
+      this.setBoardStep = function(current, turn, layout = boardLayout){
         sortBoardStep.push({
             current,
             turn,
             layout
         });
       }
-
-      return {
-        cellCount,
-        cellSize,
-        boardLayout,
-        sortBoardStep,
-        setCellCount,
-        setCellSize,
-        setBoardLayut,
-        modifyLayout,
-        setBoardStep
-      };
     }
+
+    // return {
+    //   cellCount,
+    //   cellSize,
+    //   boardLayout,
+    //   sortBoardStep,
+    //   setCellCount,
+    //   setCellSize,
+    //   setBoardLayut,
+    //   modifyLayout,
+    //   setBoardStep
+    // };
 
     function link(scope, element, attrs) {
       console.log(attrs);
