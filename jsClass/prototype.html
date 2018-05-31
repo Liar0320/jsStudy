@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>原型链</title>
+</head>
+<body>
+    
+</body>
+<script>
+    
+    function Father(){
+
+    }
+    var father = new Father();
+    console.log(father.b,father.__proto__);
+
+    //解析其实这里 将
+     
+    // function Father(){
+    //    this = {
+    //        __proto__ = Father.prototype,
+    //    }
+    //   return this;
+    // }
+    // var father = new Father();
+    //隐式将__proto__链接到Father.prototype
+
+/*
+    Father.prototype = {b:2}
+    function Father(){
+
+    }
+    var father = new Father();
+    console.log(father.b,father.__proto__);
+*/
+
+    
+    // Father.prototype = {b:2}
+    // function Father(){
+    //     this.father = 'father';
+    // }
+
+    // var father = new Father();
+
+    // Child.prototype = father;
+    // function Child(){
+
+    // }
+    // var child = new Child();
+    // console.log(child.b,child.__proto__);
+
+
+    // var obj = Object.create({name:'lch',age:'10'})
+    // console.log(obj.name,obj.age);
+    
+    //并不是所有的对象都继承与Object.prototype 
+    var obj = Object.create(null);
+    console.log(obj.__proto__);
+</script>
+</html>
