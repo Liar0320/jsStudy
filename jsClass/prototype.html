@@ -59,5 +59,16 @@
     //并不是所有的对象都继承与Object.prototype 
     var obj = Object.create(null);
     console.log(obj.__proto__);
+
+
+    // var num = 123;
+    // //num.toString(); ------> new Number(num).toString();
+    // //系统自带的Number.prototype.__proto__ = Object.prototype
+    // Number.prototype.toString = function(){
+    //     console.log('liar');
+    // }
+    // console.log(num.toString());
+
+
 </script>
 </html>
