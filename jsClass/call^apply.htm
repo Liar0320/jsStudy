@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>call和apply</title>
+</head>
+<body>
+    fcuntion this指向window在默认情况下
+    改变this指向，
+    区别传参类型不同
+</body>
+<script>
+    function test(){}
+    test();
+    test.call();
+    //test()  ====================== test.call();
+
+    function Apprearance(color,tail) {
+        this.color = color;
+        this.tail = tail;
+    }
+
+    function Feel(com) {
+        console.log(this);
+        this.com = com;
+    }
+
+    function Model(height,width,len) {
+        this.height = height;
+        this.width = width;
+        this.len = len;
+    }
+
+    function Car(height,width,len,color,tail,com) {
+        Model.call(this,height,width,len);
+        Apprearance.call(this,color,tail);
+        Feel.call(this,com);
+    }
+
+   var car = new Car(100,200,100,'red',true,9)
+    console.log(car);
+</script>
+</html>
