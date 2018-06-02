@@ -20,7 +20,7 @@
         height:document.documentElement.clientWidth>1200?600:document.documentElement.clientHeight,
         width:document.documentElement.clientWidth>1200?600:document.documentElement.clientWidth,
     }
-    const abstractBoard = new handleBoard();
+
     //画板
     var ctxPiece;
     //棋子
@@ -31,31 +31,33 @@
     };
 
     //抽象的棋盘操手
-    function handleBoard() {
-      //cell的多少
-      const cellCount= {
+    const abstractBoard = {
+      //棋盘大小
+      cellCount: {
         cols:15,
         rows:15
-      }; 
+      },
       //存储每一个单元格的大小
-      const cellSize = { width: 0, height: 0 }; 
-      //抽象的棋盘 二维数组
-      const boardLayout = []; 
+      cellSize : { width: 0, height: 0 },
+      //抽象的棋盘  二维数组
+      boardLayout : [],
       //存储棋盘的步数对应的落子位置 包含参数 第一步 黑子 位置 ， step turn  pois
-      const sortBoardStep=[];
+      sortBoardStep:[],
       //设置cell的多少
-      function setCellCount(cols=cellCount.cols,rows=cellCount.rows){
-        cellCount.cols = cols;
-        cellCount.rows = rows;
-        setBoardLayut(cellCount);
-      }
+      setCellCount:function(cols,rows){
+        if(cols)this.cellCount.cols = cols
+        if(rows)this.cellCount.rows = rows;
+        this.setBoardLayut(this.cellCount);
+      },
       //设置每个单元格的宽高
-      function setCellSize(client){
-              cellSize.width = client.width / cellCount.cols;
-              cellSize.height = client.height / cellCount.rows;
-      }
+      setCellSize : function (client){
+        this.cellSize.width = client.width / this.cellCount.cols;
+        this.cellSize.height = client.height / this.cellCount.rows;
+      },
       //设置抽象棋盘
-      function setBoardLayut(size = cellCount, layout = boardLayout) {
+      setBoardLayut:function (size, layout) {
+        if(!size) size = this.cellCount;
+        if(!layout) layout = this.boardLayout;
         if (size.cols === undefined || size.rows === undefined)
           new Error(`棋盘格局不对,行数${size.rows},列数${size.cols}`);
         for (let i = 0; i < size.cols; i++) {
@@ -64,35 +66,25 @@
             layout[i][j] = false;
           }
         }
-        console.log(layout, boardLayout);
-      }
+      },
       //修改抽象棋盘
-      function modifyLayout(current, turn, layout = boardLayout) {
+      modifyLayout:function (current, turn, layout) {
+        if(!layout) layout = this.boardLayout;
         layout[current[1]][current[0]] = turn;
-        if(turn)setBoardStep(current, turn, $.liarCopy([],layout));
-        // console.log(layout,boardLayout)
-      }
+        if(turn)this.setBoardStep(current, turn, $.liarCopy([],layout));
+      },
       //存储棋盘的步数对应的落子位置 包含参数 第一步 黑子 位置 ， step turn  pois
-      function setBoardStep(current, turn, layout = boardLayout){
-        sortBoardStep.push({
+      setBoardStep: function (current, turn, layout){
+        if(!layout) layout =this.boardLayout;
+        this.sortBoardStep.push({
             current,
             turn,
             layout
         });
       }
 
-      return {
-        cellCount,
-        cellSize,
-        boardLayout,
-        sortBoardStep,
-        setCellCount,
-        setCellSize,
-        setBoardLayut,
-        modifyLayout,
-        setBoardStep
-      };
     }
+
 
     function link(scope, element, attrs) {
       console.log(attrs);
@@ -169,10 +161,12 @@
       if (abstractBoard.boardLayout[current[1]][current[0]] !== false) return false;  
       let turn = ++pieceBlob.current % 2 === 0 ? "black" : "white"; 
       drawPiece(ctxPiece, current, abstractBoard.cellSize, pieceBlob,turn);
-      if (validRect(abstractBoard.boardLayout, current,turn)){
+      setTimeout(function () {
+        if (validRect(abstractBoard.boardLayout, current,turn)){
           alert(`游戏结束.${turn}方胜利`);
           gameControl();
-      }
+         }
+      })
       console.log(abstractBoard);
     }
 
@@ -265,9 +259,10 @@
             abstractBoard.cellSize.height
           );
     }
-    
     //游戏的开始和重启
     function gameControl(){
+        let next = confirm('是否重新开始');
+        if(!next) return;
         ctxPiece.clearRect(0,0,conf.width,conf.height);
         initAbstractBoard(conf);
     }
@@ -279,6 +274,11 @@
     };
   }
 })(angular,window);
+
+
+
+// const abstractBoard = new handleBoard();
+
 
 // current当前位置，turn当前方，boardLayout当前棋盘布局
 // function countResult(current,turn,boardLayout){
@@ -313,4 +313,69 @@
 //         }
 //     }
 //     return false;
+// }
+
+
+// //抽象的棋盘操手
+// function handleBoard() {
+//   //cell的多少
+//   const cellCount= {
+//     cols:15,
+//     rows:15
+//   }; 
+//   //存储每一个单元格的大小
+//   const cellSize = { width: 0, height: 0 }; 
+//   //抽象的棋盘 二维数组
+//   const boardLayout = []; 
+//   //存储棋盘的步数对应的落子位置 包含参数 第一步 黑子 位置 ， step turn  pois
+//   const sortBoardStep=[];
+//   //设置cell的多少
+//   function setCellCount(cols=cellCount.cols,rows=cellCount.rows){
+//     cellCount.cols = cols;
+//     cellCount.rows = rows;
+//     setBoardLayut(cellCount);
+//   }
+//   //设置每个单元格的宽高
+//   function setCellSize(client){
+//           cellSize.width = client.width / cellCount.cols;
+//           cellSize.height = client.height / cellCount.rows;
+//   }
+//   //设置抽象棋盘
+//   function setBoardLayut(size = cellCount, layout = boardLayout) {
+//     if (size.cols === undefined || size.rows === undefined)
+//       new Error(`棋盘格局不对,行数${size.rows},列数${size.cols}`);
+//     for (let i = 0; i < size.cols; i++) {
+//       layout[i] = [];
+//       for (let j = 0; j < size.rows; j++) {
+//         layout[i][j] = false;
+//       }
+//     }
+//     console.log(layout, boardLayout);
+//   }
+//   //修改抽象棋盘
+//   function modifyLayout(current, turn, layout = boardLayout) {
+//     layout[current[1]][current[0]] = turn;
+//     if(turn)setBoardStep(current, turn, $.liarCopy([],layout));
+//     // console.log(layout,boardLayout)
+//   }
+//   //存储棋盘的步数对应的落子位置 包含参数 第一步 黑子 位置 ， step turn  pois
+//   function setBoardStep(current, turn, layout = boardLayout){
+//     sortBoardStep.push({
+//         current,
+//         turn,
+//         layout
+//     });
+//   }
+
+//   return {
+//     cellCount,
+//     cellSize,
+//     boardLayout,
+//     sortBoardStep,
+//     setCellCount,
+//     setCellSize,
+//     setBoardLayut,
+//     modifyLayout,
+//     setBoardStep
+//   };
 // }
