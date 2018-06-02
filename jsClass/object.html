@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>对象</title>
+</head>
+<body>
+    底层解析obj.name------->obj[name] 
+    1.  for in
+    2.  hasOwnProperty        
+    3.  in
+    4. instanceOf           ---------- A instanceOf B   看A对象的原型链上有没有B构造函数的原型             A是对象  B是构造函数
+    //Object.prototype.toString.call([]);
+    Object.prototype.toString = function (){
+        识别 this;
+        返回响应结果
+    }
+    
+</body>
+<script>
+    var obj = {
+        name:'lch',
+        say:function(){
+            console.log(this,this.name);
+        }
+    }
+
+    function F() {
+        this.name = 'lch';
+        this.say = function(){
+            console.log(this,this.name);
+        }
+    }
+    var f = new F();
+    console.log(f.say(),obj.say());
+
+    var obj = {
+        name:123,
+        age:20,
+        __proto__:{
+            lastName:'原型'
+        }
+    }
+    for(var prop in obj){
+        if(obj.hasOwnProperty(prop)){
+            console.log(obj[prop]);
+        }
+    }
+    console.log('name' in obj,'lastName' in obj);
+
+</script>
+</html>

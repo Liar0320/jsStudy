@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>继承</title>
+</head>
+    1.传统形式 --->原型链
+        过多的继承了没用的属性。
+    2.借用构造函数 
+        不能继承构造函数的原型。
+        每次构造函数都要多走一个函数。
+    3.共享原型
+        不能随便改动直接的原型。
+    4.圣杯模式
+    
+     function inherit() {
+         function F() {}
+         return function (target,origin) {
+             F.prototype = origin.prototype;
+             var f = new F();
+             target.prototype = f.prototype;
+         }
+     }
+
+<body>
+    
+</body>
+<script>
+
+    //2-----------------------借用构造函数
+    // function Animal(height,weight) {
+    //     this.height = height;
+    //     this.weight = weight;
+    // }
+
+    // function Bird(fly,height,weight) {
+    //     Animal.call(this,height,weight);
+    //     this.fly = fly;
+    // }
+    // var bird = new Bird(true,50,100);
+    // console.log(bird);
+
+
+
+    //3-----------------------共享原型
+   
+    // Animal.prototype = {'height':50,'weight':'50'}
+    // function Animal() {    
+    // }
+    // Bird.prototype = Animal.prototype;
+    // Bird.prototype.fly = true;
+    // function Bird() {
+    // }
+    // var bird = new Bird();
+    // var animal = new Animal();
+    // console.log(bird.fly,animal.fly);
+  
+
+    //4-----------------------圣杯模式
+    // Animal.prototype = {'height':50,'weight':'50'}
+    // function Animal() {    
+    // }
+    // F.prototype = Animal.prototype;
+    // function F() {
+    // }
+    // Bird.prototype = new F();
+    // Bird.prototype.fly = true;
+    // function Bird() {
+    // }
+    // var bird = new Bird();
+    // var animal = new Animal();
+    // console.log(bird.fly,animal.fly);
+    // console.log(bird.__proto__,animal.__proto__);
+
+
+    // Animal.prototype = {'height':50,'weight':'50'}
+    // function Animal() {    
+    // }
+    // function Bird() {
+    // }
+    // inherit(Bird,Animal);
+    // Bird.prototype.fly = true;
+    // var bird = new Bird();
+    // var animal = new Animal();
+    // console.log(bird.fly,animal.fly);
+    // console.log(bird.__proto__,animal.__proto__);
+
+
+    // function inherit() {
+    //     function F() {}
+    //     return function (target,origin) {
+    //         F.prototype = origin.prototype;
+    //         var f = new F();
+    //         target.prototype = f.prototype;
+    //     }
+    // }
+
+    
+
+</script>
+</html>
