@@ -48,7 +48,7 @@
                    let circle = document.createElement('div');
                    circle.className = 'pageControl-circle mr15';
                    circle.addEventListener('click',()=>{
-                        index = i;
+                        index = len - 2- i;
                         $.addClass(ele[0],animation);
                         $.setStyle(ele[0],'transform',`translate3d(${index*width}px,0,0)`);
                    })
