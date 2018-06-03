@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>this</title>
+</head>
+<body>
+    <p>this:</p>
+    <p>1.函数预编译过程 this------>window</p>
+    <p>2.全局作用域里 this------>window</p>
+    <p>3.call/apply 可以改变函数运行时this的指向</p>
+    <p>4.obj.fnc()  fnc中的this指的是obj。 谁调用指向谁</p>
+    <hr></hr>
+    <p>arguments.callee  函数引用</p>
+    <p>func.caller 函数执行的环境</p>
+</body>
+<script>
+   var num = (function(n){
+        if(n===1) return 1;
+        return n * arguments.callee(n-1);
+    })(5);
+    console.log(num);
+
+    function demo(){
+        console.log(demo.caller);
+        function test(){
+            console.log(test.caller);
+        }
+        test();
+    }
+    demo();
+
+    var name = '222';
+    var a = {
+        name:'111',
+        say:function(){
+            console.log(this.name);
+        }
+    }
+    var fun = a.say;
+    fun()
+    a.say()
+    var b = {
+        name:'333',
+        say:function(fn){
+            console.log(fn);
+        }
+    }
+    b.say(a.say);
+    b.say = a.say;
+    b.say();
+
+</script>
+
+</html>
