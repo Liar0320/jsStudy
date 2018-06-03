@@ -12,6 +12,17 @@
                 }]
             }
         },//跳转五子棋页面
+        {
+            name:'home',
+            url:'/home',
+            controller:'homeCtrl as vm',
+            templateUrl:'../modules/home.html',
+            resolve:{
+                loadCtrl:['$ocLazyLoad',function($ocLazyLoad){
+                    return $ocLazyLoad.load('../modules/home.js');  
+                }]
+            }
+        },//跳转五子棋页面
     ]
 
 

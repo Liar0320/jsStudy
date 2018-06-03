@@ -1,0 +1,28 @@
+/*homeCtrl*/
+.mrl25{
+    margin: 0 25%;
+}
+.broadcast{
+    height:700px;
+    width:1000px;
+}
+.l_animation{
+    transition:500ms;
+}
+.pageControl{
+  position: absolute;
+  width: 100%;
+  bottom:15px;
+  letter-spacing: -5px;
+}
+.pageControl-circle{
+    height: 0;
+    width: 0;
+    border: solid #000 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+}
+.pageControl-circle:hover{
+    border-color:#dedede;
+}

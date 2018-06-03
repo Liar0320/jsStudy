@@ -21,7 +21,7 @@
                         //  ajaxService.post('/userInfo','',function(data){
                         //     console.log(data);
                         //  })
-                        $state.go('goBang',{});
+                        $state.go('home',{});
                     }else{
                         sessionFactory.set('UserLogin','');
                     }
