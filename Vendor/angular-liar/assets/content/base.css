@@ -140,10 +140,3 @@ input,button,textarea,select{*font-size:100%;}
 .pr50{padding-right:50px;}
 .pr100{padding-right:100px;}
 
-/*隐藏 滚动条*/
-.ofh{
-    overflow: hidden;
-}
-.ofa{
-    overflow: auto;
-}
