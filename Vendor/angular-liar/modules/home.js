@@ -19,22 +19,19 @@
             let len = ele[0].querySelectorAll('img').length;
             let width = parseInt($.getStyle(ele[0].querySelectorAll('img')[0],'width'));
             $.setStyle(ele[0],'width',`${len*width}px`);
-            $.setStyle(ele[0],'left',`-${(len-1)*width}px`);
-            let index = 0; 
+            $.setStyle(ele[0],'left',`${width}px`);
+            let index = 1; 
+            $.setStyle(ele[0],'transform',`translate3d(-${index*width}px,0,0)`);
             setInterval(()=>{
                 index++;
-                if(index === len){
+                if(!$.hasClass(ele[0],animation))$.addClass(ele[0],animation)
+                $.setStyle(ele[0],'transform',`translate3d(-${index*width}px,0,0)`);
+                if(index===len){
+                    setTimeout(()=>{
+                    $.removeClass(ele[0],animation);
                     index = 1;
-                    $.addClass(ele[0],animation);
-                    $.setStyle(ele[0],'transform',`translate3d(${index*width}px,0,0)`);
-                }else{
-                     $.setStyle(ele[0],'transform',`translate3d(${index*width}px,0,0)`);
-                     if(index===len-1){
-                         setTimeout(()=>{
-                            $.removeClass(ele[0],animation)
-                            $.setStyle(ele[0],'transform',`translate3d(0,0,0)`);
-                         },2000)
-                     }
+                    $.setStyle(ele[0],'transform',`translate3d(-${index*width}px,0,0)`);
+                    },1000)
                 }
             },10000)
 
@@ -48,9 +45,9 @@
                    let circle = document.createElement('div');
                    circle.className = 'pageControl-circle mr15';
                    circle.addEventListener('click',()=>{
-                        index = len - 2- i;
-                        $.addClass(ele[0],animation);
-                        $.setStyle(ele[0],'transform',`translate3d(${index*width}px,0,0)`);
+                        index = i + 1;
+                        if(!$.hasClass(ele[0],animation))$.addClass(ele[0],animation)
+                        $.setStyle(ele[0],'transform',`translate3d(-${index*width}px,0,0)`);
                    })
                    div.appendChild(circle);
                    circle = null;
@@ -65,7 +62,13 @@
 /*
     轮播图，
     一张为基数，
-    0 1 2 3 0 排序方式 头尾各方一张
+                  1 2 3 1
+                1 2 3 1
+              1 2 3 1
+            1 2 3 1 
+    ----->  1 2 3 1 
+                1 2 3 1
+    排序方式 头尾各方一张
     当0一直向有滑动，直到滑动到0时 将动画效果取消并且重置位移 然后将index改为1 动画效果加上反复
     位移使用translate3d();
 */

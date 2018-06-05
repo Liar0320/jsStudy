@@ -1,0 +1,7 @@
+/*隐藏 滚动条*/
+.ofh{
+    overflow: hidden;
+}
+.ofa{
+    overflow: auto;
+}

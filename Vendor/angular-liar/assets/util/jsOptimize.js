@@ -165,23 +165,27 @@ const $ = {};
         ele.style[attr] = value;
     }
 
-    function addClass(ele,addName){
-        if(addName.match(/ +/g) === null){
-            ele.classList.add(addName);
+    function addClass(ele,className){
+        if(className.match(/ +/g) === null){
+            ele.classList.add(className);
         }else{
-            ele.className += ele.className === ''? addName:' '+addName;
+            ele.className += ele.className === ''? className:' '+className;
         }
     }
     
-    function removeClass(ele,addName){
-        if(addName.match(/ +/g) === null){
-            ele.classList.remove(addName);
+    function removeClass(ele,className){
+        if(className.match(/ +/g) === null){
+            ele.classList.remove(className);
         }else{
-            let names = addName.split(/ +/g);
+            let names = className.split(/ +/g);
             for(let item of names){
                 ele.className.indexOf(item) ===-1||ele.classList.remove(item);
             }
         }
+    }
+
+    function hasClass(ele,className){
+       return  ele.className.indexOf(className) > -1;
     }
 
     function getAttributeNames(ele,attr){
@@ -194,6 +198,7 @@ const $ = {};
         addClass,
         removeClass,
         getAttributeNames,
+        hasClass
     })
 
 })($)

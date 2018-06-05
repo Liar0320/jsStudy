@@ -3,11 +3,11 @@
     margin: 0 25%;
 }
 .broadcast{
-    height:700px;
+    height:450px;
     width:1000px;
 }
 .l_animation{
-    transition:500ms;
+    transition:300ms;
 }
 .pageControl{
   position: absolute;
