@@ -10,6 +10,25 @@ https://www.cnblogs.com/heyuquan/archive/2014/07/17/bubble-quick-sort.html  排�
 const $ = {};
 ///判断 return true or false
 ((_$)=>{
+    //number string boolean undefind object function
+    function type(thing) {
+        const TEMPLATE = {
+            '[object Number]':'number - object',
+            '[object String]':'string - object',
+            '[object Boolean]':'boolean - object',
+            '[object Object]':'object',
+        }
+        let _type = typeof(thing);
+        if(thing === null){
+            return 'null';
+        }else if(_type === 'object'){
+            console.log(Object.prototype.toString.call(thing));
+            return TEMPLATE[Object.prototype.toString.call(thing)];
+        }else{
+            return _type;
+        }
+    }
+
     ///基础类型判断
     const types=["Array","Boolean","Date","Number"
     ,"Object","RegExp","HTMLDocument","String","Window"];
@@ -36,6 +55,7 @@ const $ = {};
     }
     
     $['isNull'] = isNull;
+    $['type'] = type;
 })($);
 
 
