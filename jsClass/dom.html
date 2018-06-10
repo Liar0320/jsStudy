@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./base.css">
+    <title>DOM</title>
+</head>
+<body class="f14">
+    <img src="./DOM结构树.png" alt="dom结构树" height="500" width = "800">
+
+     //此处ie都指ie9以下
+    <p>DOM --> Document Object Model</p>
+    <p>DOM定义了表示和修改文档所需的发放。</p>
+    <p>DOM对象即宿主对象，有浏览器厂商定义，用来操作html和xml功能的一类对象的集合。</p>
+    <p>也有人称DOM是对HTML以及XML的标准编程接口。</p>
+    <hr>
+    <p class="tc fb">DOM基本操作</p>
+    <p class="fb">1.对节点的增删改查</p>
+    <p class="fb">查</p>
+    <p>查看元素节点</p>
+    <p>document 代表整个文档</p>
+    <p>document.getElementById()//元素id 在ie8以下的浏览器，不区分id大小写，而且也返回匹配name属性的元素</p>
+    <p>document.getElementsByTagName()//标签名</p>
+    <p>document.getElementsByName()// 以前 需要注意，只有部分标签name可生效(表单，表单元素，img，iframe)  不推荐 w3c规定  但是浏览器现在标签都支持</p>
+    <p>document.getElementsByClassName()//类名 ->ie8 和 ie8以下的ie版本中没有，可以多个class一起</p>
+    <p>document.querySelector()//缺少实时性  在ie7和ie7以下的版本中没有</p>
+    <p>document.querySelectorAll()//缺少实时性  在ie7和ie7以下的版本中没有</p>
+
+    <p class="fb">遍历节点树</p>
+    <p>parentNode -> 父节点 (最顶端的parentNode位#document)</p>
+    <p>childNodes -> 子节点们</p>
+    <p>firstChild -> 第一个子节点</p>
+    <p>lastChild -> 最后一个子节点</p>
+    <p>nextSibling -> 最后一个兄弟节点</p>
+    <p>previousSibling -> 前一个兄弟节点</p>
+    <p>基于元素节点树的遍历</p>
+    <p>parentElement -> 返回当前元素的父元素节点(IE不兼容)</p> 
+    <p>children -> 只返回当前元素的元素子节点</p>
+    <p>node.childElementCount === node.children.length 当前元素节点的子元素节点树的数量(IE不兼容)</p>
+    <p>firstElementChild -> 返回的是第一个元素节点(IE不兼容)</p>
+    <p>lastElementCHild -> 返回的是最后一个元素节点(IE不兼容)</p>
+    <p>nextElementSibling -> 返回后一个兄弟元素节点</p>
+    <p>previousElementSibling -> 返回前一个兄弟元素节点</p>
+
+    <p class="fb">节点的类型</p>
+    <p>元素节点 --------1</p>
+    <p>属性节点 --------2</p>
+    <p>文本节点 --------3</p>
+    <p>注释节点 --------4</p>
+    <p>document -------9</p>
+    <p>DocuementFragment --------11</p>
+
+    <p class="fb">获取节点类型 nodeType</p>
+    <p>节点的四个属性</p>
+    <p>nodeName -> 元素的标签名，以大写形式表示，只读</p>
+    <p>nodeValue -> text节点或comment节点的文本内容，可读写</p>
+    <p>nodeType -> 该节点的类型，只读</p>
+    <p>attributes -> element节点的属性集合</p>
+    <p>节点的一个方法</p>
+    <p>Node.hasChildNodes() -> 节点是否有子节点</p>
+</body>
+
+</html>
