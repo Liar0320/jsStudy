@@ -233,7 +233,71 @@ const $ = {};
         return ele.attributes;
     }
 
+    //对于node的操作
+    function insertAfter(targetNode,originNode) {
+        originNode = originNode.siblindNodes
+    }
+
+
 
 })($);
 console.log($);
+
+
+(function(_$){
+     //获取所有的子节点
+    Element.prototype.$children = function () {
+        var children = this.children;
+        if(!children){
+            children = [];
+            var childNodes = this.childNodes;
+            var len = childNodes.length;
+            for (let i = 0; i < len; i++) {
+                let element = childNodes[i];
+                if(element.nodeType === 1) children.push(element);            
+            }
+        }
+        return children;
+    }
+
+    //一个元素的上一个节点
+    Element.prototype.$previousElementSibling = function () {
+        var node =  this.previousElementSibling;
+        if(!node) for (node = this.previousSibling; node&&node.nodeType!==1; node = node.previousSibling);
+        return node;
+    }
+
+    //一个元素的下一个节点
+    Element.prototype.$nextElementSibling = function () {
+        var node =  this.nextElementSibling;
+        if(!node) for (node = this.nextElementSibling; node&&node.nodeType!==1; node = node.nextElementSibling);
+        return node;
+    }
+
+    //在一个元素节点的后面加入一个节点
+    Element.prototype.$insterAfter = function (target,origin) {
+        var nextNode = origin.$nextElementSibling();
+        if(nextNode === undefined){
+            return this.appendChild(target);
+        }else{
+            return this.insertBefore(target,nextNode);
+        }
+    }
+
+    //寻找当前元素的第n个兄弟元素 可以为负数
+    //逻辑：当n位正数时 向下查找 n-- 当n为负数时向上查找 n++
+    Element.prototype.$retSibling = function (n) {
+       var origin = this;
+       while(n&&origin){
+            if(n>0){
+                origin = origin.$nextElementSibling();
+                n--;
+            }else{
+                origin = origin.$previousElementSibling();
+                n++;
+            }
+       }
+       return origin;
+    }
+})($);
 
