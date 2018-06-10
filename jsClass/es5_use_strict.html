@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>es5严格模式</title>
+</head>
+<body>
+    <p>"use strict"</p>
+    <p>不再兼容es3的一些不规则语法。使用全新的es5规范</p>
+    <p>两种用法</p>
+    <p>全局严格模式</p>
+    <p>局部函数内严格模式(推荐)</p>
+    <p>不会对不兼容严格模式的浏览器产生影响</p>
+    <p>不支持with,arguments.callee,func.caller,变量赋值前必须声明,局部this必须被赋值(Person.call(null/undefined)赋值什么就是什么)，拒绝重复属性和参数</p>
+    <p>我们现在是基于es3.0的 + es5.0的新增方法 一起使用的</p>
+    <p>es3.0和es5.0产生冲突部分</p>
+    <p>es5.0严格模式 那么es3.0和es5.0产生冲突的部分就是使用es5.0 否则会使用es3.0</p>
+</body>
+<script>
+
+
+    function name(params) {
+        console.log(this);
+    }
+
+    function name2(params) {
+        "use strict"
+        console.log(this);
+    }
+    name();
+    new name();
+    name2();
+    new name2();
+    name2.call('hhh');
+
+
+    //with向作用域顶端插入一个AO; 主要用来简化代码。 消耗大量效率去改变作用域链。
+    var obj = {
+        name:"obj"
+    }
+    var name = 'window';
+
+    function test() {
+        var name = 'scope';
+        with(obj){
+            console.log(name);
+        }
+    }
+    
+    test();
+
+
+</script>
+</html>
