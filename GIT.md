@@ -38,7 +38,7 @@
         使用~符号：只能后退
             git reset --hard HEAD~n
             注：表示后退n步
-        rest命令的三个参数对比
+        reset命令的三个参数对比
                 --soft参数
                     仅仅在本地库移动HEAD指针
                                 暂存区  工作区
