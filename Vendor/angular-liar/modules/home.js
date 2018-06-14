@@ -8,6 +8,7 @@
     }
 
 
+
     home.directive('decBroadCast',decBroadCast)
     function decBroadCast() {
         return{
@@ -71,4 +72,5 @@
     排序方式 头尾各方一张
     当0一直向有滑动，直到滑动到0时 将动画效果取消并且重置位移 然后将index改为1 动画效果加上反复
     位移使用translate3d();
+    可参考https://github.com/townkoim/js-img-lunbo
 */
