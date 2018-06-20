@@ -12,6 +12,14 @@ a,a:hover{
 .ftc{
     color:#c1c1c1;
 }
+.fff{
+    color:#fff;
+}
+/*背景颜色*/
+.bg0{
+    background-color: transparent;
+}
+
 /*初始化按钮*/
 .btn-liar{
     padding: 0.375rem 0.75rem;
@@ -40,7 +48,9 @@ a,a:hover{
     vertical-align: middle;
 }
 
-/*color*/
-.fff{
-    color:#fff;
+
+/*定位*/
+.r0{
+    right: 0;
+    left: inherit
 }
