@@ -190,6 +190,10 @@ const $ = {};
         ele.currentStyle[attr]:getComputedStyle(ele,'null')[attr];
     }
 
+    function setStyle(ele,attr,value){
+        ele.style[attr] = value;
+    }
+
     function addClass(ele,addName){
         if(addName.match(/ +/g) === null){
             ele.classList.add(addName);
@@ -209,6 +213,10 @@ const $ = {};
         }
     }
 
+    function hasClass(ele,className){
+        var className = ele.className + ' ';
+        return  className.indexOf(' '+className+' ') > -1;
+    }
     //window.getComputedStyle(ele).height     (内容高度);  height
     //clientHeight                                          (内容高度 + 内边距*2); height + padding
     //offsetHeight                                          (内容高度 + 内边距*2 +边框*2)  height + padding + border
@@ -239,6 +247,14 @@ const $ = {};
     }
 
 
+    $.liarExtend($,{
+        getStyle,
+        setStyle,
+        addClass,
+        removeClass,
+        getAttributeNames,
+        hasClass
+    })
 
 })($);
 console.log($);
