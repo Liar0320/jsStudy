@@ -212,3 +212,30 @@
         console.log($rootScope);
     }]);
 })(angular);
+
+
+(function(angular){
+    angular.module('app').directive('decDropDown',decDropDown);
+    function decDropDown(){
+        return{
+            restrict:'A',
+            link:function(scope,ele,attr){
+                ele.bind('mouseover',function(e){
+                      var dropdown_menu = this.getElementsByClassName('dropdown-menu')[0];
+                      if(dropdown_menu&&!$.hasClass(dropdown_menu,'show')){
+                        $.addClass(dropdown_menu,'show');
+                        $.addClass(this.getElementsByClassName('headBc-ul-li-a')[0],'fff')
+                      }
+                })
+                ele.bind('mouseleave',function(e){
+                        var dropdown_menu = this.getElementsByClassName('dropdown-menu')[0];
+                        if( dropdown_menu&&$.hasClass(dropdown_menu,'show')){
+                            $.removeClass(dropdown_menu,'show');
+                            $.removeClass(this.getElementsByClassName('headBc-ul-li-a')[0],'fff')
+                        }
+                        
+                 })
+            }
+        }
+    }
+})(angular);
