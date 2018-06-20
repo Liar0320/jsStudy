@@ -1,12 +1,19 @@
 <header class="headBc clearfix">
-  <div class="fl headBc-left">
+  <div class="fl headBc-left pr">
     <a href="javaScript:void(0)"><img class="headBc-img" src="../assets/img//icon.png" alt="个人网站"></a>
-    <div class="moblie "></div>
+    <div class="d-lg-none headBc-menulist dropdown" dec-drop-down>
+        <a href="javaScript:void(0)" class="headBc-ul-li-a f30 ftc p-0 headBc-mg"><i class="icon ion-md-search"></i></a>
+        <ul class="fr dropdown-menu mt-0">
+            <li class="fl dropdown-item"><a href="" class="dropdown-item-text">icon</a></li>
+            <li class="fl dropdown-item"><a href="" class="dropdown-item-text">icon</a></li>
+            <li class="fl dropdown-item"><a href="" class="dropdown-item-text">icon</a></li>
+          </ul>
+    </div>
   </div>
   <nav class="fl">
-    <ul class="headBc-ul clearfix fl" >
+    <ul class="headBc-ul clearfix fl d-none d-lg-block" >
       <li ng-repeat = 'title in vm.titleSets track by $index' class="fl dropdown"  dec-drop-down> 
-        <a href="javaScript:void(0)" class="headBc-ul-li-a ftc">{{title}}&nbsp;&nbsp;<b class="caret-top"></b></a>
+        <a href="javaScript:void(0)" class="headBc-ul-li-a f14 ftc">{{title}}&nbsp;&nbsp;<b class="caret-top"></b></a>
         <ul class="fr dropdown-menu mt-0">
             <li class="fl dropdown-item"><a href="" class="dropdown-item-text">icon</a></li>
             <li class="fl dropdown-item"><a href="" class="dropdown-item-text">icon</a></li>
@@ -15,15 +22,22 @@
       </li>
     </ul>
     <div class="clearfix fr">
-      <ul class="fr d-lg-none">
-        <li class="fl"><a href="">icon</a></li>
-        <li class="fl">登录</li>
-        <li class="fl">注册</li>
+      <ul class="fr headBc-mg">
+        <li class="fl d-lg-none dropdown"  dec-drop-down>
+           <a href="javaScript:void(0)" class="headBc-ul-li-a ftc headBc-btn p-0 f30"><i class="icon ion-md-log-in"></i></a>
+           <ul class="dropdown-menu mt-0 r0">
+            <li class="fl dropdown-item"><a href="" class="dropdown-item-text">icon</a></li>
+            <li class="fl dropdown-item"><a href="" class="dropdown-item-text">icon</a></li>
+            <li class="fl dropdown-item"><a href="" class="dropdown-item-text">icon</a></li>
+          </ul>
+        </li>
+        <li class="fl d-none d-lg-block"><button class="btn bg-transparent headBc-btn ftc ml15">登录</button></li>
+        <li class="fl d-none d-lg-block"><button class="btn bg-transparent headBc-btn ftc">注册</button></li>
       </ul>
-      <form action="" novalidate  class="fr">
-        <div class="pr headBc-form">
+      <form action="" novalidate  class="fr d-none d-lg-block">
+        <div class="pr headBc-mg">
             <input type="text" class="form-control headBc-input ftc">
-            <button class="btn-liar headBc-btn ftc"><i class="icon ion-md-search"></i></button>
+            <button class="btn-liar headBc-searchBtn ftc"><i class="icon ion-md-search"></i></button>
         </div>
       </form>
     </div>
