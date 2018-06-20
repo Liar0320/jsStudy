@@ -1,3 +1,35 @@
+<header class="headBc clearfix">
+  <div class="fl headBc-left">
+    <a href="javaScript:void(0)"><img class="headBc-img" src="../assets/img//icon.png" alt="个人网站"></a>
+    <div class="moblie "></div>
+  </div>
+  <nav class="fl">
+    <ul class="headBc-ul clearfix fl" >
+      <li ng-repeat = 'title in vm.titleSets track by $index' class="fl dropdown"  dec-drop-down> 
+        <a href="javaScript:void(0)" class="headBc-ul-li-a ftc">{{title}}&nbsp;&nbsp;<b class="caret-top"></b></a>
+        <ul class="fr dropdown-menu mt-0">
+            <li class="fl dropdown-item"><a href="" class="dropdown-item-text">icon</a></li>
+            <li class="fl dropdown-item"><a href="" class="dropdown-item-text">icon</a></li>
+            <li class="fl dropdown-item"><a href="" class="dropdown-item-text">icon</a></li>
+          </ul>
+      </li>
+    </ul>
+    <div class="clearfix fr">
+      <ul class="fr d-lg-none">
+        <li class="fl"><a href="">icon</a></li>
+        <li class="fl">登录</li>
+        <li class="fl">注册</li>
+      </ul>
+      <form action="" novalidate  class="fr">
+        <div class="pr headBc-form">
+            <input type="text" class="form-control headBc-input ftc">
+            <button class="btn-liar headBc-btn ftc"><i class="icon ion-md-search"></i></button>
+        </div>
+      </form>
+    </div>
+  </nav>
+</header>
+
 <div class="mrl25">
     <div class="broadcast ofh pr" >
         <div animation='l_animation' class="l_animation fl pr"  dec-broad-cast>

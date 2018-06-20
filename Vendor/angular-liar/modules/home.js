@@ -4,9 +4,9 @@
     homeCtrl.$inject = [];
     function homeCtrl() {
         var vm = this;
+        vm.titleSets = ['首页','全部课程','Unity','虚幻','关于我们'];
         console.log(this);
     }
-
 
 
     home.directive('decBroadCast',decBroadCast)
@@ -57,6 +57,9 @@
             }
         }
     }
+
+
+  //  home
 })(angular)
 
 //decBroadCast
@@ -72,5 +75,4 @@
     排序方式 头尾各方一张
     当0一直向有滑动，直到滑动到0时 将动画效果取消并且重置位移 然后将index改为1 动画效果加上反复
     位移使用translate3d();
-    可参考https://github.com/townkoim/js-img-lunbo
 */

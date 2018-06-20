@@ -185,7 +185,8 @@ const $ = {};
     }
 
     function hasClass(ele,className){
-       return  ele.className.indexOf(className) > -1;
+        var all = ' ' +ele.className + ' ';
+        return  all.indexOf(' '+className+' ') > -1;
     }
 
     function getAttributeNames(ele,attr){

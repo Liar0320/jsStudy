@@ -1,7 +1,46 @@
+a,a:hover{
+    text-decoration: none;
+}
 /*隐藏 滚动条*/
 .ofh{
     overflow: hidden;
 }
 .ofa{
     overflow: auto;
+}
+/*字体颜色*/
+.ftc{
+    color:#c1c1c1;
+}
+/*初始化按钮*/
+.btn-liar{
+    padding: 0.375rem 0.75rem;
+    padding-top: 0.375rem;
+    padding-right: 0.75rem;
+    padding-bottom: 0.375rem;
+    padding-left: 0.75rem;
+    border: none;
+    cursor: pointer;
+}
+.btn-liar:hover{
+    box-shadow: initial;
+}
+.btn-liar:focus{
+    outline:initial;
+}
+
+/*箭头*/
+.caret-top{
+    display: inline-block;
+    height: 0px;
+    width: 0px;
+    border-width: 4px;
+    border-style: solid;
+    border-color: #fff transparent transparent transparent;
+    vertical-align: middle;
+}
+
+/*color*/
+.fff{
+    color:#fff;
 }
