@@ -214,8 +214,8 @@ const $ = {};
     }
 
     function hasClass(ele,className){
-        var className = ele.className + ' ';
-        return  className.indexOf(' '+className+' ') > -1;
+        var all = ' ' +ele.className + ' ';
+        return  all.indexOf(' '+className+' ') > -1;
     }
     //window.getComputedStyle(ele).height     (内容高度);  height
     //clientHeight                                          (内容高度 + 内边距*2); height + padding

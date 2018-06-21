@@ -19,7 +19,12 @@ a,a:hover{
 .bg0{
     background-color: transparent;
 }
-
+.bg3f{
+    background-color: #3f3f3f;
+}
+.bgff{
+    background-color: #fff;
+}
 /*初始化按钮*/
 .btn-liar{
     padding: 0.375rem 0.75rem;
@@ -53,4 +58,17 @@ a,a:hover{
 .r0{
     right: 0;
     left: inherit
+}
+
+/**/
+.liar-transition{
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    transition: all .3s ease;
+}
+
+/*宽高*/
+.hi{
+    height: 100% !important;
 }
