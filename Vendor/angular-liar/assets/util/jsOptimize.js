@@ -1,6 +1,34 @@
+///  o 存储 引用1 ， item 存储 引用1  ,'改变'值类型 通过引用修改了源数据 ,item 改变引用到 null ,但是o的引用还是没变;
+///  null既不是对象也不是一种类型，它仅是一种特殊的值，你可以将其赋予任何引用类型，你也可以将null转化成任何类型
+///https://www.cnblogs.com/canning-gao/p/5708796.html
+///https://git-scm.com/book/zh/v1/Git-%E5%9F%BA%E7%A1%80-%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8
+//https://blog.csdn.net/cbjcry/article/details/70154946 JS操作DOM元素属性和方法
+/*
+https://segmentfault.com/a/1190000004322487       你真的会使用XMLHttpRequest吗？
+https://www.cnblogs.com/heyuquan/archive/2014/07/17/bubble-quick-sort.html  排序可参考
+*/
 const $ = {};
 ///判断 return true or false
 ((_$)=>{
+    //number string boolean undefind object function
+    function type(thing) {
+        const TEMPLATE = {
+            '[object Number]':'number - object',
+            '[object String]':'string - object',
+            '[object Boolean]':'boolean - object',
+            '[object Object]':'object',
+        }
+        let _type = typeof(thing);
+        if(thing === null){
+            return 'null';
+        }else if(_type === 'object'){
+            console.log(Object.prototype.toString.call(thing));
+            return TEMPLATE[Object.prototype.toString.call(thing)];
+        }else{
+            return _type;
+        }
+    }
+
     ///基础类型判断
     const types=["Array","Boolean","Date","Number"
     ,"Object","RegExp","HTMLDocument","String","Window",'Function'];
@@ -27,11 +55,13 @@ const $ = {};
     }
     
     $['isNull'] = isNull;
+    $['type'] = type;
 })($);
+
 
 ///-------- liarCopy || 浅拷贝 -----深度拷贝  暂时不考虑原形链上的
 (function(_$){ 
-    //对象的深度拷贝，不考虑原型链
+     //对象的深度拷贝，不考虑原型链
     function liarCopy(destination,source){
         copyRecurse(destination,source)
         function copyRecurse(destination,source){
@@ -63,9 +93,8 @@ const $ = {};
             let destination = undefined;
             return copyRecurse(destination,source);
         }
-        return destination;
     }
-
+ 
     //对象的扩展
     function liarExtend(destination,source){
         if(_$.isObject(destination)&&_$.isObject(source)){
@@ -230,3 +259,62 @@ const $ = {};
     })
 
 })($);
+
+
+(function(_$){
+     //获取所有的子节点
+    Element.prototype.$children = function () {
+        var children = this.children;
+        if(!children){
+            children = [];
+            var childNodes = this.childNodes;
+            var len = childNodes.length;
+            for (let i = 0; i < len; i++) {
+                let element = childNodes[i];
+                if(element.nodeType === 1) children.push(element);            
+            }
+        }
+        return children;
+    }
+
+    //一个元素的上一个节点
+    Element.prototype.$previousElementSibling = function () {
+        var node =  this.previousElementSibling;
+        if(!node) for (node = this.previousSibling; node&&node.nodeType!==1; node = node.previousSibling);
+        return node;
+    }
+
+    //一个元素的下一个节点
+    Element.prototype.$nextElementSibling = function () {
+        var node =  this.nextElementSibling;
+        if(!node) for (node = this.nextElementSibling; node&&node.nodeType!==1; node = node.nextElementSibling);
+        return node;
+    }
+
+    //在一个元素节点的后面加入一个节点
+    Element.prototype.$insterAfter = function (target,origin) {
+        var nextNode = origin.$nextElementSibling();
+        if(nextNode === undefined){
+            return this.appendChild(target);
+        }else{
+            return this.insertBefore(target,nextNode);
+        }
+    }
+
+    //寻找当前元素的第n个兄弟元素 可以为负数
+    //逻辑：当n位正数时 向下查找 n-- 当n为负数时向上查找 n++
+    Element.prototype.$retSibling = function (n) {
+       var origin = this;
+       while(n&&origin){
+            if(n>0){
+                origin = origin.$nextElementSibling();
+                n--;
+            }else{
+                origin = origin.$previousElementSibling();
+                n++;
+            }
+       }
+       return origin;
+    }
+})($);
+

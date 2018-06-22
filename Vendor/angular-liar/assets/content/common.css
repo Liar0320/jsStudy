@@ -12,15 +12,22 @@ a,a:hover{
 .ftc{
     color:#c1c1c1;
 }
+.f61{
+   color:#616161
+}
 .fff{
     color:#fff;
 }
+
 /*背景颜色*/
 .bg0{
     background-color: transparent;
 }
 .bg3f{
     background-color: #3f3f3f;
+}
+.bg4f{
+    background-color: #4f4f4f;
 }
 .bgff{
     background-color: #fff;
@@ -57,9 +64,12 @@ a,a:hover{
 /*定位*/
 .r0{
     right: 0;
-    left: inherit
+    left: inherit;
 }
-
+.t0{
+    top:0;
+    bottom:inherit;
+}
 /**/
 .liar-transition{
     -webkit-transition: all .3s ease;
@@ -71,4 +81,26 @@ a,a:hover{
 /*宽高*/
 .hi{
     height: 100% !important;
+}
+
+/*鼠标*/
+.pointer{
+    cursor: pointer;
+}
+
+/*input输入框搜索*/
+.input_search{
+    padding: 5px 12px;
+}
+.input_search_btn{
+    right: 10px;
+    left: inherit;
+}
+.input_search_btn i{
+    font-size: 25px;
+}
+
+/*hr*/
+.liar-hr{
+    border-top:solid 1px #dedede;
 }

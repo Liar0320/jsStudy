@@ -224,14 +224,14 @@
                       var dropdown_menu = this.getElementsByClassName('dropdown-menu')[0];
                       if(dropdown_menu&&!$.hasClass(dropdown_menu,'show')){
                         $.addClass(dropdown_menu,'show');
-                        $.addClass(this.getElementsByClassName('headBc-ul-li-a')[0],'fff')
+                        $.addClass(this.getElementsByTagName('a')[0],'fff')
                       }
                 })
                 ele.bind('mouseleave',function(e){
                         var dropdown_menu = this.getElementsByClassName('dropdown-menu')[0];
                         if( dropdown_menu&&$.hasClass(dropdown_menu,'show')){
                             $.removeClass(dropdown_menu,'show');
-                            $.removeClass(this.getElementsByClassName('headBc-ul-li-a')[0],'fff')
+                            $.removeClass(this.getElementsByTagName('a')[0],'fff')
                         }
                         
                  })
@@ -245,26 +245,40 @@
             restrict:'A',
             link:function(scope,ele,attr){
                 var className = attr.setclass;
+                var aClassName = attr.asetclass||'active';
                 var targetEl = attr.targetel || 'navdown-menu';
                 var calc = attr.calc;
 
                 var dropdown_menu = ele[0].getElementsByClassName(targetEl)[0];
+             
+                function removeParent(child,menu){
+                    if(child&&menu){
+                        $.removeClass(child,className); 
+                        $.setStyle(menu,'height','0px');   
+                        return; 
+                    }
+                    var children = ele.parent().children();
+                    for (let index = 0; index < children.length; index++) {
+                        if(className&&$.hasClass(children[index],className)){
+                            $.removeClass(children[index],className); 
+                            $.setStyle(children[index].getElementsByClassName(targetEl)[0],'height','0px');
+                            break;
+                        }   
+                    }
+                }
                 angular.element(ele.find('a')[0]).bind('mousedown',function(e){
                     e.preventDefault();
                     if(calc !==undefined){
                         var height = dropdown_menu&&$.getStyle(dropdown_menu,'height');
-                        if(height ==='0px'){
-                            var li = dropdown_menu.getElementsByTagName('li');
-                            height = parseInt($.height(li[0],true))*li.length;
-                            $.setStyle(dropdown_menu,'height',height+'px');
-                          }else{
-                            $.setStyle(dropdown_menu,'height','0px');
-                          }
-                          if(ele[0]&&className&&!$.hasClass(ele[0],className)){
+                        // if(remove(height !=='0px')) return;
+                        if(height ==='0px'&&ele[0]&&className&&!$.hasClass(ele[0],className)){ 
                             $.addClass(ele[0],className);
-                          }else{
-                            $.removeClass(ele[0],className);
-                          }
+                            var li = dropdown_menu.getElementsByTagName('li');
+                            height = parseInt($.height(li[0],true))*li.length + 1; //1  hr分割线
+                            $.setStyle(dropdown_menu,'height',height+'px');
+                        }else{
+                            removeParent(ele[0],dropdown_menu);
+                        }
                     }else{
                         if(dropdown_menu&&className&&!$.hasClass(dropdown_menu,className)){
                             $.addClass(dropdown_menu,className);
@@ -272,6 +286,23 @@
                             $.removeClass(dropdown_menu,className);
                           }
                     }
+                })
+
+                function remove(){
+                    var children = ele.parent().children();
+                    for (let index = 0; index < children.length; index++) {
+                        let bol = false;
+                        var lis = children[index].getElementsByTagName('li');
+                        [...lis].forEach(item=>{
+                            if($.hasClass(item,aClassName)){
+                                $.removeClass(item,aClassName);  bol = true;
+                            }   
+                        }) 
+                    }
+                }
+                angular.element(angular.element(dropdown_menu).find('a')).bind('mousedown',function(e){
+                    remove();
+                    $.addClass(this.parentNode,aClassName);
                 })
             }
         }
