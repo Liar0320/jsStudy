@@ -37,15 +37,40 @@
     -o-transition: all .3s ease;
     transition: all .3s ease;
 }
-
-.dropdown-menu .dropdown-item:hover,
-.dropdown-menu .dropdown-item:focus{
+.liar-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 10rem;
+    padding: 0.5rem 0;
+    margin: 0.125rem 0 0;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0.25rem;
+  }
+  
+.liar-dropdown-menu .liar-dropdown-item:hover,
+.liar-dropdown-menu .liar-dropdown-item:focus{
     background-color: green;
     cursor: pointer;
 }
-.dropdown-item:hover .dropdown-item-text{
+.liar-dropdown-item:hover .liar-dropdown-item-text{
     color:#fff;
 }
+.liar-dropdown-menu .liar-dropdown-item-text{
+    color:#616161
+}
+.liar-dropdown-menu.show {
+    display: block;
+  }
 
 .navdown-menu{
     position: absolute;

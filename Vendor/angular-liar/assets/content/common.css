@@ -63,12 +63,12 @@ a,a:hover{
 
 /*定位*/
 .r0{
-    right: 0;
-    left: inherit;
+    right: 0 !important;
+    left: inherit !important;
 }
 .t0{
-    top:0;
-    bottom:inherit;
+    top:0 !important;
+    bottom:inherit !important;
 }
 /**/
 .liar-transition{
