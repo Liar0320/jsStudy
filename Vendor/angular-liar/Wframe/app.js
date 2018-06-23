@@ -221,14 +221,14 @@
             restrict:'A',
             link:function(scope,ele,attr){
                 ele.bind('mouseover',function(e){
-                      var dropdown_menu = this.getElementsByClassName('dropdown-menu')[0];
+                      var dropdown_menu = this.getElementsByClassName('liar-dropdown-menu')[0];
                       if(dropdown_menu&&!$.hasClass(dropdown_menu,'show')){
                         $.addClass(dropdown_menu,'show');
                         $.addClass(this.getElementsByTagName('a')[0],'fff')
                       }
                 })
                 ele.bind('mouseleave',function(e){
-                        var dropdown_menu = this.getElementsByClassName('dropdown-menu')[0];
+                        var dropdown_menu = this.getElementsByClassName('liar-dropdown-menu')[0];
                         if( dropdown_menu&&$.hasClass(dropdown_menu,'show')){
                             $.removeClass(dropdown_menu,'show');
                             $.removeClass(this.getElementsByTagName('a')[0],'fff')
@@ -288,6 +288,7 @@
                     }
                 })
 
+                if(calc === undefined) return;
                 function remove(){
                     var children = ele.parent().children();
                     for (let index = 0; index < children.length; index++) {
