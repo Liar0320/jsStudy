@@ -1,6 +1,6 @@
 <header class="d-flex home-header f14 pr15 pl15">
     <div class="w50 d-lg-none"  dec-nav-click setClass='trans0'>
-        <a class="pointer home-header-logo"><i class="icon ion-md-search ftc"></i></a>
+        <a class="pointer home-header-logo"><i class="icon ion-md-apps ftc"></i></a>
         <ul class="navdown-menu bg4f liar-transition mt-0 tl">
             <form class="pr mb10 mt10 pl10 pr10">
                 <input type="text" class="form-control input_search ftc">
@@ -17,17 +17,17 @@
               </li>
         </ul>
     </div>
-    <div class="w200 home-header-img">
+    <div class="mr15 home-header-img">
       <img src="../assets/img/icon.png" alt="图标" >
     </div>
     <nav class="flex-fill d-lg-show">
       <ul class="d-flex home-header-ul">
         <li ng-repeat="title in vm.titleSets" dec-drop-down>
           <a href="" class="ftc">{{title}}<b class="ml5 caret-top"></b></a>
-          <ul class="dropdown-menu mt-0">
-            <li class="dropdown-item"> <a href="" class="dropdown-item-text f61">{{title}}</a></li>
-            <li class="dropdown-item"> <a href="" class="dropdown-item-text f61">{{title}}</a></li>
-            <li class="dropdown-item"> <a href="" class="dropdown-item-text f61">{{title}}</a></li>
+          <ul class="liar-dropdown-menu mt-0">
+            <li class="liar-dropdown-item"> <a href="" class="liar-dropdown-item-text f61">{{title}}</a></li>
+            <li class="liar-dropdown-item"> <a href="" class="liar-dropdown-item-text f61">{{title}}</a></li>
+            <li class="liar-dropdown-item"> <a href="" class="liar-dropdown-item-text f61">{{title}}</a></li>
           </ul>
         </li>
       </ul>
@@ -40,9 +40,14 @@
       <button class="btn m10 mr-0 ftc bg-transparent ">登录</button>
       <button class="btn m10 ftc bg-transparent ">注册</button>
     </div>
-    <div class="w50 d-lg-none">
-        <span class="pointer home-header-logo"><i class="icon ion-md-search  ftc"></i></span>
-      </div>
+    <div class="w50 d-lg-none pr" dec-drop-down>
+        <a class="pointer home-header-logo" dec-drop-down><i class="icon ion-md-person ftc"></i></a>
+        <ul class="liar-dropdown-menu mt-0 r0">
+          <li class="liar-dropdown-item"> <a href="" class="liar-dropdown-item-text f61">登录</a></li>
+          <li class="liar-dropdown-item"> <a href="" class="liar-dropdown-item-text f61">注册</a></li>
+          <li class="liar-dropdown-item"> <a href="" class="liar-dropdown-item-text f61">注销</a></li>
+        </ul>
+    </div>
 </header>
 
 
