@@ -1,8 +1,8 @@
-<header class="d-flex home-header f14 pr15 pl15">
+<header class="liar-nav f14 pr15 pl15">
     <div class="w50 d-lg-none"  dec-nav-click setClass='trans0'>
-        <a class="pointer home-header-logo"><i class="icon ion-md-apps ftc"></i></a>
+        <a class="pointer logo"><i class="icon ion-md-apps ftc"></i></a>
         <ul class="navdown-menu bg4f liar-transition mt-0 tl">
-            <form class="pr mb10 mt10 pl10 pr10">
+            <form class="pr m10">
                 <input type="text" class="form-control input_search ftc">
                 <span class="pa input_search_btn t0 pointer"><i class="icon ion-md-search f14 ftc"></i></span>
             </form>
@@ -17,11 +17,11 @@
               </li>
         </ul>
     </div>
-    <div class="mr15 home-header-img">
+    <div class="mr15 img-contain">
       <img src="../assets/img/icon.png" alt="图标" >
     </div>
     <nav class="flex-fill d-lg-show">
-      <ul class="d-flex home-header-ul">
+      <ul class="d-flex header-ul">
         <li ng-repeat="title in vm.titleSets" dec-drop-down>
           <a href="" class="ftc">{{title}}<b class="ml5 caret-top"></b></a>
           <ul class="liar-dropdown-menu mt-0">
@@ -41,7 +41,7 @@
       <button class="btn m10 ftc bg-transparent ">注册</button>
     </div>
     <div class="w50 d-lg-none pr" dec-drop-down>
-        <a class="pointer home-header-logo" dec-drop-down><i class="icon ion-md-person ftc"></i></a>
+        <a class="pointer logo" dec-drop-down><i class="icon ion-md-person ftc"></i></a>
         <ul class="liar-dropdown-menu mt-0 r0">
           <li class="liar-dropdown-item"> <a href="" class="liar-dropdown-item-text f61">登录</a></li>
           <li class="liar-dropdown-item"> <a href="" class="liar-dropdown-item-text f61">注册</a></li>

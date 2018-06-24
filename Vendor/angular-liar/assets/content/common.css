@@ -78,6 +78,10 @@ a,a:hover{
     transition: all .3s ease;
 }
 
+.trans0{
+    transform: translate3d(0,0,0) !important;
+}
+
 /*宽高*/
 .hi{
     height: 100% !important;
@@ -103,4 +107,10 @@ a,a:hover{
 /*hr*/
 .liar-hr{
     border-top:solid 1px #dedede;
+}
+
+@media (max-width:992px){
+    .d-lg-show{
+        display: none !important;
+    }
 }
