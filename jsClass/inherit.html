@@ -15,14 +15,15 @@
         不能随便改动直接的原型。
     4.圣杯模式
     
-     function inherit() {
-         function F() {}
-         return function (target,origin) {
-             F.prototype = origin.prototype;
-             var f = new F();
-             target.prototype = f.prototype;
-         }
-     }
+ function inherit(target,origin) {
+        function F() {}
+        return - function (target,origin) {
+           F.prototype = origin.prototype;
+            var f = new F();
+            target.prototype = f;
+        }(target,origin)
+    }
+
 
 <body>
     
@@ -96,6 +97,16 @@
     //         target.prototype = f.prototype;
     //     }
     // }
+    
+     function inherit(target,origin) {
+        function F() {}
+        return - function (target,origin) {
+           F.prototype = origin.prototype;
+            var f = new F();
+            target.prototype = f;
+        }(target,origin)
+    }
+
 
     
 
