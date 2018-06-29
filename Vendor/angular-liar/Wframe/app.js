@@ -14,8 +14,14 @@
     app.provider('routerHelp',['$stateProvider',function($stateProvider){
         var createRouter =function(params){
             params.forEach(element => {
-                $stateProvider.state(element.name,{url:element.url,controller:element.controller,
-                                    templateUrl:element.templateUrl,resolve:element.resolve})
+                $stateProvider.state(
+                    element.name,
+                    {
+                        url:element.url,
+                        controller:element.controller,
+                        templateUrl:element.templateUrl,
+                        resolve:element.resolve
+                    })
             });
         }
         this.createRouter = createRouter;
@@ -24,17 +30,29 @@
         }
     }]);
     app.config(['$stateProvider','$urlRouterProvider','routerHelpProvider','routerConfig',function($stateProvider,$urlRouterProvider,routerHelp,routerConfig){
-       $urlRouterProvider.otherwise('login')
+       $urlRouterProvider.otherwise('app')
        $stateProvider
-            .state('login',{
-                url:'/login',
-                controller:'loginCtrl as vm',
-                templateUrl:'../system/login.html',
+            .state('app',{
+                url:'/app',
+                views:{
+                    '':{
+                        controller:'homeCtrl as vm',
+                        templateUrl:'../modules/home.html',
+                    },
+                    'header':{
+                        controller:'headerCtrl as vm',
+                        templateUrl:'../system/header.html',
+                    }
+                },
                 resolve:{
-                    loadCtrl:['$ocLazyLoad',function($ocLazyLoad){
-                        return $ocLazyLoad.load('../system/login.js');  
+                    '':['$ocLazyLoad',function($ocLazyLoad){
+                        return $ocLazyLoad.load('../modules/home.js');  
+                    }],
+                    'header':['$ocLazyLoad',function($ocLazyLoad){
+                        return $ocLazyLoad.load('../system/header.js');  
                     }]
-                }});
+                }
+            });
         routerHelp.createRouter(routerConfig);
     }]);
     app.factory('sessionFactory',['$window',$window=>{
@@ -93,11 +111,11 @@
                 url,
                 params,
                 cache,
-            }).success((response, status, headers, config)=>{
+            }).then((response, status, headers, config)=>{
                 $.isFunction(resolve)?
                         resolve(response, status, headers, config):
                         console.warn('ajaxService callback is not function');
-            }).error((response, status, headers, config)=>{
+            }).catch((response, status, headers, config)=>{
                 $.isFunction(reject)?
                         reject(response, status, headers, config):
                         console.warn('ajaxService callback is not function');
@@ -222,7 +240,7 @@
             link:function(scope,ele,attr){
                 ele.bind('mouseover',function(e){
                       var dropdown_menu = this.getElementsByClassName('liar-dropdown-menu')[0];
-                      if(dropdown_menu&&!$.hasClass(dropdown_menu,'show')){
+                      if(dropdown_menu&&dropdown_menu.$children().length>0&&!$.hasClass(dropdown_menu,'show')){
                         $.addClass(dropdown_menu,'show');
                         $.addClass(this.getElementsByTagName('a')[0],'fff')
                       }
@@ -247,10 +265,37 @@
                 var className = attr.setclass;
                 var aClassName = attr.asetclass||'active';
                 var targetEl = attr.targetel || 'navdown-menu';
-                var calc = attr.calc;
-
-                var dropdown_menu = ele[0].getElementsByClassName(targetEl)[0];
+   
+              //  if(!dropdown_menu) var dropdown_menu = ele[0].getElementsByClassName(targetEl)[0];
+                var dropdown_menuSidle = ele[0].getElementsByClassName('navdown-menu')[0];
              
+                ele.bind('mousedown',function(e){
+                    e = e||window.event;
+                    e.preventDefault();
+                    var el = e.target;
+                    if(el.nodeName === 'I' && el.getAttribute('left')!==undefined) {
+                        $.hasClass(dropdown_menuSidle,'trans0') ? $.removeClass(dropdown_menuSidle,'trans0'):$.addClass(dropdown_menuSidle,'trans0');
+                        return;
+                    }
+                    if(el.nodeName === 'A'&&el.getAttribute('parent') !==undefined){
+                        var menuContaint = angular.element(el).parent().find('ul');
+                        var height = menuContaint&&$.getStyle(menuContaint[0],'height');
+                        var li = menuContaint.find('li');
+                        // if(remove(height !=='0px')) return;
+                        if(height ==='0px'&&li.length>0&&!$.hasClass(ele[0],className)){ 
+                            $.addClass(angular.element(el).parent()[0],className);
+                            height = parseInt($.height(li[0],true))*li.length + 1; //1  hr分割线
+                            $.setStyle(menuContaint[0],'height',height+'px');
+                            menuContaint.bind('mousedown',setActive);
+                        }else{
+                            removeParent(angular.element(el).parent()[0],menuContaint[0]);
+                            menuContaint.unbind('mousedown',setActive)
+                        }
+                        li = null;
+                        menuContaint = null;
+                    }
+                })
+
                 function removeParent(child,menu){
                     if(child&&menu){
                         $.removeClass(child,className); 
@@ -266,30 +311,9 @@
                         }   
                     }
                 }
-                angular.element(ele.find('a')[0]).bind('mousedown',function(e){
-                    e.preventDefault();
-                    if(calc !==undefined){
-                        var height = dropdown_menu&&$.getStyle(dropdown_menu,'height');
-                        // if(remove(height !=='0px')) return;
-                        if(height ==='0px'&&ele[0]&&className&&!$.hasClass(ele[0],className)){ 
-                            $.addClass(ele[0],className);
-                            var li = dropdown_menu.getElementsByTagName('li');
-                            height = parseInt($.height(li[0],true))*li.length + 1; //1  hr分割线
-                            $.setStyle(dropdown_menu,'height',height+'px');
-                        }else{
-                            removeParent(ele[0],dropdown_menu);
-                        }
-                    }else{
-                        if(dropdown_menu&&className&&!$.hasClass(dropdown_menu,className)){
-                            $.addClass(dropdown_menu,className);
-                          }else{
-                            $.removeClass(dropdown_menu,className);
-                          }
-                    }
-                })
 
-                if(calc === undefined) return;
-                function remove(){
+                //遍历所有的目录节点 如果选中择置空
+                function remove(ele){
                     var children = ele.parent().children();
                     for (let index = 0; index < children.length; index++) {
                         let bol = false;
@@ -299,12 +323,19 @@
                                 $.removeClass(item,aClassName);  bol = true;
                             }   
                         }) 
+                        if(bol) return;
                     }
                 }
-                angular.element(angular.element(dropdown_menu).find('a')).bind('mousedown',function(e){
-                    remove();
-                    $.addClass(this.parentNode,aClassName);
-                })
+
+                function setActive(e){
+                    e = e ||window.evnet;
+                    e.stopPropagation();
+                    var target = e.target||window.evnet.target
+                    if(target.nodeName !== 'A') return false;
+                    remove(angular.element(target.parentNode.parentNode.parentNode));
+                    $.addClass(target.parentNode,aClassName);
+                }
+
             }
         }
     }
