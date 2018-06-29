@@ -44,12 +44,12 @@ input,button,textarea,select{*font-size:100%;}
 .cl{clear:left;}
 .cr{clear:rigth;}
 .clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
-.vm{verticle-align:middle;}
+.vm{vertical-align:middle;}
 .pr{position:relative;}
 .pa{position:absolute;}
 .abs-right{position:absolute;right:0}
 .zoom{zoom:1;}
-.hidden{visiility:hidden;}
+.hidden{visibility:hidden;}
 .none{display:none;}
 
 /*长度高度*/
@@ -78,6 +78,7 @@ input,button,textarea,select{*font-size:100%;}
 .h{height:100%}
 
 /*边距*/
+.ma{margin: auto}
 .m10{margin:10px;}
 .m15{margin:15px;}
 .m30{margin:30px;}
