@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../node_modules/vue//dist/vue.js" type='text/javascript'></script>
+    <title>component</title>
+</head>
+<body>
+    <div id='app'>
+        <for-label v-bind:receive = 'arr' v-on:update:receive = ' arr = $event'></for-label>
+        <base-check v-model='check'></base-check>
+        <for-label v-bind:receive = 'arr' v-on:update:receive = ' arr = $event'>
+            <template slot-scope='{ aa }'>
+               更新 {{aa}}
+            </template>
+        </for-label>
+        <ref-input ref='useInput'></ref-input>
+        <ref-input inline-template>
+            <div>
+                <p>These are compiled as the component's own template.</p>
+                <p>Not parent's transclusion content.</p>
+              </div>
+        </ref-input>
+    </div>
+</body>
+
+<script type='text/javascript'>
+    Vue.component('forLabel',{
+        props:['receive'],
+        template:`
+            <div>
+                <p v-for='item in receive'>
+                    <slot v-bind:aa='item'>
+                        原始{{item}}
+                    </slot>
+                </p>
+                <button @click='receive.push(9)'>receive.push(9)</button>
+            </div>
+        `,
+        data:function(){
+            return {
+                pop:undefined,
+            }
+        },
+        watch:{
+            receive:function(newValue,oldValue){
+                this.$emit('update:receive',newValue)
+            }
+        },
+        methods:{
+
+        }
+    })
+    Vue.component('baseCheck',{
+        model:{
+            prop:'checked',
+            event:'change'
+        },
+        props:{
+            checked:{}
+        },
+        template:`
+           <div>
+                <input type="checkbox" v-bind:checked = 'checked' v-on:change='$emit("change",$event.target.checked)'>
+                <input type='text' v-on:change='pro'>
+            </div>
+        `,
+    
+        inject:['pro']
+    })
+    Vue.component('refInput',{
+        template:`
+          <div>
+            <input type='text' ref='aaa' v-bind:value='val'>
+          </div>
+        `,
+        data:function(){
+            return {
+                val:'in',
+            }
+        },
+        methods:{
+            focus:function(data){
+                this.$refs.aaa.value = data;
+            }
+        }
+    })
+    var app = new Vue({
+        el:'#app',
+        data:{
+            arr:['l','c','h'],
+            check:true
+        },
+        methods:{
+            up:function(e){
+                this.arr = e;
+            },
+            pro:function(e){
+                console.log(e.target.value.split(','));
+                this.arr = e.target.value.split(',');
+            }
+        },
+        computed:{
+
+        },
+        components:{
+            
+        },
+        watch:{
+            check:function(newValue,oldValue){
+                console.log(newValue,oldValue);
+            }
+        },
+        provide:function(){
+            return{
+                pro:this.pro,
+            }
+        }
+    })
+
+</script>
+
+</html>
