@@ -1,0 +1,135 @@
+------------------------------------
+descriptors（描述符）分成两种，
+	一种是data descriptors,
+	另外一种是 accessor descriptors.
+	两种的descriptors有两个必选项,configurable和enumerable,
+	A data descriptor有两个可选项.
+		1.value
+		2.writable
+	accessor descriptor也有两个关键的属性。
+		1:get   //定义了一个函数，作为属性的getter,如果没有getter就为undefined 默认为undefined
+		2:set
+	这里面有一点是，可能会从原型链上面继承相应的属性，如果想避免这种情况，可以写get。所以可以用__proto__: null
+	
+注意：
+ data descriptors
+ accessor descriptor
+ 这两种不能混用。
+
+var obj = {};
+Object.defineProperty(obj,'key',{
+	__proto__:null,
+	value:'configurable?',
+    //configureable : false, //能否使用delete、能否需改属性特性、或能否修改访问器属性、，false为不可重新定义，默认值为false
+	//enumerable: false, //对象属性是否可通过for-in循环，false为不可循环,默认值为false
+	//writable: false, //对象属性是否可修改,false为不可修改,默认值为false
+	//value:undefined //对象属性的默认值,默认值为undefined
+})
+
+var obj = {'a':1,'b':2};
+Object.defineProperty(obj,'key',{
+	__proto__:null,
+	value:'configurable?',
+    configureable : true, 
+})
+for(var key in obj){console.log(key)}
+
+Object.defineProperty(obj,'p',{
+	set:function(){
+		this.a = 'a';
+	},
+	get:function(){
+		return this.a
+	}
+})
+
+-------------------------------------
+//访问器属性  getter , setter
+var book = {
+	_year:2004,
+	edition:0,
+}
+Object.defineProperty(book,'year',{
+	get:function(){
+		return this._year;
+	},
+	set:function(newValue){
+		if(newValue > 2004){
+			this._year = newValue;
+			this.edition += newValue -2004
+		}
+	}
+})
+
+----------------------------------
+//定义多个属性
+var book = {
+}
+Object.defineProperties(book,{
+	__year:{
+		value:2004,
+		writable:true,
+		configurable:true,
+	},
+	edition:{
+		value:0,
+		writable:true,
+	},
+	year:{
+		get:function(){
+			return this.__year;
+		},
+		set:function(newValue){
+			if(newValue>2004){
+			console.log(newValue);
+				this.__year = newValue;
+				console.log(this.__year,newValue);
+				this.edition += newValue -2004
+			}
+		}
+	}
+})
+
+-----------------------------------
+ //读取属性
+    var descriptor__year = Object.getOwnPropertyDescriptor(book,'_year');
+    var descriptor_year = Object.getOwnPropertyDescriptor(book,'year');
+	
+	
+	
+-----------------------------------
+//定制一个视图和数据变化绑定
+var div = document.createElement('div');
+div.style.cssText = 'position:fixed;top:100px;left:0'
+div.innerHTML = '	<label>读书使我快乐aaaa</label>'
+document.body.appendChild(div);
+
+var labelCtrl = {
+
+}
+Object.defineProperty(labelCtrl,'think',{
+	set:function(content){
+		div.innerHTML = content;
+	},
+	get:function(){
+		return div.innerHTML;
+	}
+})
+
+
+-----------------------------------------------------
+根据资料整理
+https://blog.csdn.net/qq_17335153/article/details/52584727   js Object的属性 Configurable,Enumerable,Writable,Value,Getter,Setter
+https://www.jianshu.com/p/07ba2b0c8fca		vue.js关于Object.defineProperty的利用原理 
+
+
+
+
+
+
+
+
+
+
+
+

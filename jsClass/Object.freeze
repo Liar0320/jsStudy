@@ -1,0 +1,9 @@
+Object.freeze(params) 阻止修改现有属性的特性和值，并阻止添加新属性
+返回值是传递给函数的对象。
+总的来说就是把对象完全变成const常亮 我的理解。
+function freeze(obj){
+	Object.freeze(obj);
+	Object.values(obj).forEach(function(item){
+		if(typeof(item) === 'object')freeze(item);
+	})
+}
