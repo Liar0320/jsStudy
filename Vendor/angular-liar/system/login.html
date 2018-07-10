@@ -1,18 +1,56 @@
-<div >
-   <!-- <a ui-sref="goBang">goBang</a>
-   <label for="url"></label><input type="text" name='url' ng-model="vm.url">
-   <label for="data"></label><input type="text" name='data' ng-model='vm.data'>
-   <button ng-click='vm.send()'>发送</button> -->
-   <form >
-        <fieldset>
+<div class="login">
+    <!-- 头部图标 -->
+    <div class="mb20 tc f20">
+        <p class=" pt30 pb30"><i class="icon ion-md-apps f30 ftc"></i></p>
+        <h1>Sign in to my Web</h1>
+    </div>
+    <form novalidate name='loginForm' class="mb20  login-containt">
+        <fieldset class="form-group">
             <label for="id">账号</label>
-            <input type="text" ng-model="vm.form.id">
+            <input type="text" class="form-control" name='id' ng-model="vm.form.id"  required >
+            <span class="error" ng-show='loginForm.id.$dirty&&loginForm.id.$error.required'>请输入账号</span>
         </fieldset>
-        <fieldset>
+        <fieldset  class="form-group">
             <label for="password">密码</label>
-            <input type="password" ng-model="vm.form.password">
+            <input type="password"  class="form-control" name='psw' ng-model="vm.form.password" required>
+            <span class="error" ng-show='loginForm.psw.$dirty&&loginForm.psw.$error.required'>请输入密码</span>
         </fieldset>
-       <button ng-click="vm.login()">登录</button>
-       <a ui-sref="goBang">gobang</a>
+        <fieldset class="tc">
+            <input type="reset" class=" btn btn-danger mr15" value="重置" >   <!--ng-click="loginForm.$setPristine();" -->
+            <input type="submit" class="btn btn-primary " value="提交" ng-disabled="loginForm.$invalid" ng-click="vm.login()">
+        </fieldset>
    </form>
+   <p class="login-signup mb20 ">
+        New to GitHub? 
+        <a href="">Create an account.</a>
+   </p>
 </div>
+
+<style>
+    .login{
+      width: 340px;
+      margin: 0 auto;
+    }
+
+    .login-containt{
+        padding: 20px;
+        font-size: 14px;
+        background-color: #fff;
+        border: 1px solid #d8dee2;
+        border-top: 1px solid #d8dee2;
+        border-radius: 5px;
+    }
+    .login-signup{
+        padding: 15px 20px;
+        text-align: center;
+        border: 1px solid #d8dee2;
+        border-radius: 5px;
+    }
+    form {
+      transition:all linear 0.5s;
+      background: transparent;
+    }
+    form .error {
+      color: red;
+    }
+</style>

@@ -22,6 +22,7 @@
     "oclazyload": "^1.1.0"
   },
   "dependencies": {
+    "angular-validation": "^1.4.4",
     "bootstrap": "^4.1.1",
     "md5": "^2.2.1"
   }

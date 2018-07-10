@@ -42,7 +42,7 @@
         }
     }]);
     app.config(['$stateProvider','$urlRouterProvider','routerHelpProvider','routerConfig',function($stateProvider,$urlRouterProvider,routerHelp,routerConfig){
-       $urlRouterProvider.otherwise('app');
+       $urlRouterProvider.otherwise('home');
        $stateProvider
             .state('app',{
                 url:'/home',

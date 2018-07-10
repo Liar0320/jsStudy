@@ -26,13 +26,13 @@
 )
     .constant('APP_REQUIRES',{
         modules:[{
-            name:'encrypt',
-            files:['../node_modules/md5/md5.js']
+            name:'validform',
+            files:['../node_modules/angular-validation/dist/angular-validation-rule.js','../node_modules/angular-validation/dist/angular-validation.js']
         }
         ]
     })
     .constant('APP_LOADMOD',{
-        'login':['encrypt']
+        'login':['validform']
     });
 })(angular);
 
