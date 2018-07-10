@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="./dist/angular.js"></script>
+    <script src='./index.js'> </script>
+    <title>active</title>
+</head>
+<style>
+    ul{
+        list-style: none;
+    }
+    ul .title{
+        color:#000
+    }
+    ul .child{
+        color:#222;
+        cursor: pointer;
+        padding: 5px;
+    }
+    .child.active{
+        background-color: blue;
+        color:#fff;
+    }
+    .child .delete{
+        width: 0;
+        height: 0;
+    }
+    .child.active .delete{
+        display: inline-block;
+        padding: 5px;
+        height: 10px;
+        width: 10px;
+        background: #000
+    }
+</style>
+<body ng-app='app'>
+    <div ng-controller="tabActiveControl as vm">
+        <!-- <p>{{vm.opo}}</p> -->
+        <dev-tab reslove='vm.data' callback='vm.callback(result)'></dev-tab>
+    </div> 
+</body>
+</html>
