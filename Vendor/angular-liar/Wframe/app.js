@@ -1,6 +1,6 @@
 
 (function(angular){
-    'use strict'
+    'use strict';
     var app = angular.module('app',['ui.router','oc.lazyLoad']);
     app.config(function ($controllerProvider, $compileProvider, $filterProvider, $provide) {
         app.register = {
@@ -13,6 +13,7 @@
     });
     app.provider('routerHelp',['$stateProvider',function($stateProvider){
         var createRouter =function(params){
+            if(!params) return;
             params.forEach(element => {
                 $stateProvider.state(
                     element.name,
@@ -20,8 +21,19 @@
                         url:element.url,
                         controller:element.controller,
                         templateUrl:element.templateUrl,
-                        resolve:element.resolve
-                    })
+                        resolve:{
+                            loadCtrl:['$ocLazyLoad','APP_LOADMOD',function($ocLazyLoad,APP_LOADMOD){
+                                var mod = [];
+                                var arr = element.resolve.split('/');
+                                var name = arr[arr.length - 1].split('.js')[0];
+                                APP_LOADMOD[name]&&APP_LOADMOD[name].forEach(function(item){
+                                    mod.push(item);
+                                });
+                                mod.push(element.resolve);
+                                return $ocLazyLoad.load(mod);  
+                            }]
+                        }
+                    });
             });
         }
         this.createRouter = createRouter;
@@ -30,10 +42,10 @@
         }
     }]);
     app.config(['$stateProvider','$urlRouterProvider','routerHelpProvider','routerConfig',function($stateProvider,$urlRouterProvider,routerHelp,routerConfig){
-       $urlRouterProvider.otherwise('app')
+       $urlRouterProvider.otherwise('home');
        $stateProvider
             .state('app',{
-                url:'/app',
+                url:'/home',
                 views:{
                     '':{
                         controller:'homeCtrl as vm',
