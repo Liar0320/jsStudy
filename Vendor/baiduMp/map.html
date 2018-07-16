@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="http://api.map.baidu.com/api?v=3.0&ak=C2KdLl8qc9qqFUwM7RGu0Ubcui4BedID"  type='text/javascript' ></script>
+    <title>baidu map</title>
+</head>
+<style>
+    #map_containt{
+        height: 500px;
+    }
+</style>
+<body>
+    <div id='map_containt'></div>
+</body>
+<script type='text/javascript'>
+        setMap('map_containt',0,0);
+        function setMap(id, x, y) {
+            // 初始化地图
+            var map = new BMap.Map(id); // 创建地图实例  
+            var point = new BMap.Point(x || 120.15, y || 30.25); // 创建点坐标  
+            map.centerAndZoom(point, 15); // 初始化地图，设置中心点坐标和地图级别  
+            map.enableScrollWheelZoom(true); //开启鼠标滚轮缩放
+            var marker = new BMap.Marker(point); // 创建标注    
+            map.addOverlay(marker);
+		}
+</script>
+</html>
