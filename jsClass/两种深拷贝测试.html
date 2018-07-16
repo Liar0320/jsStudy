@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>js深copy测试</title>
+    <script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+</head>
+<body>
+   <p> JSON.parse(JSON.stringify(obj))</p>
+   <p>    坏处：1.将对象属性中的函数破坏    </p>
+   <p>          2.会将原型破坏</p>
+   <p>    好处：在处理对象不是很大，很多的时候 性能占优。</p>
+   <p>  copy原型---(这里以angular.copy方法进行测试)  </p>
+   <p>    坏处：会进行深度递归所以在对象层级嵌套很多的时候,性能较差   </p>
+   <p>    好处：进行递归 会保留该对象所有的属性 所以完整性高</p>
+   <p>不考虑 原型链和函数 选暴利</p>
+</body>
+<script>
+    // var obj = {
+    // }
+    // for (let i = 0; i < 200; i++) {
+    //     obj['abc'+i] = i+'tessedsdsadasdas';   
+    // }
+    var startTime = new Date();
+    // var arr = [];
+    // for (let i = 0; i < 10000; i++) {     
+    //    arr[i] = JSON.parse(JSON.stringify(obj));
+    //  //  arr[i] = angular.copy(obj)
+    // }
+    var extend = function(oldObj){
+        return JSON.parse(JSON.stringify(oldObj))
+    }
+
+    var test={a:"ss",b:[1,2,3],c:{d:"css",e:"cdd",f:{g:"zz"}}};
+    for (let i = 0; i < 200; i++) {
+        test['abc'+i] =  {i:{i:i+'tessedsdsadasdas'}} ;   
+    }
+    var test1={};
+
+    var startTime1 = new Date();
+    for(var i = 0 ; i < 1000 ; i++){
+        test1 = extend(test);
+    }
+    var endTime1 = new Date();
+
+    var startTime2 = new Date();
+    for(var i = 0 ; i < 1000 ; i++){
+        test2 = angular.copy(test);
+    }
+    var endTime2 = new Date();
+
+
+
+    document.write(endTime1.getTime()-startTime1.getTime(),'ms           ',endTime2.getTime()-startTime2.getTime(),'ms           ');
+    console.log(endTime1.getTime()-startTime1.getTime(),'ms           ',endTime2.getTime()-startTime2.getTime(),'ms');
+
+</script>
+</html>
