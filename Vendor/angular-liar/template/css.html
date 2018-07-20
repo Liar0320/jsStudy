@@ -11,6 +11,11 @@
     <title>home</title>
 </head>
 <style>
+    a,a:focus,a:hover{
+        color: #000;
+        text-decoration: initial;
+    }
+
     .text-line{
         position: relative;
         text-align: center;
@@ -31,6 +36,18 @@
         font-size: 16px;
         color: #919191;
     }
+
+    .filter-line .child{
+
+    }
+    .filter-line .active.child::after{
+        content: '';
+        position: absolute;
+        left: 5px;
+        bottom: 0;
+        right: 5px;
+        border-bottom: solid 2px #00c1de;
+    }
 </style>
 <body>
     <div class="container">
@@ -43,9 +60,10 @@
         </div>
         <div class="filter-line">
             <ul class="d-flex">
-                <li class="p15 f16">炼丹炉</li>
-                <li>蟠桃会</li>
-                <li>天宫</li>
+                <li class="p15 f16 child pr"><a href="">炼丹炉</a></li>
+                <li class="p15 f16 child pr active"><a href="">蟠桃会</a></li>
+                <li class="p15 f16 child pr"><a href="">天宫</a></li>
+                <li class="p15 f16 child pr"><a href="">天宫</a></li>
             </ul>
         </div>
         <div class="row">
@@ -64,5 +82,12 @@
         </div>
     </div>
     
+    <ul>
+        <li class="item1"></li>
+        <li class="item2"></li>
+        <li class="item3"></li>
+        <li class="item4"></li>
+        <li class="item5"></li>
+    </ul>
 </body>
 </html>
