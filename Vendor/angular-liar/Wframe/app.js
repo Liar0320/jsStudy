@@ -2,15 +2,15 @@
 (function(angular){
     'use strict';
     var app = angular.module('app',['ui.router','oc.lazyLoad']);
-    app.config(function ($controllerProvider, $compileProvider, $filterProvider, $provide) {
-        app.register = {
-            controller: $controllerProvider.register,
-            directive: $compileProvider.directive,
-            filter: $filterProvider.register,
-            factory: $provide.factory,
-            service: $provide.service
-        };
-    });
+    // app.config(function ($controllerProvider, $compileProvider, $filterProvider, $provide) {
+    //     app.register = {
+    //         controller: $controllerProvider.register,
+    //         directive: $compileProvider.directive,
+    //         filter: $filterProvider.register,
+    //         factory: $provide.factory,
+    //         service: $provide.service
+    //     };
+    // });
     app.provider('routerHelp',['$stateProvider',function($stateProvider){
         var createRouter =function(params){
             if(!params) return;
