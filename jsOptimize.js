@@ -335,7 +335,34 @@ const $ = {};
   };
 })($);
 
+//兼容 ie 8 和ie8以下
 (function($) {
+  function objectKes(object){
+    if(Object.keys){
+      return Object.keys(object);
+    }
+    var result = [];
+    for(var key in obj){
+      if(obj.prototype.hasOwnProperty(key)){
+        result.push(key);
+      }
+    }
+    return result;
+  }
+
+  function indexOf(arr,value){
+    if(Array.prototype.indexOf){
+      return arr.indexOf(value);
+    }
+    var len = arr.length >>> 0, from = Number(arguments[2]) || 0 ,
+    from = (from < 0) ?  Math.ceil(from) : Math.floor(from);
+    for (;from < len ; from++) {
+      if(from in arr && value === arr[from]) return from;
+    }
+    return -1;
+  }
+
+
   //IE8和IE8以下的浏览器
   //document.body.scrollLeft document.documentElement.scrollLeft 会混乱但是只会存在一个
   function getScrollOffset() {

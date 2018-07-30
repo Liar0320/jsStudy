@@ -18,5 +18,6 @@
   "homepage": "https://github.com/Liar0320/jsStudy#readme",
   "devDependencies": {
     "angular": "^1.6.9"
-  }
+  },
+  "dependencies": {}
 }
