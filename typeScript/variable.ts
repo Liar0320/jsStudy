@@ -1,3 +1,4 @@
+import {sum} from "./lib";
 let [a,b] = [1,2];
 [b,a] = [a,b];
 
@@ -17,7 +18,9 @@ console.log(list);
 
 function printLabel(labelledObj: { label: string }) {
     console.log(labelledObj.label);
-  }
+}
   
-  let myObj = { size: 10, label: "Size 10 Object" };
-  printLabel(myObj);
+let myObj = { size: 10, label: "Size 10 Object" };
+printLabel(myObj);
+
+console.log(sum(3,5));
