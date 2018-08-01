@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>angular-vs-repeat</title>
+    <link rel="stylesheet" href="./dist/select.css">
+    <link rel="stylesheet" href="./dist/bootstrap3.css">
+    <script src="./dist/angular.js"></script>
+    <script src="./dist/select.js"></script>
+    <script src="./angular-ui-select.js"></script>
+
+</head>
+<body ng-app='app'>
+    <div ng-controller="repeat as vm">
+        <ui-select class="ui-select" ng-model="selected.value">
+            <ui-select-match class="ui-select-match">
+                <span ng-bind="$select.selected.name"></span>
+            </ui-select-match>
+            <ui-select-choices class="ui-select-choices" repeat="item in (itemArray | filter: $select.search) track by item.id">
+                <span ng-bind="item.name"></span>
+            </ui-select-choices>
+        </ui-select>
+
+        <ui-select class="ui-select" multiple  ng-model="selected.value">
+            <ui-select-match class="ui-select-match" placeholder="Select person...">
+                {{$item.name}} &lt;1231&gt;
+            </ui-select-match>
+            <ui-select-choices class="ui-select-choices" repeat="item in (itemArray | filter: $select.search) track by item.id">
+                <span ng-bind="item.name"></span>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+</body>
+</html>
