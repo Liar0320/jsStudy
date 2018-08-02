@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+
+<head>
+	<script src="jquery-3.2.1.min.js"></script>
+	<script src="FileSaver.js"></script>
+	<script src="jquery.wordexport.js"></script>
+</head>
+
+<body>
+	<input type="button" value="上传" />
+	<div id="page-content">
+		<style>
+			.table {
+				width: 100%;
+				border: solid 1px #000;
+				border-collapse: collapse;
+			}
+
+			.caption {
+				font-size: 26px;
+				text-align: center;
+				width: 100%;
+			}
+
+			.verify {}
+
+			.verify-td {
+				width: 200px;
+				padding: 0px;
+				border-right: solid 1px #000;
+				border-bottom: solid 1px #000;
+				padding:5px;
+
+			}
+
+			.verify-last-td {
+				border-right: none;
+			}
+			.verify-text{
+				min-height: 300px;
+				/* width: 100%; */
+			}
+
+			.text-underline {
+				text-decoration: underline
+			}
+			.comment{
+				font-size: 14px;
+				font-family: FangSong;
+			}
+		</style>
+		<div>
+				<h1 class="caption">公司审核安排方案</h1>
+				<table class="table verify">
+					<!-- <caption class="caption">公司审核安排方案</caption> -->
+					<tr>
+						<td class="verify-td">公司</td>
+						<td class="verify-td" colspan="3">{{company}}</td>
+						<!-- <td class="verify-td"></td> -->
+						<!-- <td class="verify-td"></td> -->
+						<td class="verify-td">DOC编号</td>
+						<td class="verify-td verify-last-td"></td>
+					</tr>
+					<tr>
+						<td class="verify-td" rowspan="2">审核种类</td>
+						<td class="verify-td" colspan="3">国际：{{international}}}</td>
+						<!-- <td class="verify-td"></td> -->
+						<!-- <td class="verify-td"></td> -->
+						<td class="verify-td" rowspan="2">审核时间</td>
+						<td class="verify-td verify-last-td" rowspan="2">{{verifyTime}}</td>
+					</tr>
+					<tr>
+						<!-- <td class="verify-td" rowspan="2">审核种类</td> -->
+						<td class="verify-td" colspan="3">国内：{{domestic}}</td>
+						<!-- <td class="verify-td"></td> -->
+						<!-- <td class="verify-td"></td> -->
+						<!-- <td class="verify-td" rowspan="2">审核时间</td> -->
+						<!-- <td class="verify-td verify-last-td" rowspan="2">{{verifyTime}}</td> -->
+					</tr>
+					<tr>
+						<td class="verify-td">审核地点</td>
+						<td class="verify-td" colspan="3">{{verifyAddress}}</td>
+						<!-- <td class="verify-td"></td> -->
+						<!-- <td class="verify-td"></td> -->
+						<td class="verify-td" >代表船及审核种类</td>
+						<td class="verify-td verify-last-td" >{{delegateAndType}}</td>
+					</tr>
+					<tr>
+						<td class="verify-td" rowspan="3">审核成员</td>
+						<td class="verify-td">姓名</td>
+						<td class="verify-td">审核身份</td>
+						<td class="verify-td">所在单位</td>
+						<td class="verify-td" >执法证号</td>
+						<td class="verify-td verify-last-td">联系电话</td>
+					</tr>
+					<tr>
+						<!-- <td class="verify-td" rowspan="3||{{verifyNums+1}}">审核成员</td> -->
+						<td class="verify-td">{{name}}</td>
+						<td class="verify-td">{{verifyId}}</td>
+						<td class="verify-td">{{verifyUnit}}</td>
+						<td class="verify-td" >{{lawOfId}}</td>
+						<td class="verify-td verify-last-td">{{phoneNumber}}</td>
+					</tr>
+					<tr>
+						<!-- <td class="verify-td" rowspan="3||{{verifyNums+1}}">审核成员</td> -->
+						<td class="verify-td">{{name}}</td>
+						<td class="verify-td">{{verifyId}}</td>
+						<td class="verify-td">{{verifyUnit}}</td>
+						<td class="verify-td" >{{lawOfId}}</td>
+						<td class="verify-td verify-last-td">{{phoneNumber}}</td>
+					</tr>
+					<tr>
+						<td class="verify-text" colspan="6">
+							具体日程安排及相关说明：
+							<p>	<span style="border:solid 1px #000;">√</span></p>
+							<p></p>
+							<p></p>
+							<p></p>
+							<p></p>
+						</td>
+					</tr>
+				</table>
+				<table style="width: 100%;">
+					<tr>
+						<td style="width: 33%; text-align: left">制定人：lich</td>
+						<td style="width: 33%; text-align: center">联系电话：11111111111</td>
+						<td style="width: 33%; text-align: right">2018年8月1日</td>
+					</tr>
+				</table>
+				<p class="comment" style="mso-fareast-font-family:仿宋">
+					（注：1.“审核种类”应同时备注审核所覆盖船舶的国籍及船种，若为年度审核，则还应标明审核次数。如“国际：第2次年度审核（中国籍、中国香港籍散货船、其他货船）”；2.若船舶仅作代表船审核，则“代表船及审核种类”填写船名后备注“仅作代表船”；3.此表盖章后发给公司，各局内部流转程序及方式自定。）
+				</p>
+		</div>
+		<!-- <p>（注：</p>
+		<p>1.“审核种类”应同时备注审核所覆盖船舶的国籍及船种，若为年度审核，则还应标明审核次数。如“国际：第2次年度审核（中国籍、中国香港籍散货船、其他货船）”；</p>
+		<p>2.若船舶仅作代表船审核，则“代表船及审核种类”填写船名后备注“仅作代表船”；</p>
+		<p>3.此表盖章后发给公司，各局内部流转程序及方式自定。）</p> -->
+	</div>
+
+	<a class="word-export" href="javascript:void(0)"> 导出 </a>
+	<script type="text/javascript">
+		jQuery(document).ready(function ($) {
+			$("a.word-export").click(function (event) {
+				$("#page-content").wordExport();
+			});
+		});
+	</script>
+</body>
+
+</html>
