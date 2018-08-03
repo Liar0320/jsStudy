@@ -124,9 +124,12 @@ var content = `      <div class='Section1'>
     </table>
 </div>
 <p style="margin:0pt; text-indent:3.35pt">
-    <span style="font-family:宋体; font-size:10.5pt">制定人：{{person}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    <span style="font-family:宋体; font-size:10.5pt">制定人：{{person}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
     <span style="font-family:宋体; font-size:10.5pt">联系电话：{{phoneNumber}} &nbsp;&nbsp;&nbsp;&nbsp; </span>
     <span style="font-family:宋体; font-size:10.5pt">{{year}}年{{M}}月{{D}}日</span>
+</p>
+<p style="margin:0pt; text-indent:3.35pt">
+    <span style="font-family:宋体; font-size:10.5pt">&nbsp;</span>
 </p>
 <p style="margin:0pt; text-indent:3.25pt">
     <span style="font-family:仿宋_GB2312; font-size:10.5pt">（注：1.“审核种类”应同时备注审核所覆盖船舶的国籍及船种，若为年度审核，则还应标明审核次数。如“国际：第2次年度审核（中国籍、中国香港籍散货船、其他货船）”；2.若船舶仅作代表船审核，则“代表船及审核种类”填写船名后备注“仅作代表船”；3.此表盖章后发给公司，各局内部流转程序及方式自定。）</span>
