@@ -1,3 +1,4 @@
+'use strict';
 // https://www.jianshu.com/p/287e0bb867ae  es6
 
 // https://segmentfault.com/a/1190000008866165        结合microtask和macrotask理解event-loop
@@ -25,7 +26,7 @@ _promise.then(function (res) {
 var _promise2 = new Promise(function (resolve, reject) {
     return reject(2);
 }).then(function (res) {
-    return resolve;
+    return res;
 });
 
 const asyncGreet = function () {

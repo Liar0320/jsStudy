@@ -2,7 +2,9 @@
     "globals": {
         "$": false,
         "window": false,
-        "document": false
+        "document": false,
+        "setTimeout":false,
+        "console":false
     },
     "strict": "global",
     "curly": true,

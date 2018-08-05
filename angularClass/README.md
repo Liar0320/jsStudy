@@ -15,3 +15,12 @@
         http请求
         $timeout,$interval
         手动调用$apply(), $digest()
+
+
+    对angular-ui-router的了解
+    底层都是  $stateChangeStart 开始注册  然后 通过
+    $stateChangeSuccess  进行销毁
+    $locationChangeSuccess 调用function update(evt) {} 最后进行对路由 是否存在改变url 一层管控  进行视图的更新。
+
+    中间有两个入口 一个  $browser.onUrlChange(function(newUrl, newState) {}
+    另外一个 transition.to

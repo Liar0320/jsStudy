@@ -1,0 +1,15 @@
+{
+  "name": "es6class",
+  "version": "1.0.0",
+  "description": "es6-go",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src.js -d lib"
+  },
+  "author": "liar",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0"
+  }
+}

@@ -10,39 +10,39 @@
             service: $provide.service
         };
     });
-    theApp.provider('routerHelp', ['$stateProvider', function ($stateProvider) {
-        var createRouter = function (params, $state) {
-            var statesCol = [];
-            params.forEach(function (item) {
-                var confName = item.templateUrl.split('/').pop().split('.')[0];
-                var menus = {
-                    title: item.title,
-                    stateName: item.stateName || ('home.' + confName),
-                };
-                if ($state && $state.get(menus.stateName)) return statesCol.push(menus);
-                var url = '/' + confName;
-                if (item.params) {
-                    for (var i = 0; i < item.params.length; i++) {
-                        url += '/:' + item.params[i];
-                    }
-                }
-                $stateProvider.state(menus.stateName, {
-                    url: url,
-                    // controller:'',
-                    title: item.title,
-                    templateUrl: item.templateUrl,
-                    //resolve:{}
-                });
-                statesCol.push(menus);
-            });
-            return statesCol;
-        };
+    // theApp.provider('routerHelp', ['$stateProvider', function ($stateProvider) {
+    //     var createRouter = function (params, $state) {
+    //         var statesCol = [];
+    //         params.forEach(function (item) {
+    //             var confName = item.templateUrl.split('/').pop().split('.')[0];
+    //             var menus = {
+    //                 title: item.title,
+    //                 stateName: item.stateName || ('home.' + confName),
+    //             };
+    //             if ($state && $state.get(menus.stateName)) return statesCol.push(menus);
+    //             var url = '/' + confName;
+    //             if (item.params) {
+    //                 for (var i = 0; i < item.params.length; i++) {
+    //                     url += '/:' + item.params[i];
+    //                 }
+    //             }
+    //             $stateProvider.state(menus.stateName, {
+    //                 url: url,
+    //                 // controller:'',
+    //                 title: item.title,
+    //                 templateUrl: item.templateUrl,
+    //                 //resolve:{}
+    //             });
+    //             statesCol.push(menus);
+    //         });
+    //         return statesCol;
+    //     };
 
-        this.createRouter = createRouter;
-        this.$get = function () {
-            return createRouter;
-        };
-    }]);
+    //     this.createRouter = createRouter;
+    //     this.$get = function () {
+    //         return createRouter;
+    //     };
+    // }]);
     app.provider('routerHelp', ['$stateProvider', function ($stateProvider) {
         var createRouter = function (params, $state) {
             if (!params) return;

@@ -1,0 +1,43 @@
+{
+    "company":"西游记",
+    "DOCBH":"Hz2018202",
+    "international":"西游记国际版",
+    "domestic":"西游记国内版",
+    "verifyTime":"2018-2-3",
+    "verifyAddress":"不周山山脚",
+    "delegateAndType":"仙侠传",
+    "shzcy":[
+        {
+            "name":"唐僧",
+            "verifyId":"000",
+            "verifyUnit":"大慈恩寺",
+            "lawOfId":"000000",
+            "phoneNumber":"12345678900"
+        },{
+            "name":"孙悟空",
+            "verifyId":"001",
+            "verifyUnit":"花果山",
+            "lawOfId":"000001",
+            "phoneNumber":"12345678901"
+        },{
+            "name":"猪八戒",
+            "verifyId":"002",
+            "verifyUnit":"天庭",
+            "lawOfId":"000002",
+            "phoneNumber":"12345678902"
+        },{
+            "name":"沙悟净",
+            "verifyId":"003",
+            "verifyUnit":"通天河",
+            "lawOfId":"000003",
+            "phoneNumber":"12345678903"
+        }
+    ],
+    "person":"魔尊重楼",
+    "phoneNumber":"11111111111",
+    "year":"2018",
+    "M":"8",
+    "D":"30",
+    "schedulingProgram":"《西游记》是中国古代第一部浪漫主义章回体长篇神魔小说。现存明刊百回本《西游记》均无作者署名。清代学者吴玉搢等首先提出《西游记》作者是明代吴承恩 [1]  。这部小说以“唐僧取经”这一历史事件为蓝本，通过作者的艺术加工，深刻地描绘了当时的社会现实。全书主要描写了孙悟空出世及大闹天宫后，遇见了唐僧、猪八戒和沙僧三人，西行取经，一路降妖伏魔，经历了九九八十一难，终于到达西天见到如来佛祖，最终五圣成真的故事。"
+    
+}
