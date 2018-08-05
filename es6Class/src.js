@@ -194,3 +194,148 @@ var shzcyxx = ` <tr style="height:26.85pt">
     </p>
 </td>
 </tr>`;
+
+
+
+
+
+var content3 = `        <p style="font-size:18pt; line-height:150%; margin:0pt; orphans:0; text-align:center; widows:0">
+<span style="font-family:宋体; font-size:18pt; font-weight:bold">审核计划</span>
+</p>
+<div style="text-align:center">
+<table cellspacing="0" cellpadding="0" style="border-collapse:collapse; margin:0 auto">
+    <tr style="height:34pt">
+        <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:1pt; border-left-color:#000000; border-left-style:solid; border-left-width:1pt; border-right-color:#000000; border-right-style:solid; border-right-width:1pt; border-top-color:#000000; border-top-style:solid; border-top-width:1pt; padding-left:0.9pt; padding-right:0.9pt; vertical-align:middle; width:152pt">
+            <p style="line-height:15pt; margin:0pt; orphans:0; text-align:center; widows:0">
+                <span style="font-family:宋体; font-size:10.5pt">公司/船舶</span>
+            </p>
+        </td>
+        <td colspan="3" style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:1pt; border-left-color:#000000; border-left-style:solid; border-left-width:1pt; border-right-color:#000000; border-right-style:solid; border-right-width:1pt; border-top-color:#000000; border-top-style:solid; border-top-width:1pt; padding-left:0.9pt; padding-right:0.9pt; vertical-align:middle; width:282.75pt">
+            <p style="line-height:15pt; margin:0pt; orphans:0; text-align:center; widows:0">
+                <span style="font-family:宋体; font-size:10.5pt">{{name}}</span>
+            </p>
+        </td>
+    </tr>
+    <tr style="height:34pt">
+        <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:1pt; border-left-color:#000000; border-left-style:solid; border-left-width:1pt; border-right-color:#000000; border-right-style:solid; border-right-width:1pt; border-top-color:#000000; border-top-style:solid; border-top-width:1pt; padding-left:0.9pt; padding-right:0.9pt; vertical-align:middle; width:152pt">
+            <p style="line-height:15pt; margin:0pt; orphans:0; text-align:center; widows:0">
+                <span style="font-family:宋体; font-size:10.5pt">文件审核/熟悉时间</span>
+            </p>
+        </td>
+        <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:1pt; border-left-color:#000000; border-left-style:solid; border-left-width:1pt; border-right-color:#000000; border-right-style:solid; border-right-width:1pt; border-top-color:#000000; border-top-style:solid; border-top-width:1pt; padding-left:0.9pt; padding-right:0.9pt; vertical-align:middle; width:112.2pt">
+            <p style="line-height:15pt; margin:0pt; orphans:0; text-align:center; widows:0">
+                <span style="font-family:宋体; font-size:10.5pt">{{firstTime}}</span>
+            </p>
+        </td>
+        <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:1pt; border-left-color:#000000; border-left-style:solid; border-left-width:1pt; border-right-color:#000000; border-right-style:solid; border-right-width:1pt; border-top-color:#000000; border-top-style:solid; border-top-width:1pt; padding-left:0.9pt; padding-right:0.9pt; vertical-align:middle; width:73.9pt">
+            <p style="line-height:15pt; margin:0pt; orphans:0; text-align:center; widows:0">
+                <span style="font-family:宋体; font-size:10.5pt">首次会议时间</span>
+            </p>
+        </td>
+        <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:1pt; border-left-color:#000000; border-left-style:solid; border-left-width:1pt; border-right-color:#000000; border-right-style:solid; border-right-width:1pt; border-top-color:#000000; border-top-style:solid; border-top-width:1pt; padding-left:0.9pt; padding-right:0.9pt; vertical-align:middle; width:91.05pt">
+            <p style="line-height:15pt; margin:0pt; orphans:0; text-align:center; widows:0">
+                <span style="font-family:宋体; font-size:10.5pt">{{firstTimeCommit}}</span>
+            </p>
+        </td>
+    </tr>
+    <tr style="height:34pt">
+        <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:1pt; border-left-color:#000000; border-left-style:solid; border-left-width:1pt; border-right-color:#000000; border-right-style:solid; border-right-width:1pt; border-top-color:#000000; border-top-style:solid; border-top-width:1pt; padding-left:0.9pt; padding-right:0.9pt; vertical-align:middle; width:152pt">
+            <p style="margin:0pt; orphans:0; text-align:center; widows:0">
+                <span style="font-family:宋体; font-size:10.5pt">活动审核/现场查验时间</span>
+            </p>
+        </td>
+        <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:1pt; border-left-color:#000000; border-left-style:solid; border-left-width:1pt; border-right-color:#000000; border-right-style:solid; border-right-width:1pt; border-top-color:#000000; border-top-style:solid; border-top-width:1pt; padding-left:0.9pt; padding-right:0.9pt; vertical-align:middle; width:112.2pt">
+            <p style="line-height:15pt; margin:0pt; orphans:0; text-align:center; widows:0">
+                <span style="font-family:宋体; font-size:10.5pt">{{sencodTime}}</span>
+            </p>
+        </td>
+        <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:1pt; border-left-color:#000000; border-left-style:solid; border-left-width:1pt; border-right-color:#000000; border-right-style:solid; border-right-width:1pt; border-top-color:#000000; border-top-style:solid; border-top-width:1pt; padding-left:0.9pt; padding-right:0.9pt; vertical-align:middle; width:73.9pt">
+            <p style="line-height:15pt; margin:0pt; orphans:0; text-align:center; widows:0">
+                <span style="font-family:宋体; font-size:10.5pt">末次会议时间</span>
+            </p>
+        </td>
+        <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:1pt; border-left-color:#000000; border-left-style:solid; border-left-width:1pt; border-right-color:#000000; border-right-style:solid; border-right-width:1pt; border-top-color:#000000; border-top-style:solid; border-top-width:1pt; padding-left:0.9pt; padding-right:0.9pt; vertical-align:middle; width:91.05pt">
+            <p style="line-height:15pt; margin:0pt; orphans:0; text-align:center; widows:0">
+                <span style="font-family:宋体; font-size:10.5pt">{{lastTimeCommit}}</span>
+            </p>
+        </td>
+    </tr>
+    <tr style="height:34pt">
+        <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:1pt; border-left-color:#000000; border-left-style:solid; border-left-width:1pt; border-right-color:#000000; border-right-style:solid; border-right-width:1pt; border-top-color:#000000; border-top-style:solid; border-top-width:1pt; padding-left:0.9pt; padding-right:0.9pt; vertical-align:middle; width:152pt">
+            <p style="line-height:15pt; margin:0pt; orphans:0; text-align:center; widows:0">
+                <span style="font-family:宋体; font-size:10.5pt">代表船审核时间</span>
+            </p>
+        </td>
+        <td colspan="3" style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:1pt; border-left-color:#000000; border-left-style:solid; border-left-width:1pt; border-right-color:#000000; border-right-style:solid; border-right-width:1pt; border-top-color:#000000; border-top-style:solid; border-top-width:1pt; padding-left:0.9pt; padding-right:0.9pt; vertical-align:middle; width:282.75pt">
+            <p style="line-height:15pt; margin:0pt; orphans:0; text-align:center; widows:0">
+                <span style="font-family:宋体; font-size:10.5pt">{{threeTime}}</span>
+            </p>
+        </td>
+    </tr>
+    <tr style="height:34pt">
+        <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:1pt; border-left-color:#000000; border-left-style:solid; border-left-width:1pt; border-right-color:#000000; border-right-style:solid; border-right-width:1pt; border-top-color:#000000; border-top-style:solid; border-top-width:1pt; padding-left:0.9pt; padding-right:0.9pt; vertical-align:middle; width:152pt">
+            <p style="margin:0pt; orphans:0; text-align:center; widows:0">
+                <span style="font-family:宋体; font-size:10.5pt">审核组内部会议时间</span>
+            </p>
+        </td>
+        <td colspan="3" style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:1pt; border-left-color:#000000; border-left-style:solid; border-left-width:1pt; border-right-color:#000000; border-right-style:solid; border-right-width:1pt; border-top-color:#000000; border-top-style:solid; border-top-width:1pt; padding-left:0.9pt; padding-right:0.9pt; vertical-align:middle; width:282.75pt">
+            <p style="line-height:15pt; margin:0pt; orphans:0; text-align:center; widows:0">
+                <span style="font-family:宋体; font-size:10.5pt">{{fourTime}}</span>
+            </p>
+        </td>
+    </tr>
+    <tr style="height:34pt">
+        <td colspan="4" style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:1pt; border-left-color:#000000; border-left-style:solid; border-left-width:1pt; border-right-color:#000000; border-right-style:solid; border-right-width:1pt; border-top-color:#000000; border-top-style:solid; border-top-width:1pt; padding-left:0.9pt; padding-right:0.9pt; vertical-align:middle; width:437.55pt">
+            <p style="font-size:10.5pt; line-height:150%; margin:0pt; orphans:0; text-align:center; widows:0">
+                <span style="font-family:宋体; font-size:10.5pt">具体分工及时间安排</span>
+            </p>
+        </td>
+    </tr>
+    <tr style="height:34pt" id='shzcy'>
+        <td colspan="4" style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:1pt; border-left-color:#000000; border-left-style:solid; border-left-width:1pt; border-right-color:#000000; border-right-style:solid; border-right-width:1pt; border-top-color:#000000; border-top-style:solid; border-top-width:1pt; padding-left:0.9pt; padding-right:0.9pt; vertical-align:middle; width:437.55pt">
+            <p style="font-size:10.5pt; line-height:150%; margin:0pt; orphans:0; text-align:center; widows:0">
+                <span style="font-family:宋体; font-size:10.5pt">具体分工及时间安排</span>
+            </p>
+        </td>
+    </tr>
+
+</table>
+</div>
+<p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0">
+<span style="font-family:宋体; font-size:10.5pt">&#xa0;</span>
+</p>
+<p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; text-indent:241.5pt; widows:0">
+<span style="font-family:宋体; font-size:10.5pt; font-weight:normal">审核组长签字：</span>
+<span style="font-family:宋体; font-size:10.5pt; font-weight:normal; text-decoration:underline"> </span>
+<span style="font-family:宋体; font-size:10.5pt; font-weight:bold"> </span>
+</p>
+<p style="margin:0pt; orphans:0; text-align:justify; widows:0">
+<span style="font-family:宋体; font-size:10.5pt">&#xa0;</span>
+</p>
+<p style="margin:0pt; orphans:0; text-align:justify; widows:0">
+<span style="font-family:宋体; font-size:10.5pt">&#xa0;</span>
+</p>
+<p style="margin:0pt; orphans:0; text-align:justify; widows:0">
+<span style="font-family:'Times New Roman'; font-size:10.5pt">&#xa0;</span>
+</p>
+<p style="margin:0pt; text-indent:3.25pt">
+<span style="font-family:仿宋_GB2312; font-size:10.5pt">（注：若为船舶《审核计划》，则“代表船审核时间”不适用，划“——”。）</span>
+</p>
+<p style="margin:0pt; orphans:0; text-align:center; widows:0">
+<span style="font-family:仿宋_GB2312; font-size:18pt; font-weight:bold">&#xa0;</span>
+</p>`;
+
+
+var tr3 = ` <tr style="height:34pt">
+<td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:1pt; border-left-color:#000000; border-left-style:solid; border-left-width:1pt; border-right-color:#000000; border-right-style:solid; border-right-width:1pt; border-top-color:#000000; border-top-style:solid; border-top-width:1pt; padding-left:0.9pt; padding-right:0.9pt; vertical-align:middle; width:152pt">
+    <p style="line-height:15pt; margin:0pt; orphans:0; widows:0">
+        <span style="font-family:宋体; font-size:10.5pt">审核员:</span>
+        <span style="font-family:宋体; font-size:10.5pt; text-decoration:underline"> {{person}}</span>
+    </p>
+</td>
+<td colspan="3" style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:1pt; border-left-color:#000000; border-left-style:solid; border-left-width:1pt; border-right-color:#000000; border-right-style:solid; border-right-width:1pt; border-top-color:#000000; border-top-style:solid; border-top-width:1pt; padding-left:0.9pt; padding-right:0.9pt; vertical-align:middle; width:282.75pt">
+    <p style="line-height:15pt; margin:0pt; orphans:0; text-align:justify; widows:0">
+        <span style="font-family:宋体; font-size:10.5pt">{{personInfo}}</span>
+    </p>
+</td>
+</tr>`;
