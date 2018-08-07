@@ -78,14 +78,14 @@
             var cbshfa = {
                 "shipName": "西游记",
                 "SMCBH": "Hz2018202",
-                "international": "西游记国际版",
-                "domestic": "西游记国内版",
+                "international": "西游记际",
+                "domestic": "西游记内",
                 "verifyTime": "2018-2-3",
                 "shipBirthPlace": "不周山山脚",
                 "verifyPlace":"天竺",
                 "verifyType": "仙侠传",
                 "shipCheif":"玉皇大帝",
-                "isMaster":"√是□    否□",
+                "isMaster":"是■     否□",
                 "verifyUnit":"天安门",
                 "shzcy": [
                     {
@@ -456,7 +456,7 @@
                     i =  Math.random(1,10).toFixed(1)*10;
                     temp = arr[i];
                  }
-
+                 temp = arr[0];
                 exportUtil.exportPdf(temp.data,temp.name);
             }
             

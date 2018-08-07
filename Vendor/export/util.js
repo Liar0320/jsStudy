@@ -15,17 +15,60 @@ function exportUtil(SheetJSExportService){
                 //     bolditalics: 'Roboto-Italic.ttf'
                 // },
                 /*这里是加入的微软雅黑字体*/
-                fzytk: {
-                    normal: 'FZYTK.TTF',
-                    bold: 'FZYTK.TTF',
-                    italics: 'FZYTK.TTF',
-                    bolditalics: 'FZYTK.TTF',
+                STSONG: {
+                    normal: 'STSONG.TTF',
+                    bold: 'STSONG.TTF',
+                    italics: 'STSONG.TTF',
+                    bolditalics: 'STSONG.TTF',
                 }
+        };
+
+        var common = {
+            styles: {
+                header: {
+                    fontSize: 18,
+                    alignment:'center',
+                    bold: true,
+                    margin: [0, 0, 0, 10]
+                },
+                subheader: {
+                    fontSize: 16,
+                    bold: true,
+                    margin: [0, 10, 0, 5]
+                },
+                tableExample: {
+                    margin: [0, 5, 0, 15],
+                    fontSize: 12,
+                },
+                tableHeader: {
+                    bold: true,
+                    fontSize: 10,
+                    color: 'black'
+                },
+                borderNone: {
+                    border:[false,false,false,false],
+                    margin:[0,10,0,0]
+                },
+                tdSt:{
+                    margin:[0,5,0,0],
+                    alignment: 'center'
+                },
+                ct:{
+                    alignment: 'center'
+                },
+                psStyle:{
+                    fontSize: 10,
+                }
+            },
+            defaultStyle: {
+                font:'STSONG',
+                alignment: 'justify'
+            }
         };
 
 
 
-        function wtqd(data){
+        function wtqd(data,common){
             var dd = {
                 content: [
                     {text: '问题清单', style: 'header'},
@@ -54,43 +97,8 @@ function exportUtil(SheetJSExportService){
                     },
                     {style:'psStyle',text:'（注: 问题不包括不符合规定情况。）'}
                 ],
-                styles: {
-                    header: {
-                        fontSize: 18,
-                        alignment:'center',
-                        bold: true,
-                        margin: [0, 0, 0, 10]
-                    },
-                    subheader: {
-                        fontSize: 16,
-                        bold: true,
-                        margin: [0, 10, 0, 5]
-                    },
-                    tableExample: {
-                        margin: [0, 5, 0, 15],
-                        fontSize: 14,
-                    },
-                    tableHeader: {
-                        bold: true,
-                        fontSize: 13,
-                        color: 'black'
-                    },
-                    borderNone: {
-                        border:[false,false,false,false],
-                        margin:[0,10,0,0]
-                    },
-                    tdSt:{
-                        margin:[0,5,0,0]
-                    },
-                    psStyle:{
-                        fontSize: 10,
-                        margin:[0,15]
-                    }
-                },
-                defaultStyle: {
-                    font:'fzytk',
-                    alignment: 'justify'
-                },
+                styles: common.styles,
+                defaultStyle: common.defaultStyle,
                 pageOrientation:"Landscape"
             }
       
@@ -146,7 +154,7 @@ function exportUtil(SheetJSExportService){
             return dealPdf(data,dd);
         }
     
-        function bfhgdqd(data){
+        function bfhgdqd(data,common){
             var dd = {
                 content: [
                     {text: '不符合规定情况清单', style: 'header'},
@@ -176,43 +184,8 @@ function exportUtil(SheetJSExportService){
                     },
                     {style:'psStyle',text:'（注: 1.在适用的□内打“√”；若有纠正措施验证有关情况说明，则本次验证人员应在“有□”内打“√”，后续验证时“有□”及“无□”均不需再做标记；若无纠正措施验证有关情况说明，则不需做标记，但最后一次验证人员需在“无□”内打“√”。2.不符合规定情况对应相关强制性规定时，则“对应规则章节号”备注“强制性规定”。3.“程度”填写“一般”、“严重” 或“重大”。4.“纠正期限”填写“立即纠正”、“一周内纠正”、“一个月内纠正”、“两个月内纠正”或“三个月内纠正”。）'}
                 ],
-                styles: {
-                    header: {
-                        fontSize: 18,
-                        alignment:'center',
-                        bold: true,
-                        margin: [0, 0, 0, 10]
-                    },
-                    subheader: {
-                        fontSize: 16,
-                        bold: true,
-                        margin: [0, 10, 0, 5]
-                    },
-                    tableExample: {
-                        margin: [0, 5, 0, 15],
-                        fontSize: 14,
-                    },
-                    tableHeader: {
-                        bold: true,
-                        fontSize: 13,
-                        color: 'black'
-                    },
-                    borderNone: {
-                        border:[false,false,false,false],
-                        margin:[0,10,0,0]
-                    },
-                    tdSt:{
-                        margin:[0,5,0,0]
-                    },
-                    psStyle:{
-                        fontSize: 10,
-                        margin:[0,15]
-                    }
-                },
-                defaultStyle: {
-                    font:'fzytk',
-                    alignment: 'justify'
-                },
+                styles: common.styles,
+                defaultStyle: common.defaultStyle,
                 pageOrientation:"Landscape"
                 
             }
@@ -271,7 +244,7 @@ function exportUtil(SheetJSExportService){
             return dealPdf(data,dd);
         }
     
-        function cbshbg(data){
+        function cbshbg(data,common){
             var dd = {
                 content: [
                     {text: '船舶审核报告', style: 'header'},
@@ -279,72 +252,37 @@ function exportUtil(SheetJSExportService){
                         style: 'tableExample',	
                         table: {
                             //widths: [85,80,80,85,60,60,60, 'auto'],
-                            widths: [55,55,55,55,55,55,55, 55],
+                            widths: [55,55,55,60,55,55,60, 55],
                         // heights:['*','*','*','*','*','*','*','*','*',300,'*'],
                             heights:[25,25,25,25,25,25,25,25,250,25,250,25,25,25,100,100,25,25,25,25],
                             body: [
                                 [{text:'船舶',style:'tdSt'}, {colSpan:2,text:'{{shipName}}',alignment: 'center',style:'tdSt'},'',{text:'SMC编号',style:'tdSt'},{text:'{{SMCBH}}',colSpan:2,style:'tdSt'},'',{text:'审核种类',colSpan:2,style:'tdSt'},{text:'{{verifyType}}',style:'tdSt'}],
                                 [{text:'是否为代表船',style:'tdSt'}, {colSpan:2,text:'{{isMaster}}',alignment: 'center',style:'tdSt'},'',{text:'SMC编号',style:'tdSt'},{text:'{{verifyTime}}',colSpan:4,style:'tdSt'},'','',''],
                                 [{text:'审核组成员'}, '','','','',{text:'审核组成员'}],
-                                [{text:'船舶基本情况 ',colSpan:8}, '','', '','', '','',''],
-                                [{text:'船种',margin:[0,20],rowSpan:2},{text:'国际：{{international}} ',colSpan:2,style:'tdst'},'',{text:'船籍港',margin:[0,20],rowSpan:2},{text:'{{shipBirthPlace}}',colSpan:2,margin:[0,20],rowSpan:2},'',{text:'总吨',margin:[0,20],rowSpan:2},{text:'{{shipTone}}',margin:[0,20],rowSpan:2}],
-                                ['',{text:'国内：{{domestic}} ',colSpan:2,style:'tdst'},'','','','','',''],
-                                [{text:'载客定额',style:'tdSt'},{text:'{{limitPassenger}} ',colSpan:2,style:'tdst'},'',{text:'船舶识别号',style:'tdSt'},{text:'{{shipId}} ',colSpan:2,style:'tdst'},'',{text:'体系内人数',style:'tdst'},{text:'{{txnCounts}}',style:'tdst'}],
+                                [{text:'船舶基本情况 ',colSpan:8,style:"tdSt"}, '','', '','', '','',''],
+                                [{text:'船种',style:"ct",margin:[0,20],rowSpan:2},{text:'国际：{{international}} ',colSpan:2,style:'tdSt'},'',{text:'船籍港',style:'ct',margin:[0,20],rowSpan:2},{text:'{{shipBirthPlace}}',colSpan:2,margin:[0,20],rowSpan:2,style:'ct'},'',{text:'总吨',style:'ct',margin:[0,20],rowSpan:2},{text:'{{shipTone}}',margin:[0,20],rowSpan:2,style:'ct'}],
+                                ['',{text:'国内：{{domestic}} ',colSpan:2,style:'tdSt'},'','','','','',''],
+                                [{text:'载客定额',style:'tdSt'},{text:'{{limitPassenger}} ',colSpan:2,style:'tdSt'},'',{text:'船舶识别号',style:'tdSt'},{text:'{{shipId}} ',colSpan:2,style:'tdSt'},'',{text:'体系内人数',style:'tdSt'},{text:'{{txnCounts}}',style:'tdSt'}],
                                 [{text:'船舶管理人',colSpan:3,style:'tdSt'},'','',{text:'{{shipCheif}}',colSpan:5,style:'tdSt'},'','','',''],
                                 [{text:'船舶所有人/光船承租人 ',colSpan:3,style:'tdSt'},'','',{text:'{{shipOwner}}',colSpan:5,style:'tdSt'},'','','',''],
                                 [{text:'船舶经营人',colSpan:3,style:'tdSt'},'','',{text:'{{shipManager}}',colSpan:5,style:'tdSt'},'','','',''],
                                 [{colSpan:8,text:'审核情况概述： \n  　　{{verifySurvey}}'}, '', '','','','','',''],
-                                [{colSpan:8, style:'tdSt',text:'问题合计{{problemCounts}}个，其中文件{{pbFileCounts}}个、代表船活动{{pbShipCounts}}个。'}, '', '','','','','',''],
+                                [{colSpan:8,pageBreak: 'before', style:'tdSt',text:'问题合计{{problemCounts}}个，其中文件{{pbFileCounts}}个、代表船活动{{pbShipCounts}}个。'}, '', '','','','','',''],
                                 [{text:'不符合规定情况合计', style:'tdSt',colSpan:3},'','',{text:'{{unaccordCounts}} ',colSpan:5, style:'tdSt'},  '', '','', ''],
                                 [{text:'文件', style:'tdSt'},{text:'{{filesCounts}}项', style:'tdSt'},{text:'船长 ', style:'tdSt'},{text:'{{captainCounts}}项', style:'tdSt'},{text:'甲板部 ', style:'tdSt'},{text:'{{boardCounts}}项 ', style:'tdSt'},{text:'轮机部', style:'tdSt'},{text:'{{engineCounts}}项', style:'tdSt'},],
                                 [{text:'一般不符合', style:'tdSt'},{text:'{{slightCounts}}项 ', style:'tdSt'},{text:'严重不符合', style:'tdSt',colSpan:2},'',{text:'{{seriousCounts}}项 ', style:'tdSt' },{text:'重大不符合 ', style:'tdSt',colSpan:2},'',{text:'{{mostSeriousCounts}}项', style:'tdSt'}],
                                 [{colSpan:8,text:'不符合规定情况综述： \n  　　{{fbhqkCollect}}'}, '', '','','',''],
                                 [{colSpan:8,text:'不符合规定情况纠正要求: \n  　　{{fbhqkRedirect}}'}, '', '','','',''],
-                                [{text:'审核意见', rowSpan:3,margin:[0,51,0,0]}, {text:'是否同意签发证书 （适用于临时、初次、换证审核）',colSpan:4, style:'tdSt'},'', '', '', {text:'{{istyqfzs}}', style:'tdSt',colSpan:3},'',''],
-                                ['', {text:'是否同意给予安全管理证书中间审核签注 （适用于中间审核） ',colSpan:4, style:'tdSt'}, '','', '', {text:'{{istyqfaqzs}}', style:'tdSt',colSpan:3},'',''],
-                                ['', {text:'是否同意给予安全管理证书附加审核签注 （适用于附加审核）',colSpan:4, style:'tdSt'}, '','', '', {text:'{{istyqfaqzsfj}}', style:'tdSt',colSpan:3},'',''],
+                                [{text:'审核意见', rowSpan:3,margin:[0,51,0,0]}, {text:'是否同意签发证书 （适用于临时、初次、换证审核）',alignment:"left",colSpan:4, style:'tdSt'},'', '', '', {text:'{{istyqfzs}}', style:'tdSt',colSpan:3},'',''],
+                                ['', {text:'是否同意给予安全管理证书中间审核签注 （适用于中间审核） ',colSpan:4, style:'tdSt',alignment:"left"}, '','', '', {text:'{{istyqfaqzs}}', style:'tdSt',colSpan:3},'',''],
+                                ['', {text:'是否同意给予安全管理证书附加审核签注 （适用于附加审核）',alignment:"left",colSpan:4, style:'tdSt'}, '','', '', {text:'{{istyqfaqzsfj}}', style:'tdSt',colSpan:3},'',''],
                             ]
                         }
                     },
                     {style:'psStyle',text:'（注: 1.在适用的□内打“√”；2.“审核种类”应同时备注审核所覆盖船舶的国籍及船种，若 为年度审核，则还应标明审核次数。）'}
                 ],
-                styles: {
-                    header: {
-                        fontSize: 18,
-                        alignment:'center',
-                        bold: true,
-                        margin: [0, 0, 0, 10]
-                    },
-                    subheader: {
-                        fontSize: 16,
-                        bold: true,
-                        margin: [0, 10, 0, 5]
-                    },
-                    tableExample: {
-                        margin: [0, 5, 0, 15],
-                        fontSize: 14,
-                    },
-                    tableHeader: {
-                        bold: true,
-                        fontSize: 13,
-                        color: 'black'
-                    },
-                    borderNone: {
-                        border:[false,false,false,false],
-                        margin:[0,10,0,0]
-                    },
-                    tdSt:{
-                        margin:[0,5,0,0]
-                    },
-                    psStyle:{
-                        fontSize: 10,
-                        margin:[0,15]
-                    }
-                },
-                defaultStyle: {
-                    font:'fzytk',
-                    alignment: 'justify'
-                }
+                styles: common.styles,
+                defaultStyle: common.defaultStyle,
                 
             }
     
@@ -381,7 +319,7 @@ function exportUtil(SheetJSExportService){
             return dealPdf(data,dd);
         }
     
-        function gsshbg(data) {
+        function gsshbg(data,common) {
             var dd = {
                 content: [
                     {text: '公司审核报告', style: 'header'},
@@ -393,68 +331,34 @@ function exportUtil(SheetJSExportService){
                             heights:[25,25,25,25,25,25,25,25,250,25,250,25,25,25,100,100,25,25,25,25],
                             body: [
                                 [{text:'公司',style:'tdSt'}, {colSpan:3,text:'{{company}}',alignment: 'center',style:'tdSt'},'','',{text:'DOC编号',style:'tdSt'},{text:'{{DOCBH}}',style:'tdSt'}],
-                                [{rowSpan:2,text:'审核种类',margin:[0,20]},{text:'国际：{{domestic}} ',colSpan:5,style:'tdst'}],
-                                [{rowSpan:2,text:'审核种类',margin:[0,20]},{text:'国内：{{international}} ',colSpan:5,style:'tdst'}],
+                                [{rowSpan:2,text:'审核种类',margin:[0,20]},{text:'国际：{{domestic}} ',colSpan:5,style:'tdSt'}],
+                                [{rowSpan:2,text:'审核种类',margin:[0,20]},{text:'国内：{{international}} ',colSpan:5,style:'tdSt'}],
                                 [{text:'审核组成员'}, '','','','',{text:'审核组成员'}],
-                                [{text:'公司基本情况 ',colSpan:6}, '','', '','', ''],
+                                [{text:'公司基本情况 ',style:'tdSt',colSpan:6}, '','', '','', ''],
                                 [{text:'法定代表人', style:'tdSt'},{text:'{{leader}}', style:'tdSt'},{text:'总经理', style:'tdSt'},{text:'{{topManager}}', style:'tdSt'},{text:'指定人员 ', style:'tdSt'},{text:'{{designee}}', style:'tdSt'}],
                                 [{text:'海务主管', style:'tdSt'}, {text:'{{HWcharge}}',colSpan:2, style:'tdSt'},  '',{text:'机务主管', style:'tdSt'}, {text:'{{JWcharge}}',colSpan:2, style:'tdSt'},''],
                                 [{text:'公司地址', style:'tdSt'}, {text:'{{companyAddress}} ',colSpan:3, style:'tdSt'},  '', '',{text:'公司识别码', style:'tdSt'}, {text:'{{companyId}}', style:'tdSt'}],
                                 [{colSpan:6,text:'公司最高领导层、岸基体系相关部门及分支机构情况： \n  　　{{companyInfo}}'}, '', '','','',''],
                                 [{text:'公司体系内人数', style:'tdSt'},{text:'{{txnPersonCounts}}', style:'tdSt'},{text:'岸基体系内人数', style:'tdSt'},{text:'{{jatxCounts}}', style:'tdSt'},{text:'体系内船舶数量 ', style:'tdSt'},{text:'{{txnShipCounts}}', style:'tdSt'}],
                                 [{colSpan:6,text:'审核情况概述： \n  　　{{verifySurvey}}'}, '', '','','',''],
-                                [{colSpan:6, style:'tdSt',text:'问题合计{{problemCounts}}个，其中文件{{pbFileCounts}}个、岸基活动{{pbAjCounts}}个、代表船活动{{pbShipCounts}}个。'}, '', '','','',''],
+
+                                [{colSpan:6,style:'tdSt',pageBreak: 'before', text:'问题合计{{problemCounts}}个，其中文件{{pbFileCounts}}个、岸基活动{{pbAjCounts}}个、代表船活动{{pbShipCounts}}个。'}, '', '','','',''],
                                 [{text:'不符合规定情况合计', style:'tdSt',colSpan:2}, {text:'{{unaccordCounts}} ',colSpan:4, style:'tdSt'},  '', '','', '',],
                                 [{text:'体系文件', style:'tdSt'},{text:'{{txFilesCounts}}项', style:'tdSt'},{text:'岸基活动 ', style:'tdSt'},{text:'{{ajActiveCounts}}项', style:'tdSt'},{text:'代表船活动 ', style:'tdSt'},{text:'{{masterShipCounts}}项 ', style:'tdSt'}],
-                                [{text:'一般不符合', style:'tdSt'},{text:'{slightCounts}}项 ', style:'tdSt'},{text:'严重不符合', style:'tdSt'},{text:'{{seriousCounts}}项 ', style:'tdSt'},{text:'重大不符合 ', style:'tdSt'},{text:'{{mostSeriousCounts}}项', style:'tdSt'}],
+                                [{text:'一般不符合', style:'tdSt'},{text:'{{slightCounts}}项 ', style:'tdSt'},{text:'严重不符合', style:'tdSt'},{text:'{{seriousCounts}}项 ', style:'tdSt'},{text:'重大不符合 ', style:'tdSt'},{text:'{{mostSeriousCounts}}项', style:'tdSt'}],
                                 [{colSpan:6,text:'不符合规定情况综述： \n  　　{{fbhqkCollect}}'}, '', '','','',''],
                                 [{colSpan:6,text:'不符合规定情况纠正要求: \n  　　{{fbhqkRedirect}}'}, '', '','','',''],
-                                [{text:'审核意见', rowSpan:4,margin:[0,68,0,0]}, {text:'是否同意签发证书 （适用于临时、初次、换证审核）',colSpan:3, style:'tdSt'}, '', '', {text:'{{istyqfzs}}', style:'tdSt',colSpan:2},''],
-                                ['', {text:'是否同意给予符合证明年度审核签注 （适用于年度审核） ',colSpan:3, style:'tdSt'}, '', '', {text:'{{istyshqz}}', style:'tdSt',colSpan:2},''],
-                                ['', {text:'是否需要跟踪审核 （适用于年度、换证审核） ',colSpan:3, style:'tdSt'}, '', '', {text:'{{isgzsh}}', style:'tdSt',colSpan:2},''],
-                                ['', {text:'是否同意维持符合证明的有效性 （适用于跟踪、附加审核）',colSpan:3, style:'tdSt'}, '', '', {text:'{{iswcyxx}}', style:'tdSt',colSpan:2},''],
+                                [{text:'审核意见', rowSpan:4,margin:[0,68,0,0],style:"center"}, {text:'是否同意签发证书 （适用于临时、初次、换证审核）',colSpan:3, style:'tdSt'}, '', '', {text:'{{istyqfzs}}', style:'tdSt',colSpan:2},''],
+                                ['', {text:'是否同意给予符合证明年度审核签注 （适用于年度审核） ',colSpan:3, style:'tdSt',alignment:"left"}, '', '', {text:'{{istyshqz}}', style:'tdSt',colSpan:2},''],
+                                ['', {text:'是否需要跟踪审核 （适用于年度、换证审核） ',colSpan:3, style:'tdSt',alignment:"left"}, '', '', {text:'{{isgzsh}}', style:'tdSt',colSpan:2},''],
+                                ['', {text:'是否同意维持符合证明的有效性 （适用于跟踪、附加审核）',colSpan:3, style:'tdSt',alignment:"left"}, '', '', {text:'{{iswcyxx}}', style:'tdSt',colSpan:2},''],
                             ]
                         }
                     },
                     {style:'psStyle',text:'（注: 1.在适用的□内打“√”；2.“审核种类”应同时备注审核所覆盖船舶的国籍及船种，若 为年度审核，则还应标明审核次数。）'}
                 ],
-                styles: {
-                    header: {
-                        fontSize: 18,
-                        alignment:'center',
-                        bold: true,
-                        margin: [0, 0, 0, 10]
-                    },
-                    subheader: {
-                        fontSize: 16,
-                        bold: true,
-                        margin: [0, 10, 0, 5]
-                    },
-                    tableExample: {
-                        margin: [0, 5, 0, 15],
-                        fontSize: 14,
-                    },
-                    tableHeader: {
-                        bold: true,
-                        fontSize: 13,
-                        color: 'black'
-                    },
-                    borderNone: {
-                        border:[false,false,false,false],
-                        margin:[0,10,0,0]
-                    },
-                    tdSt:{
-                        margin:[0,5,0,0]
-                    },
-                    psStyle:{
-                        fontSize: 10,
-                        margin:[0,15]
-                    }
-                },
-                defaultStyle: {
-                    font:'fzytk',
-                    alignment: 'justify'
-                }
+                styles: common.styles,
+                defaultStyle: common.defaultStyle,
                 
             }
             
@@ -469,7 +373,7 @@ function exportUtil(SheetJSExportService){
                 }
                 var heights  = [25,25,25,25,25]; //每行的高度
                 
-                var headshzcy = '[{"text":"审核组成员","rowSpan":'+(len*1+1)+',"margin":[0,'+17*len+',0,0]}, {"text":"审核组长","style":"tdSt"}, {"text":"'+data.shzcy[0].zuzhang+'","colSpan":2,"style":"tdSt"},"",{"text":"","colSpan":2,"style":"tdSt"},""]';
+                var headshzcy = '[{"text":"审核组成员","style":"ct","rowSpan":'+(len*1+1)+',"margin":[0,'+17*len+',0,0]}, {"text":"审核组长","style":"tdSt"}, {"text":"'+data.shzcy[0].zuzhang+'","colSpan":2,"style":"tdSt"},"",{"text":"","colSpan":2,"style":"tdSt"},""]';
                 rows.push(headshzcy);
                 for (var i = 0; i < len; i++) {
                     var temp = '["", {"text":"审核员","style":"tdSt"}, {"text":"{{chengyuan}}","colSpan":2,"style":"tdSt"},"",{"text":"","colSpan":2,"style":"tdSt"},""]';
@@ -491,7 +395,7 @@ function exportUtil(SheetJSExportService){
             return dealPdf(data,dd);     
         }
     
-        function shjh(data) {
+        function shjh(data,common) {
             var dd = {
                 content: [
                     {text: '审核计划', style: 'header'},
@@ -513,45 +417,10 @@ function exportUtil(SheetJSExportService){
                         }
                     },
                     {text:'审核组长签字______________',style:'tdSt' ,alignment: 'right'},
-                    {style:'psStyle',text:'（注：若为船舶《审核计划》，则“代表船审核时间”不适用，划“——”。）'}
+                    {style:'psStyle',margin:[0,15,0,0],text:'（注：若为船舶《审核计划》，则“代表船审核时间”不适用，划“——”。）'}
                 ],
-                styles: {
-                    header: {
-                        fontSize: 18,
-                        alignment:'center',
-                        bold: true,
-                        margin: [0, 0, 0, 10]
-                    },
-                    subheader: {
-                        fontSize: 16,
-                        bold: true,
-                        margin: [0, 10, 0, 5]
-                    },
-                    tableExample: {
-                        margin: [0, 5, 0, 15],
-                        fontSize: 14,
-                    },
-                    tableHeader: {
-                        bold: true,
-                        fontSize: 13,
-                        color: 'black'
-                    },
-                    borderNone: {
-                        border:[false,false,false,false],
-                        margin:[0,10,0,0]
-                    },
-                    tdSt:{
-                        margin:[0,5,0,0]
-                    },
-                    psStyle:{
-                        fontSize: 10,
-                        margin:[0,15]
-                    }
-                },
-                defaultStyle: {
-                    font:'fzytk',
-                    alignment: 'justify'
-                }
+                styles: common.styles,
+                defaultStyle: common.defaultStyle,
                 
             }
             
@@ -566,7 +435,7 @@ function exportUtil(SheetJSExportService){
                 }
                 var heights  = [25,25,25,25,25,25]; //每行的高度
                 for (var i = 0; i < len; i++) {
-                    var temp = '[{"text":"审核员：{{person}}","style":"tdSt"}, {"text":"{{personInfo}}","colSpan":3,"style":"tdSt"},"",""]';
+                    var temp = '[{"text":"审核员：{{person}}","style":"tdSt","alignment":"left"}, {"text":"{{personInfo}}","colSpan":3,"style":"tdSt","alignment":"left"},"",""]';
                     for (var key in data.shzcy[i]) {
                         if (data.shzcy[i].hasOwnProperty(key)) {
                             temp = temp.replace('{{'+key+'}}',data.shzcy[i][key]);
@@ -583,19 +452,20 @@ function exportUtil(SheetJSExportService){
             }     
             return dealPdf(data,dd);      
         }
-        function cbshfa(data) {
+
+        function cbshfa(data,common) {
             var dd = {
                 content: [
                     {text: '船舶审核安排方案', style: 'header'},
                     {
                         style: 'tableExample',	
                         table: {
-                            widths: [85, 80, 80,85,60, 'auto'],
+                            widths: [85, 80, 80,85,60, 80],
                            // heights:['*','*','*','*','*','*','*','*','*',300,'*'],
                             heights:[25,25,25,25,25,25,25,25,25,250,25],
                             body: [
-                                [{rowSpan:2,text:'船舶',margin:[0,20]}, {rowSpan:2,text:'{{shipName}}',margin:[0,20]},{rowSpan:2,text:'SMC编号',margin:[0,20]},{rowSpan:2,text:'{{SMCBH}}',margin:[0,20]},{rowSpan:2,text:'船种',margin:[0,20]},{text:'国际:{{international}}'}],
-                                [{rowSpan:2,text:'船舶',margin:[0,20]}, {rowSpan:2,text:'{{shipName}}',margin:[0,20]},{rowSpan:2,text:'SMC编号',margin:[0,20]},{rowSpan:2,text:'{{SMCBH}}',margin:[0,20]},{rowSpan:2,text:'船种',margin:[0,20]},{text:'国内:{{domestic}}'}],
+                                [{rowSpan:2,text:'船舶',margin:[0,20],style:'ct'}, {rowSpan:2,text:'{{shipName}}',margin:[0,20]},{rowSpan:2,text:'SMC编号',margin:[0,20],style:'ct'},{rowSpan:2,text:'{{SMCBH}}',margin:[0,20],style:'ct'},{rowSpan:2,text:'船种',margin:[0,20]},{text:'国际:{{international}}',style:'tdSt'}],
+                                [{rowSpan:2,text:'船舶',margin:[0,20],style:'ct'}, {rowSpan:2,text:'{{shipName}}',margin:[0,20]},{rowSpan:2,text:'SMC编号',margin:[0,20],style:'ct'},{rowSpan:2,text:'{{SMCBH}}',margin:[0,20]},{rowSpan:2,text:'船种',margin:[0,20],style:'ct'},{text:'国内:{{domestic}}',style:'tdSt'}],
                                 [{text:'船籍港',style:'tdSt'}, {text:'{{shipBirthPlace}}',style:'tdSt'}, {text:'船舶管理人',style:'tdSt'}, {text:'{{shipCheif}}',colSpan:3,style:'tdSt'},'',''],
                                 [{text:'审核种类',style:'tdSt'}, {text:'{{verifyType}}',style:'tdSt'}, {text:'审核时间',style:'tdSt'}, {text:'{{verifyTime}}',style:'tdSt'},{text:'审核地点',style:'tdSt'},{text:'{{verifyPlace}}',style:'tdSt'}],
                                 [{text:'是否为代表船',style:'tdSt'}, {text:'{{isMaster}}',colSpan:2,style:'tdSt'},'', {text:'委托审核机构',style:'tdSt'}, {text:'{{verifyUnit}}',colSpan:2,style:'tdSt'},''],
@@ -611,48 +481,14 @@ function exportUtil(SheetJSExportService){
                     },
                     {style:'psStyle',text:'（注：1.将船种填入适用的“国际”或“国内”栏，不适用的栏内划“——”；2.若船舶仅作代表船审核，则“审核种类”备注“仅作代表船”。若该船舶为非五星旗船，则“船籍港”填写船舶国籍即可；3.此表盖章后发给公司，各局内部流转程序及方式自定。）'}
                 ],
-                styles: {
-                    header: {
-                        fontSize: 18,
-                        alignment:'center',
-                        bold: true,
-                        margin: [0, 0, 0, 10]
-                    },
-                    subheader: {
-                        fontSize: 16,
-                        bold: true,
-                        margin: [0, 10, 0, 5]
-                    },
-                    tableExample: {
-                        margin: [0, 5, 0, 15],
-                        fontSize: 14,
-                    },
-                    tableHeader: {
-                        bold: true,
-                        fontSize: 13,
-                        color: 'black'
-                    },
-                    borderNone: {
-                        border:[false,false,false,false],
-                        margin:[0,10,0,0]
-                    },
-                    tdSt:{
-                        margin:[0,5,0,0]
-                    },
-                    psStyle:{
-                        fontSize: 10,
-                    }
-                },
-                defaultStyle: {
-                    font:'fzytk',
-                    alignment: 'justify'
-                }
+                styles: common.styles,
+                defaultStyle: common.defaultStyle,
                 
             }
             function dealPdf(data,docDefinition){
                 var content = JSON.stringify(docDefinition.content);
                 var len = data.shzcy.length;
-                var rows = '[{"rowSpan":'+(len*1 + 1)+',"text":"审核组成员","margin":[0,'+17*len+',0,0]},{"text":"姓名","style":"tdSt"} ,{"text":"审核身份","style":"tdSt"},{"text":"所在单位","style":"tdSt"},{"text":"执法证号","style":"tdSt"},{"text":"联系电话","style":"tdSt"}]';
+                var rows = '[{"rowSpan":'+(len*1 + 1)+',"style":"ct","text":"审核组成员","margin":[0,'+17*len+',0,0]},{"text":"姓名","style":"tdSt"} ,{"text":"审核身份","style":"tdSt"},{"text":"所在单位","style":"tdSt"},{"text":"执法证号","style":"tdSt"},{"text":"联系电话","style":"tdSt"}]';
                 //var rule = ['name','verifyId','verifyUnit','lawOfId','phoneNumber'];
                 for (var key in data) {
                     if (data.hasOwnProperty(key) && key !=='shzcy') {
@@ -679,21 +515,21 @@ function exportUtil(SheetJSExportService){
             return dealPdf(data,dd);      
         }
     
-        function gsshfa(data) {
+        function gsshfa(data,common) {
             var dd = {
                 content: [
                     {text: '公司审核安排方案', style: 'header'},
                     {
                         style: 'tableExample',
                         table: {
-                            widths: [80, 80, 80,80, 80, 80,80],
+                            widths: [70, 70, 80,80, 80, 80,80],
                            // heights:['*','*','*','*','*','*','*','*','*',300,'*'],
                             heights:[25,25,25,25,25,25,25,25,25,300,25],
                             body: [
                                 [{text:'公司',style:'tdSt'},{colSpan:3,text:'{{company}}',style:'tdSt'},'','', {text:'DOC编号',style:'tdSt'},{text:'{{DOCBH}}',style:'tdSt'}],
-                                [{rowSpan:2,text:'审核种类',margin:[0,20]}, {colSpan:3,text:'国际:{{international}}',style:'tdSt'},'','', {rowSpan:2,text:'审核时间',margin:[0,20]},{rowSpan:2,text:'{{verifyTime}}',margin:[0,20]}],
-                                ['', {colSpan:3,text:'国内:{{domestic}}',style:'tdSt'},'','','',''],
-                                [{text:'审核地点',margin:[0,5]},{colSpan:3,text:'{{verifyAddress}}',margin:[0,5]} ,'','', '代表船及审核种类',{text:'{{delegateAndType}}',margin:[0,5]}],
+                                [{rowSpan:2,text:'审核种类',margin:[0,20],style:"ct"}, {colSpan:3,text:'国际:{{international}}',style:'tdSt',alignment:"left"},'','', {rowSpan:2,text:'审核时间',margin:[0,20],style:"ct"},{rowSpan:2,text:'{{verifyTime}}',margin:[0,20],style:"ct"}],
+                                ['', {colSpan:3,text:'国内:{{domestic}}',alignment:"left",style:'tdSt'},'','','',''],
+                                [{text:'审核地点',style:"tdSt"},{colSpan:3,text:'{{verifyAddress}}',margin:[0,5]} ,'','', '代表船及审核种类',{text:'{{delegateAndType}}',style:"tdSt"}],
                                 [{rowSpan:5,text:'审核组成员',margin:[0,40,0,0]},{text:'姓名'} ,{text:'审核身份'},{text:'所在单位'},{text:'执法证号'},{text:'联系电话'}],
                                 // ['', '{{name}}', '{{verifyId}}','{{verifyUnit}}','{{lawOfId}}','{{phoneNumber}}'],
                                 // ['', '{{company}}', 'DOCbianhao','{{DOCbianhao}}','{{DOCbianhao}}','{{DOCbianhao}}'],
@@ -705,49 +541,16 @@ function exportUtil(SheetJSExportService){
                         }
                     },
                     {style:'psStyle',text:'（注：1.“审核种类”应同时备注审核所覆盖船舶的国籍及船种，若为年度审核，则还应标明审核次数。如“国际：第2次年度审核（中国籍、中国香港籍散货船、其他货船）”；2.若船舶仅作代表船审核，则“代表船及审核种类”填写船名后备注“仅作代表船”；3.此表盖章后发给公司，各局内部流转程序及方式自定。）'}
-                ],
-                styles: {
-                    header: {
-                        fontSize: 18,
-                        alignment:'center',
-                        bold: true,
-                        margin: [0, 0, 0, 10]
-                    },
-                    subheader: {
-                        fontSize: 16,
-                        bold: true,
-                        margin: [0, 10, 0, 5]
-                    },
-                    tableExample: {
-                        margin: [0, 5, 0, 15],
-                        fontSize: 14,
-                    },
-                    tableHeader: {
-                        bold: true,
-                        fontSize: 13,
-                        color: 'black'
-                    },
-                    borderNone: {
-                        border:[false,false,false,false],
-                        margin:[0,10,0,0]
-                    },
-                    tdSt:{
-                        margin:[0,5,0,0]
-                    },
-                    psStyle:{
-                        fontSize: 10,
-                    }
-                },
-                defaultStyle: {
-                    font:'fzytk',
-                    alignment: 'justify'
-                }
+                ], 
+                styles: common.styles,
+                defaultStyle: common.defaultStyle,
+               
                 
             }
             function dealPdf(data,docDefinition){
                 var content = JSON.stringify(docDefinition.content);
                 var len = data.shzcy.length;
-                var rows = '[{"rowSpan":'+(len*1 + 1)+',"text":"审核组成员","margin":[0,'+17*len+',0,0]},{"text":"姓名","style":"tdSt"} ,{"text":"审核身份","style":"tdSt"},{"text":"所在单位","style":"tdSt"},{"text":"执法证号","style":"tdSt"},{"text":"联系电话","style":"tdSt"}]';
+                var rows = '[{"rowSpan":'+(len*1 + 1)+',"style":"ct","text":"审核组成员","margin":[0,'+17*len+',0,0]},{"text":"姓名","style":"tdSt"} ,{"text":"审核身份","style":"tdSt"},{"text":"所在单位","style":"tdSt"},{"text":"执法证号","style":"tdSt"},{"text":"联系电话","style":"tdSt"}]';
                 //var rule = ['name','verifyId','verifyUnit','lawOfId','phoneNumber'];
                 for (var key in data) {
                     if (data.hasOwnProperty(key) && key !=='shzcy') {
@@ -774,6 +577,7 @@ function exportUtil(SheetJSExportService){
             return dealPdf(data,dd);    
         }
 
+
         // var content = {
         //     wtqd:wtqd,
         //     bfhgdqd:bfhgdqd,
@@ -788,13 +592,13 @@ function exportUtil(SheetJSExportService){
             //涉及到 浏览器安全性考虑
             var  doc = '';
             switch (type) {
-                case 'gsshfa': doc = gsshfa(data);break;
-                case 'cbshfa': doc = cbshfa(data);break;
-                case 'shjh': doc = shjh(data);break;
-                case 'gsshbg': doc = gsshbg(data);break;
-                case 'cbshbg': doc = cbshbg(data);break;
-                case 'bfhgdqd': doc = bfhgdqd(data);break;
-                case 'wtqd': doc = wtqd(data);break;
+                case 'gsshfa': doc = gsshfa(data,common);break;
+                case 'cbshfa': doc = cbshfa(data,common);break;
+                case 'shjh': doc = shjh(data,common);break;
+                case 'gsshbg': doc = gsshbg(data,common);break;
+                case 'cbshbg': doc = cbshbg(data,common);break;
+                case 'bfhgdqd': doc = bfhgdqd(data,common);break;
+                case 'wtqd': doc = wtqd(data,common);break;
                 default:
                     break;
             }  
