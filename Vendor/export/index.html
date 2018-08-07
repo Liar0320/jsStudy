@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src='angular.js'></script>
+    <script src="./word/jquery-3.2.1.min.js"></script>
+    <script src="./word/FileSaver.js"></script>
+    <script src="./word/jquery.wordexport.js"></script>
+    <script src="./xlsx/shim.js"></script>
+    <script src="./xlsx/xlsx.full.min.js"></script>
+    <script src="./xlsx/SheetJS-angular.js"></script>
+    <script src="./pdf/pdfmake.js"></script>
+    <script src="./pdf/vfs_fonts.js"></script>
+    <script src="util.js"></script>
+    <title>Document</title>
+</head>
+<body ng-app='app'>
+    <div ng-controller="po as vm">
+        <button ng-click="vm.export1()">导出1</button>
+        <button ng-click="vm.export2()">导出2</button>
+        <button ng-click="vm.export3(0)">导出xlsx1</button>
+        <button ng-click="vm.export3(1)">导出xlsx2</button>
+        <button ng-click="vm.pdf(1)">导出pdf</button>
+        <!-- <button ng-click="vm.pdf(1)">导出pdf1</button> -->
+    </div>
+</body>
+<script>
+
+
+    angular.module('app').controller('po',['exportUtil',function(exportUtil){
+            var vm = this;
+            var gsshfa = {
+                "company": "西游记",
+                "DOCBH": "Hz2018202",
+                "international": "西游记国际版",
+                "domestic": "西游记国内版",
+                "verifyTime": "2018-2-3",
+                "verifyAddress": "不周山山脚",
+                "delegateAndType": "仙侠传",
+                "shzcy": [
+                    {
+                        "name": "唐僧",
+                        "verifyId": "000",
+                        "verifyUnit": "大慈恩寺",
+                        "lawOfId": "000000",
+                        "phoneNumber": "12345678900"
+                    }, {
+                        "name": "孙悟空",
+                        "verifyId": "001",
+                        "verifyUnit": "花果山",
+                        "lawOfId": "000001",
+                        "phoneNumber": "12345678901"
+                    }, {
+                        "name": "猪八戒",
+                        "verifyId": "002",
+                        "verifyUnit": "天庭",
+                        "lawOfId": "000002",
+                        "phoneNumber": "12345678902"
+                    }, {
+                        "name": "沙悟净",
+                        "verifyId": "003",
+                        "verifyUnit": "通天河",
+                        "lawOfId": "000003",
+                        "phoneNumber": "12345678903"
+                    }
+                ],
+                "person": "魔尊重楼",
+                "phoneNumber": "11111111111",
+                "year": "2018",
+                "M": "8",
+                "D": "30",
+                "schedulingProgram": "《西游记》是中国古代第一部浪漫主义章回体长篇神魔小说。现存明刊百回本《西游记》均无作者署名。清代学者吴玉搢等首先提出《西游记》作者是明代吴承恩 [1]  。这部小说以“唐僧取经”这一历史事件为蓝本，通过作者的艺术加工，深刻地描绘了当时的社会现实。全书主要描写了孙悟空出世及大闹天宫后，遇见了唐僧、猪八戒和沙僧三人，西行取经，一路降妖伏魔，经历了九九八十一难，终于到达西天见到如来佛祖，最终五圣成真的故事。"
+
+            }
+        
+            var cbshfa = {
+                "shipName": "西游记",
+                "SMCBH": "Hz2018202",
+                "international": "西游记国际版",
+                "domestic": "西游记国内版",
+                "verifyTime": "2018-2-3",
+                "shipBirthPlace": "不周山山脚",
+                "verifyPlace":"天竺",
+                "verifyType": "仙侠传",
+                "shipCheif":"玉皇大帝",
+                "isMaster":"√是□    否□",
+                "verifyUnit":"天安门",
+                "shzcy": [
+                    {
+                        "name": "唐僧",
+                        "verifyId": "000",
+                        "verifyUnit": "大慈恩寺",
+                        "lawOfId": "000000",
+                        "phoneNumber": "12345678900"
+                    }, {
+                        "name": "孙悟空",
+                        "verifyId": "001",
+                        "verifyUnit": "花果山",
+                        "lawOfId": "000001",
+                        "phoneNumber": "12345678901"
+                    }, {
+                        "name": "猪八戒",
+                        "verifyId": "002",
+                        "verifyUnit": "天庭",
+                        "lawOfId": "000002",
+                        "phoneNumber": "12345678902"
+                    }, {
+                        "name": "沙悟净",
+                        "verifyId": "003",
+                        "verifyUnit": "通天河",
+                        "lawOfId": "000003",
+                        "phoneNumber": "12345678903"
+                    }
+                ],
+                "person": "魔尊重楼",
+                "phoneNumber": "11111111111",
+                "year": "2018",
+                "M": "8",
+                "D": "30",
+                "schedulingProgram": "《西游记》是中国古代第一部浪漫主义章回体长篇神魔小说。现存明刊百回本《西游记》均无作者署名。清代学者吴玉搢等首先提出《西游记》作者是明代吴承恩 [1]  。这部小说以“唐僧取经”这一历史事件为蓝本，通过作者的艺术加工，深刻地描绘了当时的社会现实。全书主要描写了孙悟空出世及大闹天宫后，遇见了唐僧、猪八戒和沙僧三人，西行取经，一路降妖伏魔，经历了九九八十一难，终于到达西天见到如来佛祖，最终五圣成真的故事。"
+
+            }
+        
+            var shjh = {
+                name:'李程欢',
+                firstTime:'2018-5-5',
+                sencodTime:'2018-5-5',
+                threeTime:'2018-5-5',
+                fourTime:'2018-5-5',
+                firstTimeCommit:'2018-5-5',
+                lastTimeCommit:'2018-5-5',
+                shzcy:[{
+                    person:'七剑',
+                    personInfo:'七剑下天山',
+                },{
+                    person:'七剑',
+                    personInfo:'七剑下天山',
+                },{
+                    person:'七剑',
+                    personInfo:'七剑下天山',
+                },{
+                    person:'七剑',
+                    personInfo:'七剑下天山',
+                }],
+            };
+        
+            var gsshbg = {
+                company:'李程欢',
+                DOCBH:'2018-5-5',
+                domestic:'2018-5-5',
+                international:'2018-5-5',
+                verifyTime:'2018-5-5',
+                leader:'2018-5-5',
+                topManager:'2018-5-5',
+                designee:'2018-5-5',
+                HWcharge:'2018-5-5',
+                JWcharge:'2018-5-5',
+                companyAddress:'2018-5-5',
+                companyId:'2018-5-5',
+                companyInfo:'2018-5-5',
+                txnPersonCounts:'2018-5-5',
+                jatxCounts:'2018-5-5',
+                txnShipCounts:'2018-5-5',
+                verifySurvey:'2018-5-5',
+                problemCounts:'2018-5-5',
+                pbFileCounts:'2018-5-5',
+                pbAjCounts:'2018-5-5',
+                pbShipCounts:'2018-5-5',
+                unaccordCounts:'2018-5-5',
+                txFilesCounts:'2018-5-5',
+                ajActiveCounts:'2018-5-5',
+                masterShipCounts:'2018-5-5',
+                slightCounts:'2018-5-5',
+
+                seriousCounts:'2018-5-5',
+                mostSeriousCounts:'2018-5-5',
+                fbhqkCollect:'2018-5-5',
+                fbhqkRedirect:'2018-5-5',
+                istyqfzs:'是√      否□',
+                istyshqz:'是√      否□',
+                isgzsh:'是√      否□',
+                iswcyxx:'是√      否□',
+                shzcy:[{
+                    zuzhang:'魔剑',
+                    chengyuan:'干将',
+                },{
+                    zuzhang:'魔剑',
+                    chengyuan:'莫邪',
+                },{
+                    zuzhang:'魔剑',
+                    chengyuan:'昭明',
+                },{
+                    zuzhang:'魔剑',
+                    chengyuan:'含光',
+                }],
+            };
+        
+            var cbshbg = {
+                "shipName": "西游记",
+                "SMCBH": "Hz2018202",
+                "international": "西游记国际版",
+                "domestic": "西游记国内版",
+                "verifyTime": "2018-2-3",
+                "shipTone":'200',
+                "limitPassenger":'300',
+                "shipId":'gz0000',
+                "txnCounts":'9',
+                "shipOwner":'孙悟空',
+                "shipManager":'白骨精',
+                "filesCounts":'0',
+                "captainCounts":'2',
+                "shipBirthPlace":'不周山山脚',
+                "boardCounts":'3',
+                "engineCounts":'8',
+                "verifyPlace":"天竺",
+                "verifyType": "仙侠传",
+                "shipCheif":"玉皇大帝",
+                "isMaster":"√是□    否□",
+                "istyqfzs":'是√      否□',
+                "istyqfaqzs":'是√      否□',
+                "istyqfaqzsfj":'是√      否□',
+                "verifySurvey":'我是描述我是描述我是描述我是描述我是描述我是描述',
+                "problemCounts":'1',
+                'pbFileCounts':'3',
+                "pbShipCounts":'4',
+                "unaccordCounts":5,
+                "slightCounts":'6',
+                "seriousCounts":'7',
+                "mostSeriousCounts":'8',
+                "fbhqkCollect":'不符合规定情况综述：不符合规定情况综述：不符合规定情况综述：不符合规定情况综述：',
+                "fbhqkRedirect":'fbhqkRedirectfbhqkRedirectfbhqkRedirectfbhqkRedirectfbhqkRedirect',
+                "verifyUnit":"天安门",
+                "shzcy":[{
+                    zuzhang:'魔剑',
+                    chengyuan:'干将',
+                },{
+                    zuzhang:'魔剑',
+                    chengyuan:'莫邪',
+                },{
+                    zuzhang:'魔剑',
+                    chengyuan:'昭明',
+                },{
+                    zuzhang:'魔剑',
+                    chengyuan:'含光',
+                }],
+                "person": "魔尊重楼",
+                "phoneNumber": "11111111111",
+                "year": "2018",
+                "M": "8",
+                "D": "30",
+                "schedulingProgram": "《西游记》是中国古代第一部浪漫主义章回体长篇神魔小说。现存明刊百回本《西游记》均无作者署名。清代学者吴玉搢等首先提出《西游记》作者是明代吴承恩 [1]  。这部小说以“唐僧取经”这一历史事件为蓝本，通过作者的艺术加工，深刻地描绘了当时的社会现实。全书主要描写了孙悟空出世及大闹天宫后，遇见了唐僧、猪八戒和沙僧三人，西行取经，一路降妖伏魔，经历了九九八十一难，终于到达西天见到如来佛祖，最终五圣成真的故事。"
+            };
+        
+            var bfhgdqd = {
+                name:'飞船',
+                shsj:'2018-9-0',
+                bfhqktj:10,
+                anjitj:20,
+                chuanbotj:30,
+                wenjiantj:40,
+                info:'无',
+                files:[{
+                        id:'0',
+                        bfhqkms:'错误',
+                        dyzjh:'9',
+                        serious:'重要',
+                        redirectTime:'2018-8-8',
+                        verifyPerson:'二郎神',
+                        result_isDone:'通过□  不通过□',
+                        result_person:'红孩儿',
+                        result_date:'2018-9-9',
+                    },{
+                        id:'0',
+                        bfhqkms:'错误',
+                        dyzjh:'9',
+                        serious:'重要',
+                        redirectTime:'2018-8-8',
+                        verifyPerson:'二郎神',
+                        result_isDone:'通过□  不通过□',
+                        result_person:'红孩儿',
+                        result_date:'2018-9-9',
+                    },{
+                        id:'0',
+                        bfhqkms:'错误',
+                        dyzjh:'9',
+                        serious:'重要',
+                        redirectTime:'2018-8-8',
+                        verifyPerson:'二郎神',
+                        result_isDone:'通过□  不通过□',
+                        result_person:'红孩儿',
+                        result_date:'2018-9-9',
+                    }
+                ], ajfd:[{
+                        id:'0',
+                        bfhqkms:'错误',
+                        dyzjh:'9',
+                        serious:'重要',
+                        redirectTime:'2018-8-8',
+                        verifyPerson:'二郎神',
+                        result_isDone:'通过□  不通过□',
+                        result_person:'红孩儿',
+                        result_date:'2018-9-9',
+                    },{
+                        id:'0',
+                        bfhqkms:'错误',
+                        dyzjh:'9',
+                        serious:'重要',
+                        redirectTime:'2018-8-8',
+                        verifyPerson:'二郎神',
+                        result_isDone:'通过□  不通过□',
+                        result_person:'红孩儿',
+                        result_date:'2018-9-9',
+                    },
+                ] ,ship:[{
+                        id:'0',
+                        bfhqkms:'错误',
+                        dyzjh:'9',
+                        serious:'重要',
+                        redirectTime:'2018-8-8',
+                        verifyPerson:'二郎神',
+                        result_isDone:'通过□  不通过□',
+                        result_person:'红孩儿',
+                        result_date:'2018-9-9',
+                    },{
+                        id:'0',
+                        bfhqkms:'错误',
+                        dyzjh:'9',
+                        serious:'重要',
+                        redirectTime:'2018-8-8',
+                        verifyPerson:'二郎神',
+                        result_isDone:'通过□  不通过□',
+                        result_person:'红孩儿',
+                        result_date:'2018-9-9',
+                    },
+                ]
+            }
+
+            var wtqd = {
+                name:'飞船',
+                shsj:'2018-9-0',
+                qetotals:10,
+                anjitj:20,
+                chuanbotj:30,
+                wenjiantj:40,
+                info:'无',
+                files:[{
+                        id:'0',
+                        describe:'错误',
+                        reform:'9',
+                        verifyPerson:'二郎神',
+                    },{
+                        id:'0',
+                        describe:'错误',
+                        reform:'9',
+                        verifyPerson:'二郎神',
+                    },{
+                        id:'0',
+                        describe:'错误',
+                        reform:'9',
+                        verifyPerson:'二郎神',
+                    }
+                ], ajfd:[{
+                        id:'0',
+                        describe:'错误',
+                        reform:'9',
+                        verifyPerson:'二郎神',
+                    },{
+                        id:'0',
+                        describe:'错误',
+                        reform:'9',
+                        verifyPerson:'二郎神',
+                    },
+                ] ,ship:[{
+                        id:'0',
+                        describe:'错误',
+                        reform:'9',
+                        verifyPerson:'二郎神',
+                    },{
+                        id:'0',
+                        describe:'错误',
+                        reform:'9',
+                        verifyPerson:'二郎神',
+                    },
+                ]
+            }
+
+            var arr = [{name:'gsshfa','data':gsshfa},{name:'cbshfa','data':cbshfa},
+                       {name:'shjh','data':shjh},{name:'cbshbg','data':cbshbg},
+                       {name:'gsshbg','data':gsshbg},{name:'bfhgdqd','data':bfhgdqd},
+                       {name:'wtqd','data':wtqd}];
+            console.log(exportUtil);
+            vm.export1 = function(){
+              
+                exportUtil.exportWord({name:'gsshfa',data:gsshfa},{name:'cbshfa',data:cbshfa},{name:'shjh',data:shjh},{name:'gsshbg',data:gsshbg},{name:'cbshbg',data:cbshbg});
+            }
+            vm.export2 = function(){
+                exportUtil.exportWord({name:'bfhgdqd',data:bfhgdqd},{name:'wtqd',data:wtqd});
+           }
+   
+
+         
+        
+            vm.tableRows1 = [];
+            var add = function(){
+                var length = 40;
+                for(var i=0;i<length;i++){
+                    vm.tableRows1.push( {id:i,describe:'孙悟空三打白骨精'+i,repair:'猪八戒上高老庄'+i,assessor:'佛祖'+i});
+                }
+            }
+            add();
+
+             vm.tableRows2 = [];
+            var add2 = function(){
+                var length = 100;
+                for(let i=0;i<length;i++){
+                    vm.tableRows2.push( {id:i,describe:'孙悟空三打白骨精'+i,
+                    chapter:'猪八戒上高老庄'+i,type:'佛祖'+i,level:'等级'+i,
+                    limitTime:'200'+i,assessor:'玉皇大帝'+i});
+                }
+            }
+            add2();
+
+
+            var keysMapAll = [
+                {
+                    filename:'导入问题清单',
+                    sheetname:'文件方面',
+                    rules:{ 'id': '序号', 'describe': '问题描述', 'repair': '整改需求', 'assessor': '审核员' },
+                },{
+                    filename:'导入不符合规定情况清单（模板）',
+                    sheetname:'文件方面',
+                    rules:{ 'id': '序号', 'describe': '不符合规定情况描述',
+                            'chapter': '对应规则章节号', 'type': '审核项目种类',
+                            'level':'程度','limitTime':'纠正期限','assessor':'审核员' },
+                }
+            ]
+
+            vm.export3 = function(index){
+                var keysMap = keysMapAll[index];
+                var grid = {};
+                grid.rows = vm['tableRows'+(index+1)];
+                grid.rules = keysMap.rules;
+                grid.options = {};
+                grid.options.filename = keysMap.filename;
+                grid.options.sheetname = keysMap.sheetname;
+                exportUtil.exportXlsx(grid);
+            }
+
+
+            vm.pdf = function (params) {
+                 var i =  Math.random(1,10).toFixed(1)*10;
+                 var temp = arr[i];
+                 while(!temp){
+                    i =  Math.random(1,10).toFixed(1)*10;
+                    temp = arr[i];
+                 }
+
+                exportUtil.exportPdf(temp.data,temp.name);
+            }
+            
+   
+   }])
+
+  
+ 
+</script>
+</html>
