@@ -57,6 +57,8 @@
 4:分支操作
     创建分支
         git branch [分支名]
+    创建远程关联分支 git branch lch_js origin/lch_js
+    删除分支 git branch -d [分支名]
     查看分支
         git branch -v
     切换分支
