@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>sasa</title>
+    <script src="./jquery.js"></script>
+    <script src="./jquery-ui.js"></script>
+</head>
+<style>
+    .dragParent {
+        position: relative;
+        width: 500px;
+        height: 500px;
+        border: solid 1px #000;
+        list-style: none;
+        padding: 0;
+        user-select: none;
+    }
+
+    .dragChild {
+        position: relative;
+        float: left;
+        background-color: #ddd;
+        padding: 28px 22px;
+        font-size: 17px;
+        border: solid 1px #000;
+        z-index: 1;
+    }
+    .dragChild .circle{
+        display: inline-block;
+        background-color: #fff;
+        border:solid 1px #000;
+        border-radius: 10px;
+        height: 10px;
+        width: 10px;
+        position: absolute;
+       
+    }
+    .dragChild .top{
+        left:50%;
+        left:calc(50% - 5px);
+        top:-5px;
+    }
+    .dragChild .left{
+        top:50%;
+        top:calc(50% - 5px);
+        left:-5px;
+    }
+    .dragChild .right{
+        top:50%;
+        top:calc(50% - 5px);
+        right:-5px;
+    }
+    .dragChild .bottom{
+        left:50%;
+        left:calc(50% - 5px);
+        bottom:-5px;
+    }
+    .svg{
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        top: 0;
+        left: 0;
+    }
+</style>
+
+<body>
+
+    <ul class="dragParent" draggable="false">
+        <li class="dragChild " name='start'>开始
+            <span class="circle top"></span>
+            <span class="circle left"></span>
+            <span class="circle right"></span>
+            <span class="circle bottom"></span>
+        </li>
+        <li class="dragChild " name = 'yjbm'>一级部门
+                <span class="circle top"></span>
+                <span class="circle left"></span>
+                <span class="circle right"></span>
+                <span class="circle bottom"></span>
+        </li>
+        <li class="dragChild " name='ejbm'>二级部门
+                <span class="circle top"></span>
+                <span class="circle left"></span>
+                <span class="circle right"></span>
+                <span class="circle bottom"></span>
+        </li>
+        <li class="dragChild " name ='sjbm'>三级部门
+                <span class="circle top"></span>
+                <span class="circle left"></span>
+                <span class="circle right"></span>
+                <span class="circle bottom"></span>
+        </li>
+        <li class="dragChild "name='end'>结束
+                <span class="circle top"></span>
+                <span class="circle left"></span>
+                <span class="circle right"></span>
+                <span class="circle bottom"></span>
+        </li>
+        <svg class="svg"></svg>
+    </ul>
+</body>
+<script>
+    $(".dragChild").draggable({
+        containment: "parent",
+        cancel: '.circle' ,
+        start: function (event, ui) {
+            console.log(event.toElement, ui);
+           
+        },
+        drag: function (event, ui) {
+            console.log(event, ui);
+            //if(event.toElement.className.indexOf('circle')>-1) return;
+            var collections =  getAnchorSvg(event.target.getAttribute('name'));
+            collections.forEach(function (item) {
+                console.log({x:event.target.offsetLeft,y:event.target.offsetTop},item.offset,item.className);
+                //connectDonet(item.offset,)
+            })
+            
+        },
+
+        stop: function (event, ui) {
+            console.log(event, ui);
+        },
+    });
+
+    var path ={
+        start:null,
+        end:null,
+        startName:'',
+        endName:''
+    };
+
+    //为可接收 的锚点添加事件
+    $('.circle').bind('mousedown',function(e){
+       // console.log(e);
+        e = e || window.event;
+       // var parent = e.target.parentElement;
+       path.start = getPositionStart(e.target.parentElement,e.target);
+       path.startName = e.target.parentElement.getAttribute('name');
+      // console.log(path);
+       $('.dragParent').unbind('mousemove',mousemove).bind('mousemove',mousemove);
+       $('.dragParent').unbind('mouseup',mouseup).bind('mouseup',mouseup);
+    });
+    //$('.dragParent').bind('mousemove',mousemove);
+
+    //移动更新svg
+    function mousemove(e) {
+        //if(!path.isdown) return;
+        e = e || window.event;
+        //var pois = getPositionStart(e.target.parentElement,e.target);
+        if(typeof e.target.className === 'string') return;
+     
+        connectDonet(path.start,{x:e.offsetX,y:e.offsetY},'plan');
+    }
+    
+    //是否符合条件 构成 svg
+    function mouseup(e) { 
+        $(".svg .plan").remove();
+        $('.dragParent').unbind('mousemove',mousemove);
+        //$('.dragParent').unbind('mouseup',mouseup);
+        e = e||window.event;
+        if(typeof e.target.className === 'object') return;
+        if(e.target.className.indexOf('circle')>-1){
+           
+            path.endName = e.target.parentElement.getAttribute('name');
+            path.end = getPositionStart(e.target.parentElement,e.target);
+            connectDonet(path.start,path.end,path.startName+'-'+path.start.direction+'--'+path.endName+'-'+path.end.direction);
+            console.log(path);
+        }   
+    }
+
+    //获取锚点的 offset X Y
+    function getPositionStart(parent,current) {
+        var dic = '' ;//方向
+        var    paerntX  = parent.offsetLeft;
+        var    parentY  = parent.offsetTop;
+        var parentWidth = parent.offsetWidth;
+        var parentHeight = parent.offsetHeight;
+
+        if(current.className.indexOf('right') > -1){
+            disx =  paerntX + parentWidth;
+            dic = 'right';
+        }else if(current.className.indexOf('top') > -1||current.className.indexOf('bottom') > -1){
+            disx =  paerntX + parentWidth/2;
+        }else if(current.className.indexOf('left') > -1){
+            disx =  paerntX;
+            dic = 'left';
+        }
+
+        if(current.className.indexOf('top') > -1){
+            disy =  parentY;
+            dic = 'top';
+        }else if(current.className.indexOf('right') > -1||current.className.indexOf('left') > -1){
+            disy =  parentY + parentHeight/2;
+        }else if(current.className.indexOf('bottom') > -1){
+            disy =  parentY  + parentHeight;
+            dic = 'bottom';
+        }
+       // console.log(disx,disy);
+        return{
+            x:disx,
+            y:disy,
+            direction:dic
+        }
+    }
+
+    //根据两个点创建变量
+    function connectDonet(origin, target , name) {
+        // var disX = target.x - origin.x;
+        // var disY = target.y - origin.y;
+        var pathAngle = {
+            M: {
+                x: target.x - origin.x + 5,
+                y: target.y - origin.y + 5
+            },
+            line: {
+                x: 20,
+                y: 10
+            },
+            reverseLine: {
+                x: -20,
+                y: 10
+            }
+        }
+        
+       // var y = origin.y > target.y?target.y:target.y + (origin.y - target.y);
+        //var x = origin.x > target.x?target.x:target.x + (origin.x - target.x);
+        var dAngle = `M ${pathAngle.M.x} ${pathAngle.M.y} l ${pathAngle.line.x} ${pathAngle.line.y} l ${pathAngle.reverseLine.x} ${pathAngle.reverseLine.y}`;
+        var htmlDemo = `<svg class='${name}'>
+                    <line x1="${origin.x}" y1="${origin.y}" x2="${target.x }" y2="${target.y}" style="stroke:rgb(255,0,0);stroke-width:5"/>
+                    <path d="${dAngle}" stroke="black"></path>
+                    </svg>
+        `;
+        name&&$(`.${name}`)[0]&&$(".svg")[0].removeChild($(`.${name}`)[0]);
+        $(".svg")[0].appendChild($(htmlDemo)[0]);
+    }
+
+    //创建guid
+    function GUID(len,radix){
+        var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
+        var uuid = [], i;
+        radix = radix || chars.length;
+    
+        if (len) {
+        // Compact form
+        for (i = 0; i < len; i++) uuid[i] = chars[0 | Math.random()*radix];
+        } else {
+        // rfc4122, version 4 form
+        var r;
+    
+        // rfc4122 requires these characters
+        uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
+        uuid[14] = '4';
+    
+        // Fill in random data.  At i==19 set the high bits of clock sequence as
+        // per rfc4122, sec. 4.1.5
+        for (i = 0; i < 36; i++) {
+            if (!uuid[i]) {
+            r = 0 | Math.random()*16;
+            uuid[i] = chars[(i == 19) ? (r & 0x3) | 0x8 : r];
+            }
+        }
+        }
+    
+        return uuid.join('');
+    }
+
+    //遍历 锚点 获取锚点上 所有关联的 svg ， 所有的 svg 都有 起点和终点 
+    //最终 获取 生成函数数组 传入一个 位置 更新所有的节点 
+    function getAnchorSvg(className) {
+        var result = [];
+        var children = $('.svg').children();
+        $.each(children,function (index,item) {
+            console.log(index,item);
+            if(item.className.baseVal.indexOf(className) > -1){
+                var cls = item.className.baseVal.split(' ');
+                var currentCls = cls.filter(function (item) {
+                    if(item.indexOf(className)>-1) return true;
+                })[0];
+                currentCls.split('--').forEach(function (itemCols) {
+                     item = itemCols.split('-');
+                     if(item[0] === className) return;
+                     var temp = {};
+                     var elem = $('.dragChild[name='+item[0]+']')[0];
+                   //  console.log(elem.offset());
+                     temp.className = currentCls;
+                     temp.offset = {x:elem.offsetLeft,y:elem.offsetTop};
+                     result.push(temp);
+                });
+            }
+        });  
+        return result;
+    }
+
+</script>
+
+</html>
