@@ -1,6 +1,7 @@
 'use strict';
 var a = [1,2,3];
 var b = Math.max(...a);
+<<<<<<< HEAD
 console.log(b);
 
 var str = `
@@ -339,3 +340,6 @@ var tr3 = ` <tr style="height:34pt">
     </p>
 </td>
 </tr>`;
+=======
+console.log(b);
+>>>>>>> 1e2a2be8002ee742dae6488c5a7e32fca5468782

@@ -1,0 +1,55 @@
+<div>
+    <div class="bgfff borderd7 search-section">
+        <p class="search-menu">
+            <span class="cursor inline-block fs18 color444 " ng-class="vm.searchData[vm.changeIndex].searchMenu === menu.searchMenu  ? 'on' : ''"
+                ng-repeat="menu in vm.searchData" ng-click="vm.setMenuParent($index,menu.searchMenu)">{{menu.searchMenu}}</span>
+        </p>
+        <ul class="search-items clearfix">
+            <li class="clearfix " ng-repeat="item in vm.searchData[vm.changeIndex].searchItems" ng-class="!(item.subItems.length > 0) ? 'floatLi' : ''">
+                <p class="fl color888 item-name " ng-class="vm.isSelected(vm.parentName,item.itemMenu) ? 'selected' : '' " ng-click="!vm.isSelected(vm.parentName,item.itemMenu)&&vm.changeApply($event,vm.parentName,item.itemMenu,'add')">
+                    {{item.itemMenu}}
+                    <span ng-show='vm.isSelected(vm.parentName,item.itemMenu)' ng-click="vm.changeApply($event,vm.parentName,item.itemMenu,'delete')">
+                        <i class="icon-trash"></i>
+                    </span>
+                </p>
+                <p class="fl sub-items" ng-show="item.subItems.length > 0">
+                    <span class="cursor sub-item-name " ng-repeat="subItem in item.subItems" ng-class="vm.isSelected(vm.parentName,subItem)  ? 'selected' : '' "
+                        ng-click="!vm.isSelected(vm.parentName,subItem) && vm.changeApply($event,vm.parentName,subItem,'add')">
+                        {{subItem}}
+                        <span ng-show='vm.isSelected(vm.parentName,subItem) ' ng-click="vm.changeApply($event,vm.parentName,subItem,'delete')">
+                            <i class="icon-trash"></i>
+                        </span>
+                    </span>
+                </p>
+            </li>
+        </ul>
+    </div>
+    <div class="panel-body">
+        
+        <ul class="search-items clearfix">
+            <li class="floatLi">
+                <p class="fl color888 item-name selected">
+                    <span>
+                        <input type="checkbox" class="form-control" id='isSelectedAll' ng-model="vm.isSelectedAll" ng-change="vm.changeStatus(vm.isSelectedAll)">
+                        <label for="全选">全选</label>
+                    </span>
+                </p>
+            </li>
+            <span ng-repeat="menuType in vm.menuType">
+                <li class="floatLi">
+                    <p class="fl color888 item-name selected">
+                        {{menuType}}
+                    </p>
+                </li>
+                <li ng-repeat="item in vm.selected[menuType]" class="floatLi">
+                    <p class="fl color888 item-name selected">
+                        {{item}}
+                        <span ng-click="vm.changeApply($event,menuType,item,'delete')">
+                            <i class="icon-trash"></i>
+                        </span>
+                    </p>
+                </li>
+            </span>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>adas</title>
+</head>
+<style>
+    .dragParent {
+        position: relative;
+        width: 500px;
+        height: 500px;
+        border: solid 1px #000;
+        list-style: none;
+        padding: 0;
+    }
+
+    .dragChild {
+        position: relative;
+        float: left;
+        background-color: #ddd;
+    }
+</style>
+
+<body>
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 0 0 l 30" stroke="black"></path>
+            <path d="M 30 30 l 40 20 l -40 20" stroke="black"></path>
+        </svg>
+
+    <ul class="dragParent" draggable="false">
+        <li class="dragChild">开始</li>
+        <li class="dragChild">一级部门</li>
+        <li class="dragChild">二级部门</li>
+        <li class="dragChild">三级部门</li>
+        <li class="dragChild">结束</li>
+    </ul>
+</body>
+<script>
+
+    // M = moveto
+    // L = lineto
+    // H = horizontal lineto
+    // V = vertical lineto
+    // C = curveto
+    // S = smooth curveto
+    // Q = quadratic Bézier curve
+    // T = smooth quadratic Bézier curveto
+    // A = elliptical Arc
+    // Z = closepath
+
+    // 作者：ywyan
+    // 链接：https://www.jianshu.com/p/c819ae16d29b
+    // 來源：简书
+    // 简书著作权归作者所有，任何形式的转载都请联系作者获得授权并注明出处。
+
+
+
+
+
+    var dragParent = document.getElementsByClassName('dragParent')[0];
+    var dragChildren = dragParent.children;
+    dragChildren.forEach = Array.prototype.forEach;
+    dragChildren.forEach(function (item, index) {
+        console.log(item, index);
+        drag(item, dragParent);
+    })
+
+    //拖拽区域 elem 默认为document
+    //拖拽对象 target
+    function drag(target, elem) {
+        elem || (elem = document);
+        var limitRect = getRect(elem);
+        console.log(target.offsetLeft, target.offsetTop);
+        console.log(limitRect, target);
+        var disX;
+        var disY;
+        function downHandle(e) {
+
+            e = e || window.event;
+            stopBubble(e);
+            disX = e.pageX - parseInt(target.style.left || 0);
+            disY = e.pageY - parseInt(target.style.top || 0);
+            elem.addEventListener("mousemove", moveHandle);
+            elem.addEventListener("mouseup", upHandle);
+        }
+        function moveHandle(e) {
+            e = e || window.event;
+            stopBubble(e);
+            var vaild = vaildRect(target);
+            if (vaild.left) target.style.left = e.pageX - disX + 'px';
+            if (vaild.top) target.style.top = e.pageY - disY + 'px';
+        }
+        function upHandle(e) {
+            e = e || window.event;
+            var eTarget = e.target || e.srcElement;
+            stopBubble(e);
+            // if (eTarget !== target) return;
+            elem.removeEventListener('mousemove', moveHandle);
+            elem.removeEventListener('mouseup', upHandle);
+        }
+        
+        target.addEventListener('mousedown', downHandle);
+
+        function vaildRect(elem) {
+            var offsetLeft = elem.offsetLeft;
+            var offsetTop = elem.offsetTop;
+            var left = limitRect.width - offsetLeft - getRect(elem).width;
+            var top = limitRect.height - offsetTop - getRect(elem).height ;
+            if (left < 0) {
+                elem.style.left = (parseInt(elem.style.left) + left) + 'px';
+            }
+            if (top < 0) {
+                elem.style.top = (parseInt(elem.style.top) + top) + 'px';
+            }
+            if (offsetLeft < 0) {
+                elem.style.left = '0px';
+            }
+            if (offsetTop < 0) {
+                elem.style.top = '0px';
+            }
+            return {
+                left: offsetLeft >= 0 && left >= 0,
+                top: offsetTop >= 0 && top >= 0
+            }
+        }
+
+        //阻止冒泡事件
+        //在ie下cancelbubble  不支持stoppropagation
+        function stopBubble(event) {
+            if (event.stopPropagation) {
+                event.stopPropagation();
+            } else {
+                event.cancelBubble = true;
+            }
+        }
+
+        function getRect(ele, bol) {
+            var width = bol
+                ? ele.offsetWidth +
+                getStyle(ele, "margin-right").match(/\d+/) * 1 +
+                getStyle(ele, "margin-left").match(/\d+/) * 1
+                : ele.offsetWidth;
+            var height = bol
+                ? ele.offsetHeight +
+                getStyle(ele, "margin-top").match(/\d+/) * 1 +
+                getStyle(ele, "margin-bottom").match(/\d+/) * 1
+                : ele.offsetHeight;
+            return {
+                width: width,
+                height: height
+            };
+        }
+
+        return function () {
+            target.removeEventListener('mousedown', downHandle);
+        };
+    }
+</script>
+
+</html>
