@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./d3.css" />
+    <script src="./jquery-3.2.1.min.js"></script>
+    <script src="./angular.js"></script>
+    <script src="./angular.tree.js"></script>
+
+    <script src="./d3-v3-min.js"></script>
+    <script src="./dagre-d3.js"></script>
+    <title></title>
+
+</head>
+
+<body ng-app='app'>
+    <div ng-controller="treeCtrl as vm" class="">
+        <input type="text" ng-model="vm.nodeName">
+        <p class="fl node-tit">下级节点：</p>
+        <div class="fl node-field" >
+            <select name="filterTreeData"  style="width: 80%;" ng-model="vm.selectFilter" ng-options="item.id as item.label for item in vm.filterTreeData">
+                <option value=""></option>
+            </select>
+        </div>
+        {{vm.html}}
+
+        <svg width=960 height=600 dec-line-tree tree-data='vm.treedata'  on-select='vm.treeSelect(result)' style="padding: 5px;"></svg>
+
+        <button ng-click="vm.treeAdd()">添加</button>
+    </div>
+
+
+</body>
+<script>
+ 
+    function setOffst(branch,level,originalTop,i) {
+        var left =  (level-1) * 184 ;
+        var top = originalTop + i*110 ;
+        //left (level-1)*184 top 0
+        if(!branch.children || branch.children.length === 0){
+            branch.left = left + 'px';
+            branch.top = top + 'px'; 
+        }else{
+            var childrenHeight = (branch.children.length - 1) *110;
+            top = originalTop + childrenHeight / 2 ;
+            if(top != originalTop){
+                setParentTop(branch.parent,top - originalTop);
+            }
+            branch.left = left + 'px';
+            branch.top = top + 'px'; 
+        }
+        if(branch.children){
+            for (var i = 0; i < branch.children.length; i++) {
+                setOffst(branch[i],level,originalTop,i);
+            }
+        }
+    }
+
+    function setParentTop(branch,offsetTop) {
+        branch.top = parseInt(branch.top) + offsetTop + 'px';
+        if(branch.parent){
+            setParentTop(branch.parent,offsetTop);
+        }
+    }
+
+
+</script>
+
+</html>

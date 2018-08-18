@@ -68,7 +68,7 @@
 
     module = angular.module('lichLineTree', []);
 
-    module.directive('decTree', [
+    module.directive('decLineTree', [
         '$timeout',
         function ($timeout) {
             return {

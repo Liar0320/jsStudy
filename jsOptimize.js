@@ -181,7 +181,7 @@ const $ = {};
     });
   }
 
-  function GUID(){
+  function GUID(len,radix){
     var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
     var uuid = [], i;
     radix = radix || chars.length;
