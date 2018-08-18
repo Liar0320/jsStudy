@@ -1,6 +1,6 @@
 (function () {
 
-    module = angular.module('d3tree',[]);
+    module = angular.module('app',[]);
     module.controller('treeCtrl',treeCtrl);
     treeCtrl.$inject = [];
     function treeCtrl() {
@@ -9,14 +9,111 @@
         vm.treedata = [
        
         ];
+        vm.treedata = [
+       
+		];
+		// vm.treedata.push({'label':'党工部领导2',id:14,pid:12,end:true}, {'label':'部门领导',id:11,pid:0},
+        //     {'label':'分管局领导',id:12,pid:0},
+		//     {'label':'党工部领导',id:13,pid:0});
+		var currentNode = null;
         vm.treeAdd = function () {
-            vm.treedata.push({'label':'党工部领导2',id:14,pid:12,end:true}, {'label':'部门领导',id:11,pid:0},
-            {'label':'分管局领导',id:12,pid:0},
-            {'label':'党工部领导',id:13,pid:0});
-        };
-        vm.treeSelect = function (result) {
-            console.log(result);
-        }
+			if(!vm.nodeName||!currentNode) return ; 
+			var newId = GUID(4,10);
+			var filterData = vm.treedata.filter(function (item) {
+				return item.id*1 === vm.selectFilter *1;
+			});
+			// filterData.forEach(function (item) {
+			// 	return item.pid = newId;
+			// });
+		   if(filterData[0])filterData[0].pid = newId;
+            vm.treedata.push({
+				label:vm.nodeName,
+				data:'数据'+newId,
+				id:newId,
+				pid:currentNode.id,
+				end:filterData.length===0
+			});
+			currentNode = null;
+		};
+
+		vm.treeDelete = function () {
+			if(!vm.nodeName||!currentNode) return ;
+			if(currentNode.enable === false) return;
+			var filterData = vm.treedata.filter(function (item) {
+				return item.pid*1 === currentNode.id *1;
+			});
+			var filterData = {
+				parent:null,
+				child:[]
+			};
+			for (var i = 0; i < vm.treedata.length; i++) {
+				var elem = vm.treedata[i];
+				if(elem.id*1 === currentNode.id*1){
+					 vm.treedata.splice(i,1);
+					 break;
+				}
+			}
+
+			vm.treedata.reduce(function (filterData,item) {
+				if(item.pid*1 === currentNode.id *1){
+					filterData.child.push(item);
+				}else if(item.id *1 === currentNode.pid*1){
+					filterData.parent = item;
+				}
+				return filterData;
+			},filterData);
+
+			if(filterData.child.length === 0) filterData.parent.end = true;
+
+			filterData.child.forEach(function (item) {
+				item.pid = filterData.parent.id;
+				//item.end = filterData.end ;
+			});
+
+			currentNode = null;
+
+		};
+
+		
+
+		vm.treeSelect = function (result) {
+			console.log(result);
+			currentNode = result;
+			vm.filterTreeData = vm.treedata.filter(function (item) {
+				return item.pid === currentNode.id;
+			});
+			$scope.$apply();
+		};
+
+		
+		function GUID(len,radix){
+			var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
+			var uuid = [], i;
+			radix = radix || chars.length;
+		 
+			if (len) {
+			  // Compact form
+			  for (i = 0; i < len; i++) uuid[i] = chars[0 | Math.random()*radix];
+			} else {
+			  // rfc4122, version 4 form
+			  var r;
+		 
+			  // rfc4122 requires these characters
+			  uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
+			  uuid[14] = '4';
+		 
+			  // Fill in random data.  At i==19 set the high bits of clock sequence as
+			  // per rfc4122, sec. 4.1.5
+			  for (i = 0; i < 36; i++) {
+				if (!uuid[i]) {
+				  r = 0 | Math.random()*16;
+				  uuid[i] = chars[(i == 19) ? (r & 0x3) | 0x8 : r];
+				}
+			  }
+			}
+		 
+			return uuid.join('');
+		}
     }
 
     module.directive('decLineTree',decTree);
