@@ -1,77 +1,22 @@
 (function () {
 
-    module = angular.module('app',[]);
+    module = angular.module('d3tree',[]);
     module.controller('treeCtrl',treeCtrl);
-    treeCtrl.$inject = ['$sce'];
-    function treeCtrl($sce) {
+    treeCtrl.$inject = [];
+    function treeCtrl() {
         var vm = this;
+        vm.treedata = {'a':1};
         vm.treedata = [
        
-		];
-		vm.treedata.push({'label':'党工部领导2',id:14,pid:12,end:true}, {'label':'部门领导',id:11,pid:0},
-            {'label':'分管局领导',id:12,pid:0},
-		    {'label':'党工部领导',id:13,pid:0});
-		var currentNode = null;
+        ];
         vm.treeAdd = function () {
-			if(!vm.nodeName||!currentNode) return ; 
-			var newId = GUID(4,10);
-			var filterData = vm.treedata.filter(function (item) {
-				return item.id*1 === vm.selectFilter *1;
-			});
-			// filterData.forEach(function (item) {
-			// 	return item.pid = newId;
-			// });
-		   if(filterData[0])filterData[0].pid = newId;
-            vm.treedata.push({
-				label:vm.nodeName,
-				id:newId,
-				pid:currentNode.id,
-				end:filterData.length===0
-			});
-			currentNode = null;
-		};
-
-		
-
-		vm.treeSelect = function (result) {
-			console.log(result);
-			currentNode = result;
-			vm.filterTreeData = vm.treedata.filter(function (item) {
-				return item.pid === currentNode.id;
-			});
-			$scope.$apply();
-		};
-
-		
-		function GUID(len,radix){
-			var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
-			var uuid = [], i;
-			radix = radix || chars.length;
-		 
-			if (len) {
-			  // Compact form
-			  for (i = 0; i < len; i++) uuid[i] = chars[0 | Math.random()*radix];
-			} else {
-			  // rfc4122, version 4 form
-			  var r;
-		 
-			  // rfc4122 requires these characters
-			  uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
-			  uuid[14] = '4';
-		 
-			  // Fill in random data.  At i==19 set the high bits of clock sequence as
-			  // per rfc4122, sec. 4.1.5
-			  for (i = 0; i < 36; i++) {
-				if (!uuid[i]) {
-				  r = 0 | Math.random()*16;
-				  uuid[i] = chars[(i == 19) ? (r & 0x3) | 0x8 : r];
-				}
-			  }
-			}
-		 
-			return uuid.join('');
-		}
-
+            vm.treedata.push({'label':'党工部领导2',id:14,pid:12,end:true}, {'label':'部门领导',id:11,pid:0},
+            {'label':'分管局领导',id:12,pid:0},
+            {'label':'党工部领导',id:13,pid:0});
+        };
+        vm.treeSelect = function (result) {
+            console.log(result);
+        }
     }
 
     module.directive('decLineTree',decTree);
@@ -117,8 +62,12 @@
                     g.setEdge(0, 88888);
                   }
                   
+
+        
+
                   // Run the renderer. This is what draws the final graph.
                   render(d3.select("svg"), g);
+
 
                  var boxClient = angular.element('svg>g')[0].getBBox();
                  elem.attr('height',boxClient.height+10);
@@ -156,10 +105,159 @@
                       scope.onSelect({result:result[0]});
                       console.log('g',textContent);
                  });
-               }
- 
 
-             
+                 var moveOrigin = {
+                        x:0,
+                        y:0,
+                        mouseX:0,
+                        mouseY:0,
+                        enable:false
+                    };
+
+                 $('svg .node').draggable({
+                    start: function (event, ui) {
+                        console.log(event,ui);
+                        if(event.target.textContent ==='开始' || event.target.textContent ==='结束'){
+                            moveOrigin.enable = false;
+                        }else{
+                            moveOrigin.enable = true;
+                        }
+                        moveOrigin.mouseX = event.pageX;
+                        moveOrigin.mouseY = event.pageY;
+                        var offset = getOffset(event.target);
+                        moveOrigin.x = offset.x;
+                        moveOrigin.y = offset.y;
+                      
+                    },
+          
+            
+                    drag: function (event, ui) {
+                        if(!moveOrigin.enable) return;
+                        var disX = event.pageX - moveOrigin.mouseX;
+                        var disY = event.pageY - moveOrigin.mouseY;
+                        var transform = event.target.getAttribute('transform').match(/\d[\d\.]+/g)||[];
+                        var x = transform[0] *1 ||0;
+                        var y = transform[1] *1 || 0;
+                        var newX = disX + x > 10? disX + x : 10;
+                        var newY = disY + y > 10? disY + y : 10;
+                        event.target.setAttribute('transform','translate('+ newX +','+ newY +')');
+                        console.log(disX,disY,transform,event.target.getAttribute('transform').match(/\d[\d\.]+/g));
+                        moveOrigin.mouseX = event.pageX;
+                        moveOrigin.mouseY = event.pageY;
+                    },
+            
+                    stop: function (event, ui) {
+                        if(!moveOrigin.enable) return;
+                       var offset =  getOffset(event.target);
+                       var isSWap =  swapNode(offset.x,offset.y,event.target,moveOrigin.x,moveOrigin.y);
+                       if(!isSWap)  event.target.setAttribute('transform','translate('+ moveOrigin.x +','+ moveOrigin.y +')');
+                    },
+                    containment: "parent"
+                });
+
+                function getOffset(node) {
+                    var transform = node.getAttribute('transform').match(/\d[\d\.]+/g)||[];
+                    var x = transform[0] *1 ||0;
+                    var y = transform[1] *1 || 0;
+                    node = null;
+                    return {
+                        x:x,
+                        y:y
+                    }
+                }
+
+                function swapNode(x,y,node,moveX,moveY) {
+                   console.log($(node).siblings());
+                 
+                   var siblings =$(node).siblings();
+                   var item ;
+                   for (var i = 0; i < siblings.length;  i++) {
+                        item = siblings[i];
+                        if(item.textContent === '开始' ||item.textContent==='结束') continue;
+                        var offset = getOffset(item);
+                        var clinet = item.getBBox();
+                        var vaildX = (offset.x < x)&&(x<offset.x + clinet.width);
+                        var vaildY =  (offset.y < y)&&(y<offset.y + clinet.height);
+                        if(vaildX&&vaildY){
+                           // node.setAttribute('transform','translate('+ offset.x +','+ offset.y +')');
+                           // item.setAttribute('transform','translate('+ moveX +','+ moveY +')');
+                           var data = [];
+                           data.push(filterScopeData(node)[0],filterScopeData(item)[0]);
+                           var arr = scope.treeData.filter(function (item) {
+                                return data[0].id === item.id || data[1].id ===item.id;
+                            });
+                            var temp = angular.copy(arr[0]);
+                            arr[0].label = arr[1].label;
+                            arr[0].data = arr[1].data;
+                            arr[1].label = temp.label;
+                            arr[1].data = temp.data;
+                            scope.treeData.forEach(function (item) {
+                                for (var i = 0; i < arr.length; i++) {
+                                    if(arr[i].id === item.id){
+                                        item.data = arr[i].data;
+                                        item.label = arr[i].label;
+                                    }
+                                }
+                            });
+                            scope.$apply();
+                            return false;
+                        }   
+                   }
+                   siblings = null;
+                   item = null;
+                   return false;
+                }
+
+                function filterScopeData(node) {
+                    var currentNode = node.className.baseVal.split(' ').filter(function (item) {
+                        return item.indexOf('id-')>-1;
+                    });
+                    var id = currentNode[0].split('id-')[1]*1;
+                   
+                    if(id === 0 || id=== 88888){
+                        result = [{id:id,enable:false,end:id===0?true:false}];
+                    }else{
+                      result = scope.treeData.filter(function (item) {
+                          return item.id*1 === id ;
+                      });
+                    }
+                    return result;
+                }
+              
+                //  angular.element('svg .node').bind('mousedown',function (event) {
+                //     var node = angular.element(event.target) ;
+                //     while (!node.hasClass('node')) {
+                //       node = node.parent();
+                //     }
+                //     var transform = node[0].getAttribute('transform').match(/\d[\d\.]+/g)*1;
+                //     moveOrigin.x = transform[0];
+                //     moveOrigin.y = transform[1];
+                //     moveOrigin.mouseX = event.pageX;
+                //     moveOrigin.mouseY = event.pageY;
+                //     moveOrigin.target = node;
+                //     angular.element('svg').bind('mousemove',mousemove);
+                //     angular.element('svg').bind('mouseup',mouseup);
+                //     console.log(event,node);
+                //  });
+
+                //  function mousemove(evnet) {
+                //      if(!moveOrigin.node) return;
+                //      var disX = event.page
+
+                //  }
+
+                //  function mouseup() {
+                //     angular.element('svg').unbind('mousemove',mousemove);
+                //     angular.element('svg').unbind('mouseup',mouseup);
+                //  }
+
+
+               }
+               
+
+                
+  
+            
                 // Here we"re setting nodeclass, which is used by our custom drawNodes function
                 // below.
                 g.setNode(0,  { label: "开始",       class: "type-TOP"});
@@ -190,6 +288,5 @@
            }
        }
     }
-  
   
 }).call(this);
