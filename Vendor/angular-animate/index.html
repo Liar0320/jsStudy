@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- <script src="./node_modules/angular/angular.js"></script> -->
+    <!-- <script src="./node_modules/angular-animate/angular-animate.js"></script> -->
+    <script src="./angular-1.6.0.js"></script>
+    <script src="./angular-animate.js"></script>
+    <script src="./app.js"></script>
+    <title>animate</title>
+</head>
+
+<body ng-app='app'>
+    <div ng-controller="animateCtrl as vm">
+        <button ng-click="vm.list.pop()">删除</button>
+        <button ng-click="vm.list.push('2')">增加</button>
+        <input type="text" ng-model="vm.search">
+        <ul>
+            <li class="sub-menu abn-tree-row"  ng-repeat="row in vm.list | filter:vm.search">{{row}}</li>
+        </ul>
+        <ul ng-if="vm.enterElement" class="abn-tree-row" >{{row}}12121</ul>
+        <label>Show container? <input type="checkbox" ng-model="vm.enterElement" /></label>
+        <label>Animate children? <input type="checkbox" ng-model="vm.animateChildren" /></label>
+        <hr>
+
+        <div>
+            <div ng-if="vm.enterElement" class="container">
+                List of items:
+                <div ng-repeat="item in vm.list" class="item">Item {{item}}</div>
+            </div>
+        </div>
+    </div>
+</body>
+<style>
+    ul>li {
+        padding: 5px;
+        background-color: blue;
+        margin: 5px
+    }
+
+    .container.ng-enter,
+    .container.ng-leave {
+        transition: all ease 1.5s;
+    }
+
+    .container.ng-enter,
+    .container.ng-leave-active {
+        opacity: 0;
+    }
+
+    .container.ng-leave,
+    .container.ng-enter-active {
+        opacity: 1;
+    }
+
+    .item {
+        background: firebrick;
+        color: #FFF;
+        margin-bottom: 10px;
+    }
+
+    .item.ng-enter,
+    .item.ng-leave {
+        transition: transform 1.5s ease;
+    }
+
+     .item.ng-leave {
+        transform: translateX(-50px);
+    }
+    .item.ng-leave-active {
+        transform: translateX(0);
+    }
+    .item.ng-enter {
+        transform: translateX(50px);
+    }
+
+    .item.ng-enter-active {
+        transform: translateX(0);
+    }
+
+
+.abn-tree-animate-enter,
+.abn-tree-row.ng-enter,
+ul.abn-tree-row.ng-enter {
+	transition: 1000ms linear all;
+	position: relative;
+	display: block;
+	opacity: 0;
+	max-height: 0px;
+}
+
+.abn-tree-animate-enter.abn-tree-animate-enter-active,
+.abn-tree-row.ng-enter-active,
+ul.abn-tree-row.ng-enter-active {
+	opacity: 1;
+	max-height: 30px;
+}
+
+.abn-tree-animate-leave,
+.abn-tree-row.ng-leave,
+ul.abn-tree-row.ng-leave-active {
+	transition: 1000ms linear all;
+	position: relative;
+	display: block;
+	height: 30px;
+	max-height: 30px;
+	opacity: 1;
+}
+
+.abn-tree-animate-leave.abn-tree-animate-leave-active,
+.abn-tree-row.ng-leave-active,
+ul.abn-tree-row.ng-leave-active {
+	height: 0px;
+	max-height: 0px;
+	opacity: 0;
+}
+</style>
+
+</html>
