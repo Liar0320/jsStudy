@@ -210,12 +210,46 @@ const $ = {};
     return uuid.join('');
   }
 
+/**
+			 *创建 0 - limitR 随机数
+			 * @param {*} limitR 最大随机数
+			 */
+      function randomDigit (limitR) {
+          limitR = limitR || 10;
+          var random = Math.random;
+          var len =  String(limitR).length;
+          var digit = 1;
+          for (var i = 0; i < len; i++) {
+            digit = 10*digit;
+          }
+          var result;
+          var count = 0;
+          while (result === undefined && count < 100) {
+              var counts = parseInt(random() * digit);
+              if (counts < limitR) result = counts;
+              count++;
+          }
+          random = null;
+          return count === 100 ? 0 : result;
+      }
+    function square(_parmas,_square) {
+        var normal = _parmas;
+        for (var i = 0; i < _square.length; i++) {
+          _parmas = _parmas*normal;
+        }
+        return _parmas;
+    }
+
+
   liarExtend(_$, {
     liarCopy,
     liarExtend,
     trim,
     querysort,
-    bubbleSort
+    bubbleSort,
+    combineData,
+    GUID,
+    randomDigit
   });
 })($);
 
