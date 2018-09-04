@@ -24,3 +24,33 @@
 
     中间有两个入口 一个  $browser.onUrlChange(function(newUrl, newState) {}
     另外一个 transition.to
+
+
+关于 $watch() $watchCollection() 和$watch(...,true)的区别
+
+#$watch --false
+$watch(watchExpression,(newValue,oldValue,scope){},false);
+当模型的引用或者值发生变化时生产效果
+$scope.myArray = [];
+$scope.myArray = null;
+$scope.myArray = someOtherArray;
+
+#$watchCollection()
+针对对象属性的浅层监视(Shallow Watch)，当属性发生变化时触发(对于数组，指的是监视数组的元素；对于字典对象，指的是监视其属性) 触发listener的回调操作。
+$scope.myArray.push({});
+$scope.myArray.splice(0,1);
+$scope.myArray[0] = {};
+
+#$watch --true
+$watch(watchExpression,(newValue,oldValue,scope){},true);
+将由以上所有内容触发：
+$scope.myArray[0].someProperty = "someValue";
+
+
+#$ watchGroup（watchExpressions，listener）;
+
+watchExpressions是数组类型
+
+如果要监听多个变量就要写很多个watch，这显然不是很好的作用。
+
+使用$watchGroup可同时监听多个变量，如果任一一个变量发生变化就会触发listener。
