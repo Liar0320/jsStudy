@@ -234,10 +234,10 @@ const $ = {};
       }
     function square(_parmas,_square) {
         var normal = _parmas;
-        for (var i = 0; i < _square.length; i++) {
-          _parmas = _parmas*normal;
+        for (var i = 1; i < _square; i++) {
+          normal = normal*_parmas;
         }
-        return _parmas;
+        return normal;
     }
 
 
