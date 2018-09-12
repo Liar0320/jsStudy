@@ -167,6 +167,171 @@ function localismCash(money){
     return cashPronun;
 }
 
+/**   有效的数独
+    首先board肯定是一个 2 * 2 的数组
+
+	验证每一行是否成立 成立的条件每个元素都不相等且在1-9
+	vaildRows() 
+	
+	验证每一列是否成立 成立的条件每个元素都不相等且在1-9
+	vaildCols()
+	
+	验证每个区块内是否成立  成立的条件每个元素都不相等且在1-9
+	vaildRect()
+	小块思想 循环 9次 拆分成数组 可以进行判断				
+	大块思想 循环 9次 拆分成数组 可以进行判断
+	for(var j = 0 ;j< 9; j++){
+		var countX = j % 3 + 3*_i;
+		var countY = Math.floor(j/3) + 3*i;
+		if(!validBool(result,board[countX][countY])){
+			console.log(result,countX,countY)
+			return false;
+		}
+	}
+	
+    成立的条件每个元素都不相等且在1-9
+	function validBool(obj,val){
+		return 0<val&&val<10&&(!(val in obj))
+	}
+ * @param {character[][]} board
+ * @return {boolean}
+ */
+var isValidSudoku = function(board) {
+    function validBool(obj,val){
+        if(val === '.') return true;
+        if( (0<val&&val<10)&&(!(val in obj))){
+            obj[val] = ''
+            return true;
+        }else{
+            return false;
+        }
+	}
+    function vaildRows(board){
+        var result;
+        for(var i = 0;i<board.length;i++){
+            result = {};
+            for(var j = 0; j<board[i].length;j++){
+                if(!validBool(result,board[i][j])){
+                    console.log(result,i,j)
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    function vaildCols(board){
+        var result;
+        for(var i = 0;i<board.length;i++){
+            result = {};
+            for(var j = 0; j<board[i].length;j++){
+                if(!validBool(result,board[j][i])){
+                     console.log(result,j,i)
+                   return false;
+                 }
+            }
+        }
+      return true;
+    }
+    function vaildRect(board){
+        var result ;
+        for(var _i = 0 ; _i<3;_i++){
+            for(var i =0 ; i < 3; i++){
+                result = {};
+                for(var j = 0 ;j< 9; j++){
+                    var countX = j % 3 + 3*_i;
+                    var countY = Math.floor(j/3) + 3*i;
+                    if(!validBool(result,board[countX][countY])){
+                        console.log(result,countX,countY)
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+    
+    
+    return vaildRows(board)&&vaildCols(board)&&vaildRect(board);
+};
+
+
+/** 两数之和
+ * 给定一个整数数组和一个目标值，找出数组中和为目标值的两个数。
+
+   你可以假设每个输入只对应一种答案，且同样的元素不能被重复利用。
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[]}
+ */
+var twoSum = function(nums, target) {
+    var temp = {};
+    var len = nums.length;
+    var dseTarget ;
+    for(var i = 0; i<len;i++){
+        dseTarget = target - nums[i];
+        if(dseTarget in temp){
+            return [i,temp[dseTarget]]
+        }else{
+            temp[nums[i]] = i;
+        }
+
+    }
+};
+
+
+/**移动零
+ *给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。 
+ * @param {number[]} nums
+ * @return {void} Do not return anything, modify nums in-place instead.
+ */
+var moveZeroes = function(nums) {
+    for(var i =  nums.length - 1; i > -1; i-- ){
+        if(nums[i] === 0 ){
+            nums.splice(i,1);
+            nums.push(0);
+        } 
+         
+    }
+};
+
+
+/**
+ * @param {number[][]} matrix
+ * @return {void} Do not return anything, modify matrix in-place instead.
+ */
+var rotate = function(matrix) {
+    var _len = matrix.length - 1;
+    //var count = _len - 2;
+    for(var j = 0 ;j <_len ; j++){
+      for(var i = 0 + j ;i< _len - j;i ++){
+            var origin = {
+                x:j,
+                y:i,
+                data:matrix[j][i]
+            }
+            sort(j,i,origin,matrix,_len)
+        }
+    }
+  
+    
+    function sort(x,y,origin,rect,len){
+        var current_x = len - y;
+        var current_y = x;
+        if(current_x === origin.x && current_y === origin.y){
+            rect[x][y] = origin.data;
+            return true;
+        }else{
+            rect[x][y] = rect[current_x][current_y]
+            return sort(current_x,current_y,origin,rect,len)
+        }
+    }
+};
+
+
+
+	  
+
+
 
 
 
