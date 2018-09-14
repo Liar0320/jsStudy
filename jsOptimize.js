@@ -6,6 +6,7 @@
 /*
 https://segmentfault.com/a/1190000004322487       你真的会使用XMLHttpRequest吗？
 https://www.cnblogs.com/heyuquan/archive/2014/07/17/bubble-quick-sort.html  排序可参考
+https://www.cnblogs.com/chuaWeb/p/5210689.html
 */
 const $ = {};
 ///判断 return true or false
