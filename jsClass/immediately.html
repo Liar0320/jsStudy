@@ -13,6 +13,11 @@
     </p>
 </body>
 <script>
+    //2018.9.17  认为 任何一种js函数运算符 都能讲 匿名函数 变成表达式  之后通过()去执行
+    //https://www.cnblogs.com/yy-hh/p/4624792.html
+    //根据 上面的运算符 可以推出   1*function(){console.log('我被执行了');return 999}();  0||function(){console.log('我被执行了')}();
+
+
     //立执行函数  官网给出的两种方式
     (function(){    console.log(1);}());  //W3C 推荐
     (function(){    console.log(1);})() 
