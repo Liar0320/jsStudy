@@ -371,7 +371,6 @@ var longestCommonPrefix = function(strs) {
     var char_len = char.length + 1;
     var len = strs.length;
     var str = ',' + strs.join(',');
-    var temp;
     var reg = new RegExp(',','g');
     var count = 1;
     var last = false
