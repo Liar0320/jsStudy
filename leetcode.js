@@ -359,7 +359,33 @@ var isAnagram = function(s, t) {
 
 
 
-	  
+/**
+ * 最长公前缀  可优化
+ * 因为数组不太好处理 需要循环 所以考虑 变成字符串 用正则去匹配  (','+["flower","flow","flight"].join()).match(/,flo/g)
+ * @param {string[]} strs
+ * @return {string}
+ */
+var longestCommonPrefix = function(strs) {
+    if(strs.length<=1)return strs[0] || '';
+    var char = ','+strs[0];
+    var char_len = char.length + 1;
+    var len = strs.length;
+    var str = ',' + strs.join(',');
+    var temp;
+    var reg = new RegExp(',','g');
+    var count = 1;
+    var last = false
+    while(str.match(reg).length === len){
+        if(count === char_len){
+            last = true;
+            break;
+        }
+        reg = new RegExp(char.substring(0,count),'g');
+        count ++ ;
+    }
+    var result = str.match(reg)[0]
+    return last? result.substring(1,result.length) : result.substring(1,result.length -1);
+};
 
 
 
