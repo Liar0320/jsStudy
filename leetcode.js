@@ -366,26 +366,19 @@ var isAnagram = function(s, t) {
  * @return {string}
  */
 var longestCommonPrefix = function(strs) {
-    if(strs.length<=1)return strs[0] || '';
-    var char = ','+strs[0];
-    var char_len = char.length + 1;
-    var len = strs.length;
-    var str = ',' + strs.join(',');
-    var reg = new RegExp(',','g');
-    var count = 1;
-    var last = false
-    while(str.match(reg).length === len){
-        if(count === char_len){
-            last = true;
-            break;
-        }
-        reg = new RegExp(char.substring(0,count),'g');
-        count ++ ;
+    if(strs.length ===0 ) return '';  
+    var el = strs[0];               //1、提取第一位单词 作为基准
+    var s = ',' + strs.join(',');   //2、创建总的字符串 s
+    var l = strs.length;            //3、创建数组长度
+    var r = '';                     //4、匹配参数 r
+    var i = 0;                      //5、创建一个 i = 0 的计数变量
+    while(s.match(new RegExp(','+ r,'g')).length === l){
+        i++;
+        if(r === el) break;
+        r = el.substring(0,i);
     }
-    var result = str.match(reg)[0]
-    return last? result.substring(1,result.length) : result.substring(1,result.length -1);
+    return el.substring(0,i-1);
 };
-
 
 
 
