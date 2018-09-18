@@ -1,3 +1,6 @@
+chrome 下可安装 
+AngularJs Batarang
+"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" -enable-easy-off-store-extension-install
 关于angular.js 1.x? 
     脏检测机制,
         将原对象赋值一份快照。在某个时间，在某个时间，遍历比较这个对象和快照(新旧值)，如果不一样就执行某些操作。
