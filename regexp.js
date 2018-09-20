@@ -8,30 +8,34 @@
     \b 匹配单词的开始或结束 
     \w 匹配字母或数字或下划线或汉字
 */
+/**
+ * [\u4e00-\u9fa5]   中文
+ * 
+ */
 (function(){
-    var str = 'abcdefghijklmnopqrstuvwxyzabc'
-    var str2 = str.replace(/a/g,'9');            
-    console.log(str+'\n\r'+str2);
-    console.log(str.replace(/[abc]/g,'5'))
+	var str = "abcdefghijklmnopqrstuvwxyzabc";
+	var str2 = str.replace(/a/g,"9");            
+	console.log(str+"\n\r"+str2);
+	console.log(str.replace(/[abc]/g,"5"));
 
-    ///reg
-    var reg = new RegExp('1');
-    console.log(reg.test('1我怕'),/1/.test('12312'));
-    var reg_2 = new RegExp('2','g');
-    console.log('723131231'.replace(reg_2,"帅"));
+	///reg
+	var reg = new RegExp("1");
+	console.log(reg.test("1我怕"),/1/.test("12312"));
+	var reg_2 = new RegExp("2","g");
+	console.log("723131231".replace(reg_2,"帅"));
 
-    ///  +
-    var matchStr = '12345da123sds22af';
-    console.log(matchStr.match(/\d+/g),matchStr.match(/\d/g));
+	///  +
+	var matchStr = "12345da123sds22af";
+	console.log(matchStr.match(/\d+/g),matchStr.match(/\d/g));
 
-    var strDate = '2013-6-7';
-    var re1 = /\d-+/g;  // 全局匹配数字，横杠，横杠数量至少为1，匹配结果为：  3- 6-
-    var re1 = /(\d-)+/g;  // 全局匹配数字，横杠，数字和横杠整体数量至少为1   3-6-
-    var re2  = /(\d+)(-)/g;   //  全局匹配至少一个数字，匹配一个横杠 匹配结果：2013- 6-
+	var strDate = "2013-6-7";
+	var re1 = /\d-+/g;  // 全局匹配数字，横杠，横杠数量至少为1，匹配结果为：  3- 6-
+	var re1 = /(\d-)+/g;  // 全局匹配数字，横杠，数字和横杠整体数量至少为1   3-6-
+	var re2  = /(\d+)(-)/g;   //  全局匹配至少一个数字，匹配一个横杠 匹配结果：2013- 6-
 
-    var strTrim = '  asdsad   ';
-    console.log('55'+strTrim+'55','55'+strTrim.replace(/^\s+|\s+$/g,'')+'55');
+	var strTrim = "  asdsad   ";
+	console.log("55"+strTrim+"55","55"+strTrim.replace(/^\s+|\s+$/g,"")+"55");
 
-    "translate3d(35px, 18px, 0px)".replace(/[^\d]+/g,',') //取反
+	"translate3d(35px, 18px, 0px)".replace(/[^\d]+/g,","); //取反
 })();
-window.location.search.match(/[^&|?]+/g).map(function(item,index){var obj = item.match(/[^=]+/g);return {[obj[0]]:obj[1]}})
+window.location.search.match(/[^&|?]+/g).map(function(item,index){var obj = item.match(/[^=]+/g);return {[obj[0]]:obj[1]};});
