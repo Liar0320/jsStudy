@@ -1,3 +1,9 @@
+/*
+ * @Author: liar 
+ * @Date: 2018-09-21 00:07:50 
+ * @Last Modified by:   liar 
+ * @Last Modified time: 2018-09-21 00:07:50 
+ */
 //1 2 3 4 5 6 7        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~神奇    代码其实是逻辑思维的展示，逻辑的好坏在一定程度上决定了代码的好坏。
 (function(){
     const rotate = function(nums,k){
@@ -405,6 +411,24 @@ var myAtoi = function(str) {
     let max = Math.pow(2,31) -1;
     return s < min ? min : s>max ? max:s;
 };
+
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val){
+ *      this.val = val;
+ *      this.next = next;
+ * }
+ */
+/**
+ * 
+ * @param {ListNode} node 
+ * @return {void} Do not return anything, modify node in-place instead.
+ */
+var deleteNode = function(node){
+    node.val = node.next.val;
+    node.next = node.next.next;
+}
 
 
 
