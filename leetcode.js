@@ -1,57 +1,57 @@
 /*
  * @Author: liar 
  * @Date: 2018-09-21 00:07:50 
- * @Last Modified by:   liar 
- * @Last Modified time: 2018-09-21 00:07:50 
+ * @Last Modified by: liar
+ * @Last Modified time: 2018-09-23 02:44:15
  */
 //1 2 3 4 5 6 7        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~神奇    代码其实是逻辑思维的展示，逻辑的好坏在一定程度上决定了代码的好坏。
 (function(){
-    const rotate = function(nums,k){
-        let Nlength = nums.length;
-        (Nlength<k)&&(k=k%Nlength);
+	const rotate = function(nums,k){
+		let Nlength = nums.length;
+		(Nlength<k)&&(k=k%Nlength);
  
-        if(Nlength%2 !==0){
-            let i = 0;  
-            let start = nums[0];
-            let temp = nums[0];  
-            while(true){
-              let index = (i+k+1)>Nlength?(i+k-Nlength):(i+k);
-              let current = nums[index]
-              nums[index] = temp;
-              temp = current;  
-              if(index===0) break;
-              i=index;	
-            }
-        }else{
-            let i = 0;    //当前索引
-            let start = nums[0]; //存储开始位移的元素
-            let xunhuan = 0;     //位移执行的次数  应该最后执行完成位 n次
-            let start_i = 0;     //一个标志位控制第几次循环位移 开始的标志位
-            let temp = nums[start_i]; //存储开始位移的元素
-            while(true){
-              let index = (i+k+1)>Nlength?(i+k-Nlength):(i+k);  //获取位移之后的index值
-              let current = nums[index];  //获取下次位移的元素
-              nums[index] = temp; //替换存储的元素
-              temp = current;    //存储元素
-              i=index;	         //当前索引
-              xunhuan++;         //当前位移次数
-              if(i===start_i){  //当索引 === 起始索引 即一个循环结束
-                  if(xunhuan===Nlength) break;   //如果位移次数等于应该需要位移的次数 则执行完成；
-                  start_i++;                     //否则 开始下一个循环 起始循环索引++；
-                  i = start_i;                   //当前索引 等于起始索引
-                  temp =  nums[start_i];         //存储元素
-              }
-            }
-        }  
-    }
-})
+		if(Nlength%2 !==0){
+			let i = 0;  
+			let start = nums[0];
+			let temp = nums[0];  
+			while(true){
+				let index = (i+k+1)>Nlength?(i+k-Nlength):(i+k);
+				let current = nums[index];
+				nums[index] = temp;
+				temp = current;  
+				if(index===0) break;
+				i=index;	
+			}
+		}else{
+			let i = 0;    //当前索引
+			let start = nums[0]; //存储开始位移的元素
+			let xunhuan = 0;     //位移执行的次数  应该最后执行完成位 n次
+			let start_i = 0;     //一个标志位控制第几次循环位移 开始的标志位
+			let temp = nums[start_i]; //存储开始位移的元素
+			while(true){
+				let index = (i+k+1)>Nlength?(i+k-Nlength):(i+k);  //获取位移之后的index值
+				let current = nums[index];  //获取下次位移的元素
+				nums[index] = temp; //替换存储的元素
+				temp = current;    //存储元素
+				i=index;	         //当前索引
+				xunhuan++;         //当前位移次数
+				if(i===start_i){  //当索引 === 起始索引 即一个循环结束
+					if(xunhuan===Nlength) break;   //如果位移次数等于应该需要位移的次数 则执行完成；
+					start_i++;                     //否则 开始下一个循环 起始循环索引++；
+					i = start_i;                   //当前索引 等于起始索引
+					temp =  nums[start_i];         //存储元素
+				}
+			}
+		}  
+	};
+});
 
 //数组存在重复 则返回true 
 var containsDuplicate = function(nums) {
-    while(nums.length>1){
-        if(nums.indexOf(nums.shift())>-1) return true;
-    }
-    return false;
+	while(nums.length>1){
+		if(nums.indexOf(nums.shift())>-1) return true;
+	}
+	return false;
 };
 
 
@@ -59,69 +59,69 @@ var containsDuplicate = function(nums) {
 //总体思路，获取A数组的起始数据，从B数组中匹配相同长度相同，比较两组是否相同如果不同，继续在B中查找是否还有A的起始数据，
 //如果没有则将A数组长度逐步递减，递减方式首先首部 之后 尾部 这两次都保留A数组的长度， 如果不成立 A数组去头去尾 直到A数组的长度为0
 function containArray(arrayOld,arrayNew){
-    let index = 0;
-    while(arrayOld.length - index >= arrayNew.length){
-        let temp = true;
-        index = arrayOld.indexOf(arrayNew[0],index);
-        if(index===-1)return false;
-        for(let i = 1;i<arrayNew.length;i++){
-            if(arrayNew[i]===arrayOld[++index]) continue;
-            temp = false;
-            break;
-        }
-        if(temp) return true;
-   }
-   return false;
+	let index = 0;
+	while(arrayOld.length - index >= arrayNew.length){
+		let temp = true;
+		index = arrayOld.indexOf(arrayNew[0],index);
+		if(index===-1)return false;
+		for(let i = 1;i<arrayNew.length;i++){
+			if(arrayNew[i]===arrayOld[++index]) continue;
+			temp = false;
+			break;
+		}
+		if(temp) return true;
+	}
+	return false;
 }
 
 function intersect(nums1,nums2){
-    if(nums1.length<nums2.length){
-        let temp = nums1;
-        nums1 = nums2;
-        nums2 = temp;
-    }
-    let index = 0;
-    let maxLength = nums2.length;
-    while(nums2.length>0){
-        if(containArray(nums1,nums2)) return nums2;
-        if(containArray(nums1,nums2.slice(0,maxLength-1))) return nums2.slice(0,maxLength-1);
-        if(containArray(nums1,nums2.slice(1,maxLength))) return nums2.slice(1,maxLength);
-        nums2.shift();
-        nums2.pop();
-    }
-    return [];
+	if(nums1.length<nums2.length){
+		let temp = nums1;
+		nums1 = nums2;
+		nums2 = temp;
+	}
+	let index = 0;
+	let maxLength = nums2.length;
+	while(nums2.length>0){
+		if(containArray(nums1,nums2)) return nums2;
+		if(containArray(nums1,nums2.slice(0,maxLength-1))) return nums2.slice(0,maxLength-1);
+		if(containArray(nums1,nums2.slice(1,maxLength))) return nums2.slice(1,maxLength);
+		nums2.shift();
+		nums2.pop();
+	}
+	return [];
 }
 
 //两个数组的交集 扩展  出现即取 交集；
 //计算 nums1 nums2 各种不同值出现的次数，
 //nums2中如果存在这个值，取次数小的 push;
 var intersect = function(nums1, nums2) {
-    let obj1 = nums1.reduce((temp,item)=>{
-          temp[item]? ++temp[item]:(temp[item] = 1);
-          return temp;
-      },{})
-      let obj2 = nums2.reduce((temp,item)=>{
-          temp[item]? ++temp[item]:(temp[item] = 1);
-          return temp;
-      },{})
-      let temp = [];
-      for(let key in obj1){
-          if(obj2[key]){
-              let index = Math.min(obj2[key],obj1[key]);
-              for(let i =0 ;i<index;i++){
-                  temp.push(key*1);
-              }
-          }
-      }
-      return temp;
+	let obj1 = nums1.reduce((temp,item)=>{
+		temp[item]? ++temp[item]:(temp[item] = 1);
+		return temp;
+	},{});
+	let obj2 = nums2.reduce((temp,item)=>{
+		temp[item]? ++temp[item]:(temp[item] = 1);
+		return temp;
+	},{});
+	let temp = [];
+	for(let key in obj1){
+		if(obj2[key]){
+			let index = Math.min(obj2[key],obj1[key]);
+			for(let i =0 ;i<index;i++){
+				temp.push(key*1);
+			}
+		}
+	}
+	return temp;
 };
 
 //斐波那契数列
 // 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233，377，610，987，1597，2584，4181，6765，10946，17711，28657，46368
 //fibonSequence(n) = fibonSequence(n-1) + fibonSequence(n-2);
 function fibonSequence(n){
-    if(n===0||n===1) return 1;
-    return fibonSequence(n-1) + fibonSequence(n-2);
+	if(n===0||n===1) return 1;
+	return fibonSequence(n-1) + fibonSequence(n-2);
 } 
 
 //要求输入一串低于十位的数字,输出这串数字的中文大写。
@@ -130,47 +130,47 @@ function fibonSequence(n){
 //千位 没有则加零
 //分析从最大位开始向下读取,碰到零则继续下一位(千位读零);
 function localismCash(money){
-    const REG = /^0+$/g
-    money += '';
-    let cashPronun = '';
-    for(let i =0;i<money.length;i++){
-        let number = money.charAt(i);
-        cashPronun += +number||(money.length-i===4&&(!REG.test(money.substring(i,money.length))))?transferZero(+number):'';
-        cashPronun += +number||(money.length-i===1)?transfer(money.length-i):'';
-    }
-    function transfer(digit){
-        switch (digit) {
-            case 1: return '元';
-            case 2: return '拾';     
-            case 3: return '佰';   
-            case 4: return '仟';     
-            case 5: return '万';  
-            case 6: return '拾万';   
-            case 7: return '佰万';   
-            case 8: return '仟万';    
-            case 9: return '亿'; 
-            case 10: return '拾亿'; 
-            default:  
-        }
-    }
+	const REG = /^0+$/g;
+	money += "";
+	let cashPronun = "";
+	for(let i =0;i<money.length;i++){
+		let number = money.charAt(i);
+		cashPronun += +number||(money.length-i===4&&(!REG.test(money.substring(i,money.length))))?transferZero(+number):"";
+		cashPronun += +number||(money.length-i===1)?transfer(money.length-i):"";
+	}
+	function transfer(digit){
+		switch (digit) {
+		case 1: return "元";
+		case 2: return "拾";     
+		case 3: return "佰";   
+		case 4: return "仟";     
+		case 5: return "万";  
+		case 6: return "拾万";   
+		case 7: return "佰万";   
+		case 8: return "仟万";    
+		case 9: return "亿"; 
+		case 10: return "拾亿"; 
+		default:  
+		}
+	}
 
-    function transferZero(number){
-        switch (number) {
-            case 0: return '零';
-            case 1: return '壹';
-            case 2: return '贰';     
-            case 3: return '叁';   
-            case 4: return '肆';     
-            case 5: return '伍';   
-            case 6: return '陆';   
-            case 7: return '柒';   
-            case 8: return '捌';   
-            case 9: return '玖';   
-            default:  new Error("错误数值");
-        }
-    }
+	function transferZero(number){
+		switch (number) {
+		case 0: return "零";
+		case 1: return "壹";
+		case 2: return "贰";     
+		case 3: return "叁";   
+		case 4: return "肆";     
+		case 5: return "伍";   
+		case 6: return "陆";   
+		case 7: return "柒";   
+		case 8: return "捌";   
+		case 9: return "玖";   
+		default:  new Error("错误数值");
+		}
+	}
 
-    return cashPronun;
+	return cashPronun;
 }
 
 /**   有效的数独
@@ -203,61 +203,61 @@ function localismCash(money){
  * @return {boolean}
  */
 var isValidSudoku = function(board) {
-    function validBool(obj,val){
-        if(val === '.') return true;
-        if( (0<val&&val<10)&&(!(val in obj))){
-            obj[val] = ''
-            return true;
-        }else{
-            return false;
-        }
+	function validBool(obj,val){
+		if(val === ".") return true;
+		if( (0<val&&val<10)&&(!(val in obj))){
+			obj[val] = "";
+			return true;
+		}else{
+			return false;
+		}
 	}
-    function vaildRows(board){
-        var result;
-        for(var i = 0;i<board.length;i++){
-            result = {};
-            for(var j = 0; j<board[i].length;j++){
-                if(!validBool(result,board[i][j])){
-                    console.log(result,i,j)
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-    function vaildCols(board){
-        var result;
-        for(var i = 0;i<board.length;i++){
-            result = {};
-            for(var j = 0; j<board[i].length;j++){
-                if(!validBool(result,board[j][i])){
-                     console.log(result,j,i)
-                   return false;
-                 }
-            }
-        }
-      return true;
-    }
-    function vaildRect(board){
-        var result ;
-        for(var _i = 0 ; _i<3;_i++){
-            for(var i =0 ; i < 3; i++){
-                result = {};
-                for(var j = 0 ;j< 9; j++){
-                    var countX = j % 3 + 3*_i;
-                    var countY = Math.floor(j/3) + 3*i;
-                    if(!validBool(result,board[countX][countY])){
-                        console.log(result,countX,countY)
-                        return false;
-                    }
-                }
-            }
-        }
-        return true;
-    }
+	function vaildRows(board){
+		var result;
+		for(var i = 0;i<board.length;i++){
+			result = {};
+			for(var j = 0; j<board[i].length;j++){
+				if(!validBool(result,board[i][j])){
+					console.log(result,i,j);
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	function vaildCols(board){
+		var result;
+		for(var i = 0;i<board.length;i++){
+			result = {};
+			for(var j = 0; j<board[i].length;j++){
+				if(!validBool(result,board[j][i])){
+					console.log(result,j,i);
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	function vaildRect(board){
+		var result ;
+		for(var _i = 0 ; _i<3;_i++){
+			for(var i =0 ; i < 3; i++){
+				result = {};
+				for(var j = 0 ;j< 9; j++){
+					var countX = j % 3 + 3*_i;
+					var countY = Math.floor(j/3) + 3*i;
+					if(!validBool(result,board[countX][countY])){
+						console.log(result,countX,countY);
+						return false;
+					}
+				}
+			}
+		}
+		return true;
+	}
     
     
-    return vaildRows(board)&&vaildCols(board)&&vaildRect(board);
+	return vaildRows(board)&&vaildCols(board)&&vaildRect(board);
 };
 
 
@@ -270,18 +270,18 @@ var isValidSudoku = function(board) {
  * @return {number[]}
  */
 var twoSum = function(nums, target) {
-    var temp = {};
-    var len = nums.length;
-    var dseTarget ;
-    for(var i = 0; i<len;i++){
-        dseTarget = target - nums[i];
-        if(dseTarget in temp){
-            return [i,temp[dseTarget]]
-        }else{
-            temp[nums[i]] = i;
-        }
+	var temp = {};
+	var len = nums.length;
+	var dseTarget ;
+	for(var i = 0; i<len;i++){
+		dseTarget = target - nums[i];
+		if(dseTarget in temp){
+			return [i,temp[dseTarget]];
+		}else{
+			temp[nums[i]] = i;
+		}
 
-    }
+	}
 };
 
 
@@ -291,13 +291,13 @@ var twoSum = function(nums, target) {
  * @return {void} Do not return anything, modify nums in-place instead.
  */
 var moveZeroes = function(nums) {
-    for(var i =  nums.length - 1; i > -1; i-- ){
-        if(nums[i] === 0 ){
-            nums.splice(i,1);
-            nums.push(0);
-        } 
+	for(var i =  nums.length - 1; i > -1; i-- ){
+		if(nums[i] === 0 ){
+			nums.splice(i,1);
+			nums.push(0);
+		} 
          
-    }
+	}
 };
 
 
@@ -306,31 +306,31 @@ var moveZeroes = function(nums) {
  * @return {void} Do not return anything, modify matrix in-place instead.
  */
 var rotate = function(matrix) {
-    var _len = matrix.length - 1;
-    //var count = _len - 2;
-    for(var j = 0 ;j <_len ; j++){
-      for(var i = 0 + j ;i< _len - j;i ++){
-            var origin = {
-                x:j,
-                y:i,
-                data:matrix[j][i]
-            }
-            sort(j,i,origin,matrix,_len)
-        }
-    }
+	var _len = matrix.length - 1;
+	//var count = _len - 2;
+	for(var j = 0 ;j <_len ; j++){
+		for(var i = 0 + j ;i< _len - j;i ++){
+			var origin = {
+				x:j,
+				y:i,
+				data:matrix[j][i]
+			};
+			sort(j,i,origin,matrix,_len);
+		}
+	}
   
     
-    function sort(x,y,origin,rect,len){
-        var current_x = len - y;
-        var current_y = x;
-        if(current_x === origin.x && current_y === origin.y){
-            rect[x][y] = origin.data;
-            return true;
-        }else{
-            rect[x][y] = rect[current_x][current_y]
-            return sort(current_x,current_y,origin,rect,len)
-        }
-    }
+	function sort(x,y,origin,rect,len){
+		var current_x = len - y;
+		var current_y = x;
+		if(current_x === origin.x && current_y === origin.y){
+			rect[x][y] = origin.data;
+			return true;
+		}else{
+			rect[x][y] = rect[current_x][current_y];
+			return sort(current_x,current_y,origin,rect,len);
+		}
+	}
 };
 
 
@@ -353,14 +353,14 @@ var rotate = function(matrix) {
  * @return {boolean}
  */
 var isAnagram = function(s, t) {
-    var r = {};
-    var i ;
-    s.split('').forEach(v=>{if(r[v.charCodeAt()] === undefined)r[v.charCodeAt()] = 0; r[v.charCodeAt()]++});
-    t.split('').forEach(v=>r[v.charCodeAt()]--);
-    for( i in r){
-       if(r[i] !== 0) return false;
-    }
-    return true;    
+	var r = {};
+	var i ;
+	s.split("").forEach(v=>{if(r[v.charCodeAt()] === undefined)r[v.charCodeAt()] = 0; r[v.charCodeAt()]++;});
+	t.split("").forEach(v=>r[v.charCodeAt()]--);
+	for( i in r){
+		if(r[i] !== 0) return false;
+	}
+	return true;    
 };
 
 
@@ -372,44 +372,44 @@ var isAnagram = function(s, t) {
  * @return {string}
  */
 var longestCommonPrefix = function(strs) {
-    if(strs.length ===0 ) return '';  
-    var el = strs[0];               //1、提取第一位单词 作为基准
-    var s = ',' + strs.join(',');   //2、创建总的字符串 s
-    var l = strs.length;            //3、创建数组长度
-    var r = '';                     //4、匹配参数 r
-    var i = 0;                      //5、创建一个 i = 0 的计数变量
-    while(s.match(new RegExp(','+ r,'g')).length === l){
-        i++;
-        if(r === el) break;
-        r = el.substring(0,i);
-    }
-    return el.substring(0,i-1);
+	if(strs.length ===0 ) return "";  
+	var el = strs[0];               //1、提取第一位单词 作为基准
+	var s = "," + strs.join(",");   //2、创建总的字符串 s
+	var l = strs.length;            //3、创建数组长度
+	var r = "";                     //4、匹配参数 r
+	var i = 0;                      //5、创建一个 i = 0 的计数变量
+	while(s.match(new RegExp(","+ r,"g")).length === l){
+		i++;
+		if(r === el) break;
+		r = el.substring(0,i);
+	}
+	return el.substring(0,i-1);
 };
 
 
 //实现 atoi，将字符串转为整数。
 var myAtoi = function(str) {
-    var s = parseInt(str)||0
-    return s < -2147483648 ? -2147483648 : s>2147483647 ? 2147483647:s;
+	var s = parseInt(str)||0;
+	return s < -2147483648 ? -2147483648 : s>2147483647 ? 2147483647:s;
 };
 
 var myAtoi = function(str) {
-    var s = (str.match(/^\s*([-+]?)(\d+)/)||[])[0] *1;
-    if(!s)return 0;
-    return s < -2147483648 ? -2147483648 : s>2147483647 ? 2147483647:s;
+	var s = (str.match(/^\s*([-+]?)(\d+)/)||[])[0] *1;
+	if(!s)return 0;
+	return s < -2147483648 ? -2147483648 : s>2147483647 ? 2147483647:s;
 };
 
 var myAtoi = function(str) {
-    var s = (str.replace(/^\s+/,'').match(/^[-+]?\d+/)||[])[0] *1 || 0;
-    return s < -2147483648 ? -2147483648 : s>2147483647 ? 2147483647:s;
+	var s = (str.replace(/^\s+/,"").match(/^[-+]?\d+/)||[])[0] *1 || 0;
+	return s < -2147483648 ? -2147483648 : s>2147483647 ? 2147483647:s;
 };
 
 var myAtoi = function(str) {
-    var s = (str.replace(/^\s+/,'').match(/^[-+]?\d+/)||[])[0] *1;
-    if(!s)return 0;
-    let min = Math.pow(-2,31) ;
-    let max = Math.pow(2,31) -1;
-    return s < min ? min : s>max ? max:s;
+	var s = (str.replace(/^\s+/,"").match(/^[-+]?\d+/)||[])[0] *1;
+	if(!s)return 0;
+	let min = Math.pow(-2,31) ;
+	let max = Math.pow(2,31) -1;
+	return s < min ? min : s>max ? max:s;
 };
 
 
@@ -426,9 +426,92 @@ var myAtoi = function(str) {
  * @return {void} Do not return anything, modify node in-place instead.
  */
 var deleteNode = function(node){
-    node.val = node.next.val;
-    node.next = node.next.next;
-}
+	node.val = node.next.val;
+	node.next = node.next.next;
+};
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * 查找当前节点的  第n-1个next 是不是 null 如果是则为该节点就是需要寻找的
+ * @param {ListNode} head
+ * @param {number} n
+ * @return {ListNode}
+ */
+var removeNthFromEnd = function(head, n) {
+	var i ;
+	var temp ;
+	var node ;
+	var c = 0;
+	while(true){
+		node = head;
+		for(i = 0; i< c ;i++){
+			node = node.next;
+		}
+		temp = node;
+		for(i = 0; i<n-1;i++){
+			temp = temp.next;
+		}
+		if(temp.next === null){
+			if(node.next === null){
+				node = head;
+				for(i = 0; i< c -1 ;i++){
+					node = node.next;
+				}
+				c === 0? (head = null):(node.next = null);
+			}else{
+				node.val = node.next.val;
+				node.next = node.next.next;
+			}
+			return head;
+		}
+		c++;
+	}
+
+};
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * 查找当前节点的  第n-1个的next 是不是 null 如果是则为该节点就是需要寻找的
+ * 定义两个指针p1 p2 他们保持相差 n步的距离 
+ * 当 p1 达到条件时 p2 删除该节点就可以了
+ * @param {ListNode} head
+ * @param {number} n
+ * @return {ListNode}
+ */
+var removeNthFromEnd = function(head, n) {
+
+	var dummyHead = new ListNode(-1);
+	dummyHead.next = head;
+	var p1 = dummyHead.next;
+	for(var i =0; i<n-1;i++){
+		p1 = p1.next;
+	}
+	p1 = p1.next;
+	var p2 = dummyHead;
+	while(p1 !== null){
+		p1 = p1.next;
+		p2 = p2.next;
+	}
+
+	p2.next = p2.next.next;
+
+	return dummyHead.next;
+
+};
+
+
 
 
 
