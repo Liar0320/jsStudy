@@ -2,7 +2,7 @@
  * @Author: liar 
  * @Date: 2018-09-21 00:07:50 
  * @Last Modified by: liar
- * @Last Modified time: 2018-09-23 02:44:15
+ * @Last Modified time: 2018-09-25 00:07:56
  */
 //1 2 3 4 5 6 7        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~神奇    代码其实是逻辑思维的展示，逻辑的好坏在一定程度上决定了代码的好坏。
 (function(){
@@ -511,6 +511,36 @@ var removeNthFromEnd = function(head, n) {
 
 };
 
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * var a = new ListNode(1) ;var b = new ListNode(2) ;var c = new ListNode(3) ;var d = new ListNode(4); a.next = b;b.next =c ;c.next =d 
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var reverseList = function(head) {
+	digui(head,0);
+	function digui(ln,ind) {
+		var swapX = ln;
+		var swapY = ln;
+		var count = 0;
+		while(swapY.next !== null && (!ind || count !== ind)){
+			count++;
+			if(ind >= count) return head;
+			swapY = swapY.next;
+		}
+		var temp = swapX.next;
+		swapX.next = swapY.next;
+		swapY.next = temp;
+		digui(swapY.next,count--);
+	}
+};
 
 
 
