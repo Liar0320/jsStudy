@@ -1,3 +1,4 @@
+//https://blog.csdn.net/maokelong95/article/details/54379046/           配置snippet
 {
 	//prettier && eslint
 	//http://www.lanrenxiazai.cn/tech/aq/jQueryjiaocheng/2018/0829/18383.html

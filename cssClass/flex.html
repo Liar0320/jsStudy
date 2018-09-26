@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="./icons/iconfont.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="box">
+        <span>
+            <svg class="icon mobile-em" aria-hidden="true">
+                <use xlink:href="#icon-speak_fill"></use>
+            </svg>
+        </span>
+        <div>12321ssssssssss</div>
+        <span class=" rotated" >
+            <svg class="icon mobile-em " aria-hidden="true">
+                <use xlink:href="#icon-music"></use>
+            </svg>
+        </span>
+    </div>
+</body>
+<style>
+    html{
+        font-size: 10px
+    }
+    .icon{
+        width: 1em; height: 1em;
+        vertical-align: -0.15em;
+        fill: currentColor;
+        overflow: hidden; 
+    }
+    .mobile-em{
+        width: 3em;
+        height: 3em;
+    }
+    .box{
+        display: flex;
+        display: -webkit-flex;
+    }
+    .box{
+        height: 50px;
+    }
+    span{
+        background-color: red;
+    }
+    div.box>div{
+        background-color: yellow;
+        margin:0 5px
+    }
+    .rotated{
+        animation-name: rotated;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+    }
+    @keyframes rotated{
+        0%{
+            transform: rotate(0)
+        }
+        100%{
+            transform: rotate(360deg)
+        }
+    }
+</style>
+</html>
