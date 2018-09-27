@@ -1,8 +1,8 @@
 /*
  * @Author: liar 
  * @Date: 2018-09-21 00:07:50 
- * @Last Modified by: liar
- * @Last Modified time: 2018-09-25 00:07:56
+ * @Last Modified by: lich
+ * @Last Modified time: 2018-09-27 16:57:47
  */
 //1 2 3 4 5 6 7        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~神奇    代码其实是逻辑思维的展示，逻辑的好坏在一定程度上决定了代码的好坏。
 (function(){
@@ -524,26 +524,106 @@ var removeNthFromEnd = function(head, n) {
  * @param {ListNode} head
  * @return {ListNode}
  */
+/**
+ * 每次循环到最后一位 删除该节点  将该节点 赋予 q1.next;
+ * 如果下一个节点是 null 或者 node.next === null;
+ * return node ;
+ * 如果不是则
+ * 将 node的下一个节点指向node
+ * @param {*} head 
+ */
 var reverseList = function(head) {
-	digui(head,0);
-	function digui(ln,ind) {
-		var swapX = ln;
-		var swapY = ln;
-		var count = 0;
-		while(swapY.next !== null && (!ind || count !== ind)){
-			count++;
-			if(ind >= count) return head;
-			swapY = swapY.next;
-		}
-		var temp = swapX.next;
-		swapX.next = swapY.next;
-		swapY.next = temp;
-		digui(swapY.next,count--);
-	}
+    if(!head || head.next === null) return head;
+    var rn = new ListNode();
+    var q1 = rn;
+    var q2 = head.next.next;
+    var q3 = head;
+    
+    while(true){
+        while(q2 !== null){
+            q2 = q2.next;
+            q3 = q3.next;
+        }
+        if(q1.val === undefined){
+             q1.val = q3.next.val;
+        }else{
+            q1.next = q3.next;
+            q1 = q1.next;
+        }
+        q3.next = null;
+        if(head.next === null) break;
+        q2 = head.next.next;
+        q3 = head;
+    }
+    q1.next = head;
+    return rn;
 };
 
+var reverseList = function (head) {
+	var prev = null;
+	var tempNext = null;
+	var node = head;
+	while (node) {
+		tempNext = node.next;
+		node.next = prev;
+		prev = node;
+		node = tempNext;
+	}
+	return prev;
+}
 
+var reverseList = function (head) {
+    if(head === null || head.next === null){
+        return head;
+    }else{
+        var result = reverseList(head.next);
+        var nextNode = head.next;
+        nextNode.next = head;
+        head.next = null;
+    }
+    return result;
+}
 
+//将两个有序链表 合成一个
+var mergeTwoLists = function(l1, l2) {
+    var q1 = l1;
+	var q2 = l2;
+	var isRun ;
+    var head;
+	var node ;
+	while (true) {
+		if(q1!==null && q2 !==null){
+			isRun =  q1.val < q2.val? 1:2;
+			if(node === undefined){
+				node = isRun === 1? q1:q2;
+                head = node;
+                isRun === 1? (q1 = q1.next):(q2 = q2.next);
+			}else{
+				node.next = isRun === 1? q1:q2;
+                isRun === 1? (q1 = q1.next):(q2 = q2.next);
+                node = node.next;
+			}
+		}else if(q1 === null && q2 ===null){
+			return head || null;
+		}else if(q1 === null){
+            if(node){
+               node.next = q2; 
+            }else{
+                node = q2;
+                head = node;
+            }
+           
+		   return head
+		}else{
+             if(node){
+               node.next = q1; 
+            }else{
+                node = q1;
+                head = node;
+            }
+			return head;
+		}
 
-
+	}
+};
 
