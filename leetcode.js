@@ -2,7 +2,7 @@
  * @Author: liar 
  * @Date: 2018-09-21 00:07:50 
  * @Last Modified by: lich
- * @Last Modified time: 2018-09-27 16:57:47
+ * @Last Modified time: 2018-09-28 10:26:55
  */
 //1 2 3 4 5 6 7        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~神奇    代码其实是逻辑思维的展示，逻辑的好坏在一定程度上决定了代码的好坏。
 (function(){
@@ -627,3 +627,60 @@ var mergeTwoLists = function(l1, l2) {
 	}
 };
 
+//生成一个反转的链表 和一个正向链表
+function reseverNode (head){
+	if(head === null || head.next === null ){
+		var result = head? new ListNode(head.val) : null
+		return [result,result,result];
+	}else{
+		var result = reseverNode(head.next);
+		var node = new ListNode(head.val);
+		result[0].next = node;
+		return [node,result[1],head]
+	}
+}
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {boolean}
+ */
+var isPalindrome = function(head) {
+    var q1 = head;
+    var q2;
+
+    var preNode = null;
+    var tempNode = null ;
+    while(head !== null){
+        if(tempNode){
+            tempNode = new ListNode(head.val);
+            tempNode.next = preNode;
+            preNode = tempNode;
+        }else{
+            tempNode = new ListNode(head.val);
+            preNode = tempNode;
+        }
+        head = head.next;
+    }
+    q2 = tempNode;
+  
+    
+    if(q1 === q2) return true;
+    while((q1 !== null || q2 !== null)&&(q1.val === q2.val)){
+         q1 = q1.next;
+         q2 = q2.next;
+   }
+    if(q1 === null && q2 ===null){
+        return true;
+    }else{
+        return false;
+    }
+  
+
+};
