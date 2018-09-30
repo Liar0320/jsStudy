@@ -2,7 +2,7 @@
  * @Author: liar 
  * @Date: 2018-09-21 00:07:50 
  * @Last Modified by: lich
- * @Last Modified time: 2018-09-30 13:54:26
+ * @Last Modified time: 2018-09-30 14:00:09
  */
 //1 2 3 4 5 6 7        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~神奇    代码其实是逻辑思维的展示，逻辑的好坏在一定程度上决定了代码的好坏。
 (function(){
@@ -692,6 +692,7 @@ var isPalindrome = function(head) {
  *     this.val = val;
  *     this.next = null;
  * }
+ * https://blog.csdn.net/u011373710/article/details/54024366
  */
 
 /**
