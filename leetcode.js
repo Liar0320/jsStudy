@@ -2,7 +2,7 @@
  * @Author: liar 
  * @Date: 2018-09-21 00:07:50 
  * @Last Modified by: lich
- * @Last Modified time: 2018-09-28 10:26:55
+ * @Last Modified time: 2018-09-30 13:54:26
  */
 //1 2 3 4 5 6 7        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~神奇    代码其实是逻辑思维的展示，逻辑的好坏在一定程度上决定了代码的好坏。
 (function(){
@@ -684,3 +684,77 @@ var isPalindrome = function(head) {
   
 
 };
+
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+
+/**
+ * @param {ListNode} head
+ * @return {boolean}
+ */
+var hasCycle = function(head) {
+    var hash = [];
+    if(head === null) return false;
+    while(head){
+        if(hash.includes(head)) return true
+        hash.push(head);
+        head = head.next;
+    }
+    return false
+};
+
+//定义两个运动员在同一起跑线
+var hasCycle = function(head) {
+	var q1 = head;
+	var q2 = head;
+    while(q1&&q2&&q2.next){
+          q1 = q1.next;
+          q2 = q2.next.next;
+          if(q1 ===q2) return true
+    }
+	return false
+};
+
+/*
+	判断是否是循环链表
+	如果head === null || head.next === null  return false;
+	否则进行判定
+	设置两个指针一个指向 q1 = head 一个指向 q2 = head.next 
+	两个指针始终相差一步
+	当跨出第一步时
+		q1.next = null;  将上一个指针 指向null	
+		q1 = q2;		  q1 移动到下一步
+		q2 = q2.next;	  q2 移动到下一步
+
+	如果 q2 === null;
+*/
+
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var maxDepth = function(root) {
+	if(!root) return 0;
+	var leftDepth = 1, rightDepth = 1 ,depth = arguments[1] || 1;
+	if(root.left) leftDepth = maxDepth(root.left,depth + 1);
+	if(root.right) rightDepth = maxDepth(root.right,depth + 1);
+	return Math.max(leftDepth,rightDepth,depth);
+ };
+
+ var maxDepth = function(root) {
+	return root === null? 0 : Math.max(maxDepth(root.left),maxDepth(root.right)) + 1;
+ };
