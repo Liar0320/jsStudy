@@ -1,8 +1,8 @@
 /*
  * @Author: liar 
  * @Date: 2018-09-21 00:07:50 
- * @Last Modified by: lich
- * @Last Modified time: 2018-09-30 14:00:09
+ * @Last Modified by: liar
+ * @Last Modified time: 2018-10-08 14:51:44
  */
 //1 2 3 4 5 6 7        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~神奇    代码其实是逻辑思维的展示，逻辑的好坏在一定程度上决定了代码的好坏。
 (function(){
@@ -759,3 +759,111 @@ var maxDepth = function(root) {
  var maxDepth = function(root) {
 	return root === null? 0 : Math.max(maxDepth(root.left),maxDepth(root.right)) + 1;
  };
+
+
+
+ /**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * 左子树都小于 当前节点
+ * 右子树都大于 当前节点 	
+ * @param {TreeNode} rootde
+ * @return {boolean}
+ */
+var isValidBST = function(root) {
+    if( !root) return true;
+    if( !valid(root)) return false;
+    var left=true ,right =true;
+    if(root.left){
+        left = isValidBST(root.left);
+    }else if(root.right){
+        right = isValidBST(root.right);
+    }
+    return left && right ;
+};
+//验证当前节点是否成立
+function valid(root){
+    var left,right;
+    if(root.left){
+       left = getNode(root.left);
+       if(Math.max.apply(this,left) >= root.val) return false; 
+    }
+    if(root.right){
+       right = getNode(root.right);
+       if(Math.min.apply(this,right) <= root.val) return false; 
+    }
+    return true;
+}
+//获取该branch下的所有节点
+function getNode(branch){
+    var result = [branch.val];
+    if(branch.left) result = result.concat(getNode(branch.left));
+    if(branch.right) result = result.concat(getNode(branch.right));
+    return result;
+}
+
+// root < max;
+// root < min;
+// 任何一个节点 都应该 大于min  小于max 
+var isValidBST = function(root) {
+    return isValid(root);
+};
+function isValid(root, min, max){
+    if(!root) return true;
+    if((min === undefined || min < root.val )&& (max === undefined || max > root.val)){
+        return isValid(root.left,min,root.val)&&
+             isValid(root.right,root.val,max);
+    }
+    return false;
+}
+
+
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {boolean}
+ */
+var isSymmetric = function(root) {
+    var resultStr = [];
+    var temp = [];
+    var isGoing = false;
+    while(true){
+        resultStr = [];
+        isGoing = false;
+        if(temp.length === 0) temp.push(root);
+        var len = temp.length
+        for(var i =0; i < len;i ++){
+            resultStr.push(temp[i]? temp[i].val:null);
+            if(temp[i]){
+                temp.push(temp[i].left);
+                temp.push(temp[i].right);
+                isGoing = true;
+            }else{
+                temp.push(null,null);
+            }
+        }
+        if(! isGoing)  return true;
+        if(!isSymetricStr(resultStr)) return false;
+        temp.splice(0,len);
+    }
+};
+
+function isSymetricStr(arr){
+    var len = arr.length;
+    for(var i = 0; i < len / 2 ; i++){
+        if(arr[i] !== arr[len-1-i]) return false;
+    }
+    return true;
+}
