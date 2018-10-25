@@ -50,7 +50,7 @@ $watch(watchExpression,(newValue,oldValue,scope){},true);
 $scope.myArray[0].someProperty = "someValue";
 
 
-#$ watchGroup（watchExpressions，listener）;
+#$watchGroup（watchExpressions，listener）;
 
 watchExpressions是数组类型
 
