@@ -573,3 +573,179 @@ const $ = {};
         }
     }
 })($);
+
+//对时间处理
+(function () {
+    // 传进数字 传出字符串  二位数
+    function isAddTwo (count) {
+      if (count < 10) count = '0' + count;
+      return count + '';
+    }
+
+    /**
+     * 拼接日历中的最小对象  天
+     * @param {*} year
+     * @param {*} month
+     * @param {*} day
+     * @param {*} week
+     * @param {*} typeOfmonth 是第几个月
+     */
+    function packDateObj (year, month, day, week, typeOfmonth, typeMath) {
+        var M, Y;
+        if (typeMath === 'next') {
+            M = isAddTwo(month === 12 ? 1 : month + 1);
+            Y = month === 12 ? year + 1 : year;
+        } else if (typeMath === 'prev') {
+            M = isAddTwo(month === 1 ? 12 : month - 1);
+            Y = month === 1 ? year - 1 : year;
+        } else {
+            M = isAddTwo(month);
+            Y = year;
+        }
+        return { text: day, month: typeOfmonth, week: week, date: Y + '-' + M + '-' + isAddTwo(day) };
+    }
+
+    /**
+    * 获取当月的日期格式
+    * @param {*} Cyear 当前年份
+    * @param {*} Cmonth 当前月份
+    * @param {*} currentDate 当前日期 可选
+    */
+    function getFullMonthDays (Cyear, Cmonth, CDate) {
+        Cmonth = Number(Cmonth);
+        Cyear = Number(Cyear);
+        CDate = Number(CDate);
+        var month = new Date(Cyear, Cmonth - 1);
+        var firstWeek = month.getDay();
+        var days = month.getDays();
+        var result = [];
+        var i;
+        var week;
+        week = firstWeek - 1;
+        // 当月
+        for (i = 0; i < days; i++) {
+            week += 1;
+            if (week === 8) week = 1;
+            result.push(packDateObj(Cyear, Cmonth, i + 1, week, 'current'));
+            // result.push({ text: i + 1, month: 'current', week: week, date: Cyear + '-' + isAddTwo(Cmonth) + '-' + isAddTwo(i + 1), isSelected: CDate === (i + 1) });
+        }
+        i = 0;
+        // 下月
+        while (week !== 6) {
+            week === 7 ? (week = 1) : (week += 1);
+            result.push(packDateObj(Cyear, Cmonth, i += 1, week, 'nextMonth', 'next'));
+            // result.push({ text: i += 1, month: 'nextMonth', week: week, date: Cyear + '-' + isAddTwo(Cmonth === 12 ? 1 : Cmonth + 1) + '-' + isAddTwo(i) });
+        }
+        // 上月
+        if (firstWeek !== 7) {
+            week = firstWeek;
+            var preMonthDays = new Date(Cyear, Cmonth - 2).getDays();
+            for (i = 0; i < firstWeek; i++) {
+                week -= 1;
+                if (week === 0)week = 7;
+                result.unshift(packDateObj(Cyear, Cmonth, preMonthDays - i, week, 'preMonth', 'prev'));
+                // result.unshift({ text: preMonthDays - i, month: 'preMonth', week: week, date: Cyear + '-' + isAddTwo(Cmonth === 1 ? 12 : Cmonth - 1) + '-' + isAddTwo(preMonthDays - i) });
+            }
+        }
+        // 补齐
+        week--;
+        i = result[ result.length - 1 ].text;
+        while (result.length < 42) {
+            week === 7 ? (week = 1) : (week += 1);
+            result.push(packDateObj(Cyear, Cmonth, i += 1, week, 'nextMonth', 'next'));
+            // result.push({ text: i += 1, month: 'nextMonth', week: week, date: Cyear + '-' + isAddTwo(Cmonth === 12 ? 1 : Cmonth + 1) + '-' + isAddTwo(i) });
+        }
+        return result;
+    }
+
+    /**
+    * 得到日期数组
+    * @param {*} startDate 起始时间
+    * @param {*} endDate 截止时间
+    * 依赖  getdaysByDate  getDateBydays  isAddTwo
+    */
+    function resultSortDate (startDate, endDate) {
+        var month = 0;
+        var days = 0;
+        if (startDate.getMonth === undefined) {
+            var t1 = startDate.match(/\d+/g);
+            var year1 = t1[0] * 1;
+            var month1 = t1[1] * 1 - 1;
+            var days1 = t1[2] * 1;
+        }
+        if (endDate.getMonth === undefined) {
+            var t2 = endDate.match(/\d+/g);
+            var year2 = t2[0] * 1;
+            var month2 = t2[1] * 1 - 1;
+            var days2 = t2[2] * 1;
+        }
+        if (year1 === year2) {
+            var days1 = getdaysByDate(startDate);
+            var days2 = getdaysByDate(endDate);
+            var result = [];
+            for (var i = days1; i <= days2; i++) {
+                var getM = getDateBydays(i, startDate);
+                var date = year1 + '-' + isAddTwo(getM[0]) + '-' + isAddTwo(getM[1]);
+                result.push(date);
+            }
+        } else {
+            days1 = getdaysByDate(startDate);
+            days2 = 365;
+            result = [];
+            for (i = days1; i <= days2; i++) {
+                getM = getDateBydays(i, startDate);
+                date = year1 + '-' + isAddTwo(getM[0]) + '-' + isAddTwo(getM[1]);
+                result.push(date);
+            }
+            days1 = 1;
+            days2 = getdaysByDate(endDate);
+            for (i = days1; i <= days2; i++) {
+                getM = getDateBydays(i, endDate);
+                date = year2 + '-' + isAddTwo(getM[0]) + '-' + isAddTwo(getM[1]);
+                result.push(date);
+            }
+        }
+        return result;
+    }
+
+    /**
+    * 根据日期获取在当年中的天数
+    * @param {*} date 日期
+    */
+    function getdaysByDate (date) {
+        var nowDate = date ? new Date(date) : new Date();
+        var february = (nowDate.getFullYear() % 100 !== 0 && nowDate.getFullYear() % 4 === 0) || nowDate.getFullYear() % 400 === 0 ? 29 : 28;
+        var daysOfMonth = [31, february, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        var month = 0;
+        var days = 0;
+        var result = 0;
+        if (date.getMonth === undefined) {
+            var t = date.match(/\d+/g);
+            month = t[1] * 1 - 1;
+            days = t[2] * 1;
+        }
+        for (var i = month - 1; i >= 0; i--) {
+            result += daysOfMonth[i];
+        }
+        result += days;
+
+        return result;
+    }
+    /**
+    * 根据天数转化为当年日期中的日期时间
+    * @param {*} days 天数
+    * @param {*} startDate 可选    当年的某天 为了获取 2月的天数
+    */
+    function getDateBydays (days, startDate) {
+      var nowDate = startDate ? new Date(startDate) : new Date();
+      var february = (nowDate.getFullYear() % 100 !== 0 && nowDate.getFullYear() % 4 === 0) || nowDate.getFullYear() % 400 === 0 ? 29 : 28;
+      var daysOfMonth = [31, february, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+      var month = 0;
+      while (days > daysOfMonth[month]) {
+          days -= daysOfMonth[month];
+          month++;
+          if (month >= 12) break;
+      }
+      return [month + 1, days];
+    }
+})();
