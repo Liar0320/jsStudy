@@ -1,3 +1,4 @@
+//https://www.regular-expressions.info/tutorial.html
 /// http://www.jb51.net/article/88838.htm      http://www.jb51.net/tools/zhengze.html
 /// js正则表达的声明 /a/g.test('abc')---true || new RegExp('a','g').test('abc')---true
 /// ***  大写取反,  \s:空白字符,\S:非空白字符,\s\S:任意字符,\d:数字,\w:字符
