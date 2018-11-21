@@ -79,7 +79,8 @@ watchExpressions是数组类型
     & 与父级的方法绑定
 
 #   ng-model
-    https://segmentfault.com/a/1190000016807866
+
+    http://www.cnblogs.com/liulangmao/p/4110137.html
     c.$valudators.xxx = function(moduleValue,viewValue){
         if (){
             return true;
