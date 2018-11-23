@@ -2,7 +2,11 @@
  * @Author: liar 
  * @Date: 2018-09-21 00:07:50 
  * @Last Modified by: liar
+<<<<<<< HEAD
  * @Last Modified time: 2018-11-24 00:35:37
+=======
+ * @Last Modified time: 2018-10-08 14:51:44
+>>>>>>> ae4aa8b0896131c076e15513706bcc66d79c5981
  */
 //1 2 3 4 5 6 7        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~神奇    代码其实是逻辑思维的展示，逻辑的好坏在一定程度上决定了代码的好坏。
 (function(){
@@ -685,6 +689,61 @@ var isPalindrome = function(head) {
 
 };
 
+<<<<<<< HEAD
+=======
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ * https://blog.csdn.net/u011373710/article/details/54024366
+ */
+
+/**
+ * @param {ListNode} head
+ * @return {boolean}
+ */
+var hasCycle = function(head) {
+    var hash = [];
+    if(head === null) return false;
+    while(head){
+        if(hash.includes(head)) return true
+        hash.push(head);
+        head = head.next;
+    }
+    return false
+};
+
+//定义两个运动员在同一起跑线
+var hasCycle = function(head) {
+	var q1 = head;
+	var q2 = head;
+    while(q1&&q2&&q2.next){
+          q1 = q1.next;
+          q2 = q2.next.next;
+          if(q1 ===q2) return true
+    }
+	return false
+};
+
+/*
+	判断是否是循环链表
+	如果head === null || head.next === null  return false;
+	否则进行判定
+	设置两个指针一个指向 q1 = head 一个指向 q2 = head.next 
+	两个指针始终相差一步
+	当跨出第一步时
+		q1.next = null;  将上一个指针 指向null	
+		q1 = q2;		  q1 移动到下一步
+		q2 = q2.next;	  q2 移动到下一步
+
+	如果 q2 === null;
+*/
+
+
+>>>>>>> ae4aa8b0896131c076e15513706bcc66d79c5981
 /**
  * Definition for a binary tree node.
  * function TreeNode(val) {
@@ -694,6 +753,7 @@ var isPalindrome = function(head) {
  */
 /**
  * @param {TreeNode} root
+<<<<<<< HEAD
  * @return {boolean}
  */
 var isSymmetric = function(root) {
@@ -734,3 +794,126 @@ function compareResever(rows){
 	}while(start < len);
 	return  (--start === len);
 }
+=======
+ * @return {number}
+ */
+var maxDepth = function(root) {
+	if(!root) return 0;
+	var leftDepth = 1, rightDepth = 1 ,depth = arguments[1] || 1;
+	if(root.left) leftDepth = maxDepth(root.left,depth + 1);
+	if(root.right) rightDepth = maxDepth(root.right,depth + 1);
+	return Math.max(leftDepth,rightDepth,depth);
+ };
+
+ var maxDepth = function(root) {
+	return root === null? 0 : Math.max(maxDepth(root.left),maxDepth(root.right)) + 1;
+ };
+
+
+
+ /**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * 左子树都小于 当前节点
+ * 右子树都大于 当前节点 	
+ * @param {TreeNode} rootde
+ * @return {boolean}
+ */
+var isValidBST = function(root) {
+    if( !root) return true;
+    if( !valid(root)) return false;
+    var left=true ,right =true;
+    if(root.left){
+        left = isValidBST(root.left);
+    }else if(root.right){
+        right = isValidBST(root.right);
+    }
+    return left && right ;
+};
+//验证当前节点是否成立
+function valid(root){
+    var left,right;
+    if(root.left){
+       left = getNode(root.left);
+       if(Math.max.apply(this,left) >= root.val) return false; 
+    }
+    if(root.right){
+       right = getNode(root.right);
+       if(Math.min.apply(this,right) <= root.val) return false; 
+    }
+    return true;
+}
+//获取该branch下的所有节点
+function getNode(branch){
+    var result = [branch.val];
+    if(branch.left) result = result.concat(getNode(branch.left));
+    if(branch.right) result = result.concat(getNode(branch.right));
+    return result;
+}
+
+// root < max;
+// root < min;
+// 任何一个节点 都应该 大于min  小于max 
+var isValidBST = function(root) {
+    return isValid(root);
+};
+function isValid(root, min, max){
+    if(!root) return true;
+    if((min === undefined || min < root.val )&& (max === undefined || max > root.val)){
+        return isValid(root.left,min,root.val)&&
+             isValid(root.right,root.val,max);
+    }
+    return false;
+}
+
+
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {boolean}
+ */
+var isSymmetric = function(root) {
+    var resultStr = [];
+    var temp = [];
+    var isGoing = false;
+    while(true){
+        resultStr = [];
+        isGoing = false;
+        if(temp.length === 0) temp.push(root);
+        var len = temp.length
+        for(var i =0; i < len;i ++){
+            resultStr.push(temp[i]? temp[i].val:null);
+            if(temp[i]){
+                temp.push(temp[i].left);
+                temp.push(temp[i].right);
+                isGoing = true;
+            }else{
+                temp.push(null,null);
+            }
+        }
+        if(! isGoing)  return true;
+        if(!isSymetricStr(resultStr)) return false;
+        temp.splice(0,len);
+    }
+};
+
+function isSymetricStr(arr){
+    var len = arr.length;
+    for(var i = 0; i < len / 2 ; i++){
+        if(arr[i] !== arr[len-1-i]) return false;
+    }
+    return true;
+}
+>>>>>>> ae4aa8b0896131c076e15513706bcc66d79c5981

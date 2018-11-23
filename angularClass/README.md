@@ -50,10 +50,53 @@ $watch(watchExpression,(newValue,oldValue,scope){},true);
 $scope.myArray[0].someProperty = "someValue";
 
 
-#$ watchGroup（watchExpressions，listener）;
+#$watchGroup（watchExpressions，listener）;
 
 watchExpressions是数组类型
 
 如果要监听多个变量就要写很多个watch，这显然不是很好的作用。
 
 使用$watchGroup可同时监听多个变量，如果任一一个变量发生变化就会触发listener。
+
+
+
+
+#scope 指令的作用域
+
+    可选 ，默认是false 
+    false: 使用父作用域，指令中对属性的修改，会直接 作用到父级作用域中 
+    true: 从父作用域继承 ，并创建一个新的作用域对象 ，指令 中可以访问 父级的作用域，修改不会影响 到父级 
+    {}: 创建一个隔离作用域，不能访问 父级的作用域，修改也不会影响 到父级
+
+#隔离作用域的绑定策略
+
+    @： 本地作用域属性 ，使用@符号将子级作用域同DOM属性的值进行绑定。子级作用域可以
+        使用父级作用域的变量，但内部作用域的变量改变，不会影响外部作用域的绑定变量， 
+        即单向绑定。   ***注意绑定的方式{{变量}}***
+    =： 双向绑定：通过=可以将子级作用域上的属性同父级作用域上的属性进行双向的数据绑定。
+        就像普通的数据绑定一样，子级作用域上会属性变量变化会引起父级作用域上数据模型中的改变，
+        即双向绑定。 ***注意绑定的方式{{变量}}***
+    & 与父级的方法绑定
+
+#   ng-model
+
+    http://www.cnblogs.com/liulangmao/p/4110137.html
+    c.$valudators.xxx = function(moduleValue,viewValue){
+        if (){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    c.$asyncValidators.xxx = function(moduleValue,viewValue){
+        var d = $q.defer();
+        $http.get(url,config)
+            .then(function(){
+                d.resolve();
+            },function(){
+                d.reject();
+            })
+            return promise();
+    }
+
