@@ -248,6 +248,29 @@ const $ = {};
      * @param {*} o1    旧
      * @param {*} p_k   键值
      * @param {*} excludes  忽略的键值
+     * 根据对象判断其关系为
+        新增
+        修改
+        删除
+      var v1,o1,v1_c,o1_c,o1_d;
+      判断 v1,o1 两个是否为数组 如果不是则return;
+
+      var result = [
+        [],	//新增
+        [],	//修改
+        []	//删除
+      ]
+
+
+      //获取v1中的所有键值;转换为 键值对象  key:row  v1_c
+      //匹配o1中的所有数据，提取键值相同的;并且remove他;  生成一个新的数组 o1_d;和键值对象 o1_c key:row
+        result[2] = o1_d;
+      //比较 o1_c中的所有row 和 v1_c的row中的 关系 ; 
+        如果 o1_c中 row的所有键值对 === v1_c的row;则数据正常;
+        不等于  数据修改 result[1].push(row);
+        每次比较 delete v1_c中的键值对;
+        循环剩下的键值对,该数据就是新增的条数;
+        result[0] = row;
      */
     function JsonOrg(v1, o1, p_k, excludes) {
       var v1_c = {}; var o1_c = {}; var i, key, o_item, v_item, flag, key_2;
@@ -298,6 +321,7 @@ const $ = {};
       }
       return result;
   };
+  
 
   liarExtend(_$, {
     liarCopy,
