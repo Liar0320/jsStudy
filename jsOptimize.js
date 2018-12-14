@@ -242,6 +242,63 @@ const $ = {};
     }
 
 
+     /**
+     * 比较新值数组v1和旧值数组o1  根据p_k键值  判断其中的row是否发生 新值 修改 或者删除
+     * @param {*} v1    新
+     * @param {*} o1    旧
+     * @param {*} p_k   键值
+     * @param {*} excludes  忽略的键值
+     */
+    function JsonOrg(v1, o1, p_k, excludes) {
+      var v1_c = {}; var o1_c = {}; var i, key, o_item, v_item, flag, key_2;
+      if (p_k === undefined) p_k = 'id';
+      var result = [
+          [], // 新增
+          [], 	// 修改
+          [] // 删除
+      ];
+      // 获取v1中的所有键值;转换为 键值对象  key:row  v1_c
+      for (i = 0; i < v1.length; i++) {
+          v1_c[v1[i][p_k]] = v1[i];
+      }
+      // 匹配o1中的所有数据，提取键值相同的;并且remove他;  生成一个新的数组 o1_d;和键值对象 o1_c key:row
+      for (i = 0; i < o1.length; i++) {
+          if (v1_c[o1[i][p_k]]) {
+              o1_c[o1[i][p_k]] = o1[i];
+              o1.splice(i, 1);
+              i--;
+          }
+      }
+      // 删除的rows
+      result[2] = o1;
+      // 比较 o1_c中的所有row 和 v1_c的row中的 关系 ;   获取 修改的row
+      for (key in o1_c) {
+          if (o1_c.hasOwnProperty(key)) {
+              o_item = o1_c[key];
+              v_item = v1_c[key];
+              flag = true;
+              for (key_2 in o_item) {
+                  if (excludes && excludes.indexOf(key_2) > -1) continue;
+                  if (o_item.hasOwnProperty(key_2)) {
+                      if (o_item[key_2] !== v_item[key_2]) {
+                          flag = false;
+                          break;
+                      }
+                  }
+              }
+              if (!flag) {
+                  result[1].push(v_item);
+              }
+              delete v1_c[key];
+          }
+      }
+      // 新值的row
+      for (key in v1_c) {
+          result[0].push(v1_c[key]);
+      }
+      return result;
+  };
+
   liarExtend(_$, {
     liarCopy,
     liarExtend,
