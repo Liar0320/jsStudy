@@ -13,6 +13,13 @@
  * [\u4e00-\u9fa5]   中文
  * 
  */
+
+// 0-特殊字符：()"    这三个需要转义
+
+// 1-获取指定字符串之后：  (?<=指定字符串)
+
+// 2-获取指定字符串之前： (?=指定字符串)
+// '1231.ggf.jpg'.match(/(?<=\.)[^\.]+$/g)
 (function(){
 	var str = "abcdefghijklmnopqrstuvwxyzabc";
 	var str2 = str.replace(/a/g,"9");            
