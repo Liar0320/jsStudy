@@ -211,6 +211,25 @@ const $ = {};
     return uuid.join('');
   }
 
+  /**
+   * 将base64转换为文件
+   * @param {*} dataurl 
+   * @param {*} filename 
+   * var base64Testc = 'data:image/png;base64,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'
+   * var nf = dataURLtoFile(base64Testc,'001.png');
+   */
+function dataURLtoFile(dataurl, filename) {//将base64转换为文件
+  var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+  bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+  while(n--){
+      u8arr[n] = bstr.charCodeAt(n);
+  }
+  return new File([u8arr], filename, {type:mime});
+}
+
+
+
+
 /**                           ??????????????????????????没想明白 为什么要这么写当时
 			 *创建 0 - limitR 随机数
 			 * @param {*} limitR 最大随机数
