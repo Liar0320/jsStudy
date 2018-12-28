@@ -87,5 +87,8 @@
   在本地新建分支 关联到远程分支的时候
     git push --set-upstream origin master
 
+  查看远程分支名
+    git branch -a
+
 
 
