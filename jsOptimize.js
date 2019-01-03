@@ -848,4 +848,58 @@ function dataURLtoFile(dataurl, filename) {//将base64转换为文件
       }
       return [month + 1, days];
     }
+
+     /**
+     * 获取当前周
+     */
+    Date.prototype.getWeeks = function () {  /* eslint-disable-line */
+        var size = 2; var ZERO_CHAR = '0';
+        function padNumber (num, digits, trim, negWrap) {
+            var neg = '';
+            if (num < 0 || (negWrap && num <= 0)) {
+                if (negWrap) {
+                    num = -num + 1;
+                } else {
+                    num = -num;
+                    neg = '-';
+                }
+            }
+            num = '' + num;
+            while (num.length < digits) num = ZERO_CHAR + num;
+            if (trim) {
+                num = num.substr(num.length - digits);
+            }
+            return neg + num;
+        }
+
+        function getFirstThursdayOfYear (year) {
+            // 0 = index of January
+            var dayOfWeekOnFirst = (new Date(year, 0, 1)).getDay();
+            // 4 = index of Thursday (+1 to account for 1st = 5)
+            // 11 = index of *next* Thursday (+1 account for 1st = 12)
+            return new Date(year, 0, ((dayOfWeekOnFirst <= 4) ? 5 : 12) - dayOfWeekOnFirst);
+        }
+
+        function getThursdayThisWeek (datetime) {
+            return new Date(datetime.getFullYear(), datetime.getMonth(),
+                // 4 = index of Thursday
+                datetime.getDate() + (4 - (datetime.getDay() || 7)));
+        }
+
+        function weekGetter (size) {
+            return function (date) {
+                var firstThurs = getFirstThursdayOfYear(date.getFullYear());
+
+                var thisThurs = getThursdayThisWeek(date);
+
+                var diff = +thisThurs - +firstThurs;
+
+                var result = 1 + Math.round(diff / 6.048e8); // 6.048e8 ms per week
+
+                return padNumber(result, size);
+            };
+        }
+
+        return weekGetter(size)(this);
+    };
 })();

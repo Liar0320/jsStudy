@@ -13,3 +13,16 @@
             netstat -tunlp用于显示tcp，udp的端口和进程等相关情况
         【步骤四】netstat -tunlp|grep 端口号
             netstat -tunlp|grep 端口号，用于查看指定端口号的进程情况，如查看22端口的情况，netstat -tunlp|grep 22
+
+####  查看 rpm
+    rpm -qa 
+
+#### 基本命令
+    mv cp 移动 复制
+    cp <filePath> <newFilePath>
+    :set Number 显示行号
+    :set nu! 取消显示行号
+####
+    https://blog.csdn.net/qiushisoftware/article/details/79520869
+    make
+    make install
