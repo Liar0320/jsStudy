@@ -2,7 +2,7 @@
  * @Author: liar 
  * @Date: 2018-09-21 00:07:50 
  * @Last Modified by: liar
- * @Last Modified time: 2019-01-02 19:51:36
+ * @Last Modified time: 2019-01-08 20:23:05
  * https://www.itcodemonkey.com/article/12599.html
  */
 //1 2 3 4 5 6 7        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~神奇    代码其实是逻辑思维的展示，逻辑的好坏在一定程度上决定了代码的好坏。
@@ -885,4 +885,40 @@ var maxSubArray = function(nums) {
         if(temp < 0) temp = 0;
     }
     return max;
+};
+
+// dayMax  当天最贵值;
+// 如果从最后一天开始计算
+// 往前计算利润 如果当dayMax - 当前天 利润最大 则 赋予 max；
+/**买卖股票的最佳时机
+ * @param {number[]} prices
+ * @return {number}
+ */
+var maxProfit = function(prices) {
+    var dayMax = 0,max = 0, i =  prices.length - 1;
+    for(i;i >= 0;i--){
+        dayMax = Math.max(dayMax,prices[i]);
+        max = Math.max(max,dayMax - prices[i]);
+    }
+    return max;
+};
+
+//统计所有小于非负整数 n 的质数的数量。
+/**
+ * @param {number} n
+ * @return {number}
+ */
+var countPrimes = function(n) {
+    let i = 2,j, l = n,primes = [],isPrimes;
+    for(i; i < l ;i++){
+        isPrimes = true;
+        for(j = 0;j<primes.length ; j++){
+            if(i%primes[j] === 0){
+                isPrimes = false;
+                break;
+            }
+        }
+        if(isPrimes)primes.push(i);
+    }
+    return primes.length;
 };
