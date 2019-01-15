@@ -46,4 +46,14 @@
 
 	"translate3d(35px, 18px, 0px)".replace(/[^\d]+/g,","); //取反
 })();
+//"bower_components/angular-ui-router\\angular-ui-router.js".match(/bower_components[\\\/]([\w-]+)[\\\/]/)[1]
+//var reg=new RegExp("(http://www.qidian.com/BookReader/)(\\d+),(\\d+).aspx","gmi");
+// var url="http://www.qidian.com/BookReader/1017141,20361055.aspx";
+
+// var rep=url.replace(reg,"$1ShowBook.aspx?bookId=$2&chapterId=$3");
+
+// 你可能注意到了，在reg正则表达式里的几对"()",比如`("(http://www.qidian.com/BookReader/)` ，`(\\d+)`，$n就指的是匹配到的第n个括号里的内容，**$n主要是用在后面的程序需要引用前面的正则匹配到的内容时。**在这个例子里：
+// $1 : http://www.qidian.com/BookReader/
+// $2 : 1017141
+// $3 : 20361055
 window.location.search.match(/[^&|?]+/g).map(function(item,index){var obj = item.match(/[^=]+/g);return {[obj[0]]:obj[1]};});
