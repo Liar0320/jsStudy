@@ -2,7 +2,7 @@
  * @Author: liar 
  * @Date: 2018-09-21 00:07:50 
  * @Last Modified by: liar
- * @Last Modified time: 2019-01-08 20:23:05
+ * @Last Modified time: 2019-01-21 17:12:50
  * https://www.itcodemonkey.com/article/12599.html
  */
 //1 2 3 4 5 6 7        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~神奇    代码其实是逻辑思维的展示，逻辑的好坏在一定程度上决定了代码的好坏。
@@ -921,4 +921,151 @@ var countPrimes = function(n) {
         if(isPrimes)primes.push(i);
     }
     return primes.length;
+};
+
+
+/**
+ * 统计所有小于非负整数 n 的质数的数量。
+ * @param {number} n
+ * @return {number}
+ */
+var countPrimes = function(n) {
+    console.time()
+    let i = 2,j,primes = {},count = 0;
+    for(i; i < n ;i++){
+        if(isPrimes2(i)){
+            count++;
+        }
+    }
+    function isPrimes2(num){
+        var result=true, i = 2, len = Math.round(Math.sqrt(num));
+        for(i;i<=len;i++){
+            if(num%i === 0){
+                result = false;
+                break;
+            } 
+        }
+        return result;
+    }
+    console.timeEnd()
+    return count;
+};
+
+/**
+ * 统计所有小于非负整数 n 的质数的数量。
+ * @param {number} n
+ * @return {number}
+ */
+var countPrimes = function(n) {
+    let i = 2,j, l = n,primes = [],p;
+    for(i; i < l ;i++){
+        i>3500? (p = isPrimes1) : (p = isPrimes2);
+        if(p(i)) primes.push(i);
+    }
+    function isPrimes1(num){
+        var result=true, i = 0, len = primes.length;
+        for(i;i<=len;i++){
+            if(num%primes[i] === 0){
+                result = false;
+                break;
+            } 
+        }
+        return result;
+    }
+    function isPrimes2(num){
+        var result=true, i = 2, len = Math.ceil(num/2);
+        for(i;i<=len;i++){
+            if(num%i === 0){
+                result = false;
+                break;
+            } 
+        }
+        return result;
+    }
+    return primes.length;
+};
+
+
+/**
+ * like
+ * 正向计算，计算所有可以相乘的数 直到n，缓存到array，
+ * @param {number} n
+ * @return {number}
+ */
+var countPrimes = function(n) {
+    let arr = new Array(n),i= 2,j;
+    for(i ;i < n;i++){
+        if(typeof arr[i] === 'undefined'){
+            for(j = i*i; j<n ; j+=i){
+                arr[j] = true;
+            }
+        }
+    }
+    let count = 0;
+    for(i = 2;i<n;i++){
+        if(!arr[i]) count++;
+    }
+    return count;
+};
+
+
+/**
+ * 罗马数字转整数
+ * @param {string} s
+ * @return {number}
+ */
+var romanToInt = function(s) {
+    const rules = {
+        I:1,
+        V:5,
+        X:10,
+        L:50,
+        C:100,
+        D:500,
+        M:1000
+    }
+    const special = ['I','X','C'];
+    let o = s.split(''),n = o.length; i = 0,current = 0 ,next = 0 , result = 0;
+    for(i; i < n ;i++){
+        current = rules[o[i]]
+        if(special.includes(o[i])){
+            next = rules[o[i+1]];
+            if(next > current) {
+                current = next - current ;
+                i++;
+            }
+        }
+  
+        result += current;
+    }
+    return result ;
+};
+
+
+/**
+ * 罗马数字转整数
+ * @param {string} s
+ * @return {number}
+ */
+var romanToInt = function(s) {
+    const rules = {
+        I:1,
+        V:5,
+        X:10,
+        L:50,
+        C:100,
+        D:500,
+        M:1000
+    }
+    const special = ['I','X','C'];
+    let o = s.split(''),n = o.length; i = 0,current = 0 , result = 0;
+    for(i; i < n ;i++){
+        current = rules[o[i]]
+        if(current < (rules[o[i+1]] || 0)){
+           result -= current;
+        }else{
+           result += current;
+        }
+    }
+    return result ;
 };
