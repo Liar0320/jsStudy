@@ -2,7 +2,7 @@
  * @Author: liar 
  * @Date: 2018-09-21 00:07:50 
  * @Last Modified by: liar
- * @Last Modified time: 2019-01-21 17:12:50
+ * @Last Modified time: 2019-01-24 18:03:23
  * https://www.itcodemonkey.com/article/12599.html
  */
 //1 2 3 4 5 6 7        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~神奇    代码其实是逻辑思维的展示，逻辑的好坏在一定程度上决定了代码的好坏。
@@ -1069,3 +1069,103 @@ var romanToInt = function(s) {
     }
     return result ;
 };
+
+//    爬楼梯	
+// 1 + 1
+// 2
+
+// 1 + 1 + 1
+// 2 + 1
+// 1 + 2
+
+// 1 + 1 + 1 + 1
+// 2 + 1 + 1
+// 1 + 2 + 1
+// 1 + 1 + 2
+// 2 + 2
+
+// 3-->  1 + 2
+// 4-->  2 + 3
+// 15--> 13 + 14
+
+// 由此总结 当一个数为 1或者2时  可以转化为  +1 +2;
+
+/**
+ * @param {number} n
+ * @return {number}
+ */
+var climbStairs = function(n) {
+    if(n === 0) return 0
+    if(n === 1) return 1
+    let temp = [1,2]
+    for(let i = 3; i <= n; i++){
+        temp.push(temp[0]+temp[1]);
+        temp.shift();
+    }
+    return temp[1];
+};
+
+/**
+ * @param {number} n
+ * @return {number}
+ */
+var climbStairs = function(n) {
+    let keyRoutes = {
+        0:0,
+        1:1,
+        2:2,
+        3:3,
+        4:5,
+        5:8
+    }
+    for(let i = 0; i <= n; i++){
+        if(keyRoutes[i] === undefined){
+            keyRoutes[i] = keyRoutes[i-1]+keyRoutes[i-2];
+        }
+    }
+    return keyRoutes[n];
+};
+
+
+/**
+ * 洗牌
+ * @param {number[]} nums
+ */
+var Solution = function(nums){
+    this.nums = nums;
+}
+
+/**
+ * Resets the array to its original configuration and return it.
+ * @return {number[]}(
+ */
+Solution.prototype.reset = function() {
+    // var temp = this.nums.slice(0);
+    // temp.sort(function(n,p){
+    //     return n-p;
+    // })
+    return this.nums;
+};
+
+/**
+ * Returns a random shuffling of the array.
+ * @return {number[]}
+ */
+Solution.prototype.shuffle = function() {
+     var temp = this.nums.slice(0);
+    temp.sort(function(){
+        if(Math.random() < 0.5){
+            return 1
+        }else{
+            return -1
+        }
+    })
+    return temp
+};
+
+/** 
+ * Your Solution object will be instantiated and called as such:
+ * var obj = Object.create(Solution).createNew(nums)
+ * var param_1 = obj.reset()
+ * var param_2 = obj.shuffle()
+ */
