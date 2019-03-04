@@ -831,6 +831,14 @@ function dataURLtoFile(dataurl, filename) {//将base64转换为文件
 
         return result;
     }
+
+    /**
+    * 根据日期获取在当年中的天数
+    * @param {*} date 日期
+    */
+    const dayOfYear = date =>
+    Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
+    
     /**
     * 根据天数转化为当年日期中的日期时间
     * @param {*} days 天数
